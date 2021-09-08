@@ -38,30 +38,34 @@ export default class Login extends Component{
                             <Text style={{color:'white', fontSize:normalize(20)}}>Shearing Metal Plate</Text>
                         </View>
                         <View style={{padding:normalize(20)}}>
-                            <View style={{borderWidth:1, backgroundColor:'white', width:normalize(250),borderColor:'white', height:normalize(40), borderRadius:10}}>
+                            {/* <View style={{borderWidth:1, backgroundColor:'white', width:normalize(250),borderColor:'white', height:normalize(40), borderRadius:10, paddingTop:normalize(-10)}}>
+                                
+                            </View> */}
+                            <View>
                                 <TextInput
                                     placeholder="Email"
                                     style={{
-                                        width:'100%',
-                                        paddingLeft:normalize(20)
+                                        width:normalize(250),
+                                        paddingLeft:normalize(20),
                                     }}
+                                    underlineColorAndroid="white"
                                     value={this.state.email}
                                     onChange={this.handleEmail}
                                 />
                             </View>
                             <View style={{padding:normalize(10)}} />
-                            <View style={{borderWidth:1, flexDirection:'row' ,backgroundColor:'white', width:normalize(250),borderColor:'white', height:normalize(40), borderRadius:10}}>
+                            <View>
                                 <TextInput
                                     placeholder="Password"
-                                    secureTextEntry={true}
                                     style={{
                                         width:'100%',
-                                        paddingLeft:normalize(20)
+                                        paddingLeft:normalize(20),
                                     }}
+                                    underlineColorAndroid="white"
+                                    secureTextEntry={true}
                                     value={this.state.password}
                                     onChange={this.handlePass}
                                 />
-                                {/* <Icon type={"FontAwesome5"} name="eye-slash" style={{color:'#dfdfdf'}} /> */}
                             </View>
                             <TouchableOpacity style={{paddingTop:normalize(5)}}>
                                 <Text style={{textAlign:'right', color:'#003499'}}>Lupa Password ?</Text>

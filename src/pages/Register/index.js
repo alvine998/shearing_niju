@@ -41,8 +41,8 @@ export default class Registrasi extends Component{
         const screenheight = Dimensions.get('window').height;
         return(
             <View style={{backgroundColor:'#73A3EC', height: 'auto', maxHeight: screenheight}}>
-                <ScrollView style={{paddingBottom:normalize(50)}}>
-                    <View  style={{alignItems:'center', justifyContent:'center', paddingTop:normalize(50)}}>
+                <ScrollView>
+                    <View  style={{alignItems:'center', justifyContent:'center', paddingTop:normalize(50), paddingBottom:normalize(50)}}>
                         <Image source={nijulogo} style={{height:normalize(120), width:normalize(120)}} />
                             <View style={{padding:normalize(10)}}>
                                 <Text style={{color:'white', fontSize:normalize(30), fontWeight:'bold', textAlign:'center'}}>NIJU</Text>
@@ -50,61 +50,66 @@ export default class Registrasi extends Component{
                             </View>
 
                             <View style={{padding:normalize(20)}}>
-                                <View style={{borderWidth:1, flexDirection:'row' ,backgroundColor:'white', width:normalize(250),borderColor:'white', height:normalize(40), borderRadius:10}}>
                                     <TextInput
                                         placeholder="Nama"
                                         style={{
-                                            width:'100%',
-                                            paddingLeft:normalize(20)
+                                            width:normalize(250),
+                                            paddingLeft:normalize(20),
+                                            color:'white'
                                         }}
+                                        underlineColorAndroid="white"
                                         value={this.state.name}
                                         onChange={this.handleName}
                                     />
-                                </View>
                                 <View style={{padding:normalize(10)}} />
-                                <View style={{borderWidth:1, flexDirection:'row' ,backgroundColor:'white', width:normalize(250),borderColor:'white', height:normalize(40), borderRadius:10}}>
                                     <TextInput
                                         placeholder="Nomor Ponsel"
                                         style={{
-                                            width:'100%',
-                                            paddingLeft:normalize(20)
+                                            width:normalize(250),
+                                            paddingLeft:normalize(20),
+                                            color:'white'
                                         }}
+                                        underlineColorAndroid="white"
                                         value={this.state.phone}
                                         onChange={this.handlePhone}
                                         keyboardType="number-pad"
                                         maxLength={13}
                                     />
-                                </View>
                                 <View style={{padding:normalize(10)}} />
-                                <View style={{borderWidth:1, backgroundColor:'white', width:normalize(250),borderColor:'white', height:normalize(40), borderRadius:10}}>
+                                {/* <View style={{borderWidth:1, backgroundColor:'white', width:normalize(250),borderColor:'white', height:normalize(40), borderRadius:10}}>
+               
+                                </View> */}
+                                <View>
                                     <TextInput
                                         placeholder="Email"
                                         style={{
-                                            width:'100%',
-                                            paddingLeft:normalize(20)
+                                            width:normalize(250),
+                                            paddingLeft:normalize(20),
+                                            color:'white'
                                         }}
+                                        underlineColorAndroid="white"
                                         value={this.state.email}
                                         onChange={this.handleEmail}
                                     />
                                 </View>
                                 <View style={{padding:normalize(10)}} />
-                                <View style={{borderWidth:1, flexDirection:'row' ,backgroundColor:'white', width:normalize(250),borderColor:'white', height:normalize(40), borderRadius:10}}>
                                     <TextInput
                                         placeholder="Password"
                                         secureTextEntry={true}
                                         style={{
-                                            width:'100%',
-                                            paddingLeft:normalize(20)
+                                            width:normalize(250),
+                                            paddingLeft:normalize(20),
+                                            color:'white'
                                         }}
+                                        underlineColorAndroid="white"
                                         value={this.state.password}
                                         onChange={this.handlePass}
                                     />
                                     {/* <Icon type={"FontAwesome5"} name="eye-slash" style={{color:'#dfdfdf'}} /> */}
-                                </View>
                             </View>
                             <View>
-                                <Button onPress={() => this.props.navigation.navigate('Home')} full success style={{width:normalize(100), height:normalize(40), borderRadius:10, backgroundColor:'#56FF1B'}}>
-                                    <Text style={{color:'black'}}>Daftar</Text>
+                                <Button onPress={() => this.props.navigation.navigate('Login')} full success style={{width:normalize(100), height:normalize(40), borderRadius:10, backgroundColor:'#56FF1B'}}>
+                                    <Text style={{color:'white'}}>Daftar</Text>
                                 </Button>
                             </View>
                         </View>
