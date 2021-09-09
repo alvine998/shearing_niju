@@ -67,13 +67,13 @@ export default class Login extends Component{
                                     onChange={this.handlePass}
                                 />
                             </View>
-                            <TouchableOpacity style={{paddingTop:normalize(5)}}>
+                            {/* <TouchableOpacity style={{paddingTop:normalize(5)}}>
                                 <Text style={{textAlign:'right', color:'#003499'}}>Lupa Password ?</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                         <View>
-                            <Button onPress={() => this.props.navigation.navigate('Home')} full success style={{width:normalize(100), height:normalize(40), borderRadius:10, backgroundColor:'#56FF1B'}}>
-                                <Text style={{color:'black'}}>Masuk</Text>
+                            <Button full onPress={() => this.props.navigation.navigate('Home')}  style={{width:normalize(250), height:normalize(40), borderRadius:10, backgroundColor:'#56FF1B'}}>
+                                <Text style={{color:'white', fontFamily:'RedHatDisplay-Regular', textAlign:'center'}}>Masuk</Text>
                             </Button>
                         </View>
                         <View style={{flexDirection:'row', paddingTop:normalize(50)}}>

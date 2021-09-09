@@ -55,7 +55,7 @@ export default class HomeScreen extends Component{
                                             <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Lacak {"\n"} Pesanan</Text>
                                         </TouchableOpacity>
                                         <View style={{paddingLeft:normalize(20)}}/>
-                                        <TouchableOpacity>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Invoice')}>
                                             <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#C3B257', alignItems:'center', justifyContent:'center'}}>
                                                 <Image source={invoice} style={{width:normalize(60), height:normalize(60)}}/>
                                             </View>
@@ -64,7 +64,7 @@ export default class HomeScreen extends Component{
                                     </View>
 
                                     <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', paddingTop:normalize(20)}}>
-                                        <TouchableOpacity>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Profiles')}>
                                             <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#E78181', alignItems:'center', justifyContent:'center'}}>
                                                 <Image source={profile} style={{width:normalize(60), height:normalize(60)}}/>
                                             </View>

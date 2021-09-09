@@ -12,6 +12,9 @@ import PurchaseOrder from './src/pages/PurchaseOrder';
 import DetailOrder from './src/pages/PurchaseOrder/DetailOrder';
 import VerificationOrder from './src/pages/PurchaseOrder/VerificationOrder';
 import FindOrder from './src/pages/FindOrder';
+import Invoice from './src/pages/Invoice';
+import AvailInvoice from './src/pages/Invoice/AvailInvoice';
+import Profiles from './src/pages/Profiles';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +33,11 @@ const Stack = createStackNavigator();
           <Stack.Screen name="Verification" component={VerificationOrder} options={{headerShown: false}} />
           {/* find order */}
           <Stack.Screen name="FindOrder" component={FindOrder} options={{headerShown: false}} />
+          {/* Invoice */}
+          <Stack.Screen name="Invoice" component={Invoice} options={{headerShown: false}} />
+          <Stack.Screen name="AvailInvoice" component={AvailInvoice} options={{headerShown: false}} />
+          {/* Profil */}
+          <Stack.Screen name="Profiles" component={Profiles} options={{headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
       // <View>

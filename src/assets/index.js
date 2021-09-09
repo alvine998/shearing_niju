@@ -10,10 +10,12 @@ import invoice from './icons/invoice.png'
 import profile from './icons/profile.png'
 import settings from './icons/settings.png'
 import waitings from './images/waiting.png'
+import emptys from './images/empty.png'
 
 
 export {
     success,
+    emptys,
     waitings,
     box_add,
     box_time,
