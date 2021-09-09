@@ -2,7 +2,7 @@ import { Body, Button, Header, Icon, Left, Right, Title } from 'native-base'
 import React, { Component } from 'react'
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import normalize from 'react-native-normalize'
-import { logistics, nijulogo, quality, worker } from '../../assets'
+import { box_add, box_time, invoice, logistics, nijulogo, profile, quality, settings, worker } from '../../assets'
 
 export default class HomeScreen extends Component{
     render(){
@@ -34,41 +34,45 @@ export default class HomeScreen extends Component{
                     </ScrollView>
 
                     <View style={{paddingTop:normalize(20)}}>
-                        <View style={{height:normalize(600), backgroundColor:'white', borderTopRightRadius:20, borderTopLeftRadius:20}}>
+                        <View style={{height:normalize(650), backgroundColor:'white', borderTopRightRadius:20, borderTopLeftRadius:20}}>
                             <View style={{alignItems:'center', justifyContent:'center', paddingTop:normalize(10)}}>
                                 <View style={{backgroundColor:'#808080', height:normalize(10), width:normalize(250), borderRadius:10}}/>
                                 <View style={{paddingTop:normalize(20)}}>
                                     <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(24), textAlign:'center'}}>MENU UTAMA</Text>
 
                                     <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', paddingTop:normalize(20)}}>
-                                        <TouchableOpacity>
-                                            <View style={{width:normalize(70), height:normalize(70), backgroundColor:'#6D7AF2'}}>
-
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Order')}>
+                                            <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#6D7AF2', alignItems:'center', justifyContent:'center'}}>
+                                                <Image source={box_add} style={{width:normalize(60), height:normalize(60)}}/>
                                             </View>
+                                            <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Pesan {"\n"} Sekarang</Text>
+                                        </TouchableOpacity>
+                                        <View style={{paddingLeft:normalize(20)}}/>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('FindOrder') }>
+                                            <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#54D871', alignItems:'center', justifyContent:'center'}}>
+                                                <Image source={box_time} style={{width:normalize(60), height:normalize(60)}}/>
+                                            </View>
+                                            <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Lacak {"\n"} Pesanan</Text>
                                         </TouchableOpacity>
                                         <View style={{paddingLeft:normalize(20)}}/>
                                         <TouchableOpacity>
-                                            <View style={{width:normalize(70), height:normalize(70), backgroundColor:'#54D871'}}>
-
+                                            <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#C3B257', alignItems:'center', justifyContent:'center'}}>
+                                                <Image source={invoice} style={{width:normalize(60), height:normalize(60)}}/>
                                             </View>
-                                        </TouchableOpacity>
-                                        <View style={{paddingLeft:normalize(20)}}/>
-                                        <TouchableOpacity>
-                                            <View style={{width:normalize(70), height:normalize(70), backgroundColor:'#C3B257'}}>
-
-                                            </View>
+                                            <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Invoice {"\n"}</Text>
                                         </TouchableOpacity>
                                     </View>
 
                                     <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', paddingTop:normalize(20)}}>
                                         <TouchableOpacity>
-                                            <View style={{width:normalize(70), height:normalize(70), backgroundColor:'#E78181'}}>
-
+                                            <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#E78181', alignItems:'center', justifyContent:'center'}}>
+                                                <Image source={profile} style={{width:normalize(60), height:normalize(60)}}/>
                                             </View>
+                                            <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Profil</Text>
                                         </TouchableOpacity>
                                         <View style={{paddingLeft:normalize(20)}}/>
                                         <TouchableOpacity>
-                                            <View style={{width:normalize(70), height:normalize(70), backgroundColor:'#B4B4B4'}}>
+                                            <View style={{width:normalize(70), height:normalize(70), backgroundColor:'white'}}>
 
                                             </View>
                                         </TouchableOpacity>
@@ -81,7 +85,7 @@ export default class HomeScreen extends Component{
                                     </View>
 
                                     {/* Button */}
-                                    <View style={{paddingTop:normalize(290)}}>
+                                    <View style={{paddingTop:normalize(250)}}>
                                         <Button onPress={() => navigation.navigate('Login')} full style={{backgroundColor:'#F44444', borderRadius:10, height:normalize(40)}}>
                                             <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center', fontWeight:'bold'}}>KELUAR</Text>
                                         </Button>
