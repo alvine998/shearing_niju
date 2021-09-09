@@ -15,6 +15,7 @@ import FindOrder from './src/pages/FindOrder';
 import Invoice from './src/pages/Invoice';
 import AvailInvoice from './src/pages/Invoice/AvailInvoice';
 import Profiles from './src/pages/Profiles';
+import Dashboard from './src/pages/Admin/Dashboard';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,9 @@ const Stack = createStackNavigator();
           <Stack.Screen name="AvailInvoice" component={AvailInvoice} options={{headerShown: false}} />
           {/* Profil */}
           <Stack.Screen name="Profiles" component={Profiles} options={{headerShown: false}} />
+
+          {/* Admin NIJU */}
+          <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
       // <View>

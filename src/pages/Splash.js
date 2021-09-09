@@ -30,7 +30,7 @@ export default class Splash extends Component {
               source={nijulogo}
               style={{width: normalize(150), height: normalize(150)}}
             />
-            <Text>NIJU - SHEARING METAL PLATE</Text>
+            <Text style={{fontFamily:'RedHatDisplay-Regular', fontWeight:'bold', fontSize:normalize(24), color:'white', textAlign:'center'}}>NIJU {"\n"} SHEARING METAL PLATE</Text>
           </View>
         </View>
       </View>

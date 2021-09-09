@@ -11,10 +11,17 @@ import profile from './icons/profile.png'
 import settings from './icons/settings.png'
 import waitings from './images/waiting.png'
 import emptys from './images/empty.png'
-
+import mailing from './icons/mail.png'
+import reports from './icons/reports.png'
+import progress from './icons/progress.png'
+import checksheet from './icons/checksheet.png'
 
 export {
     success,
+    checksheet,
+    progress,
+    reports,
+    mailing,
     emptys,
     waitings,
     box_add,

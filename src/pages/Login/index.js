@@ -34,8 +34,8 @@ export default class Login extends Component{
                     <View style={{alignItems:'center', justifyContent:'center', paddingTop:normalize(50)}}>
                         <Image source={nijulogo} style={{height:normalize(120), width:normalize(120)}} />
                         <View style={{padding:normalize(10)}}>
-                            <Text style={{color:'white', fontSize:normalize(30), fontWeight:'bold', textAlign:'center'}}>NIJU</Text>
-                            <Text style={{color:'white', fontSize:normalize(20)}}>Shearing Metal Plate</Text>
+                            <Text style={{color:'white', fontSize:normalize(30), fontWeight:'bold', textAlign:'center', fontFamily:'RedHatDisplay-Bold'}}>NIJU</Text>
+                            <Text style={{color:'white', fontSize:normalize(20), fontFamily:'RedHatDisplay-Bold'}}>Shearing Metal Plate</Text>
                         </View>
                         <View style={{padding:normalize(20)}}>
                             {/* <View style={{borderWidth:1, backgroundColor:'white', width:normalize(250),borderColor:'white', height:normalize(40), borderRadius:10, paddingTop:normalize(-10)}}>
@@ -53,7 +53,6 @@ export default class Login extends Component{
                                     onChange={this.handleEmail}
                                 />
                             </View>
-                            <View style={{padding:normalize(10)}} />
                             <View>
                                 <TextInput
                                     placeholder="Password"
@@ -73,13 +72,18 @@ export default class Login extends Component{
                         </View>
                         <View>
                             <Button full onPress={() => this.props.navigation.navigate('Home')}  style={{width:normalize(250), height:normalize(40), borderRadius:10, backgroundColor:'#56FF1B'}}>
-                                <Text style={{color:'white', fontFamily:'RedHatDisplay-Regular', textAlign:'center'}}>Masuk</Text>
+                                <Text style={{color:'white', fontFamily:'RedHatDisplay-Regular', textAlign:'center'}}>Masuk Customer</Text>
+                            </Button>
+                        </View>
+                        <View style={{paddingTop:normalize(10)}}>
+                            <Button full onPress={() => this.props.navigation.navigate('Dashboard')}  style={{width:normalize(250), height:normalize(40), borderRadius:10, backgroundColor:'#56FF1B'}}>
+                                <Text style={{color:'white', fontFamily:'RedHatDisplay-Regular', textAlign:'center'}}>Masuk Admin</Text>
                             </Button>
                         </View>
                         <View style={{flexDirection:'row', paddingTop:normalize(50)}}>
-                            <Text style={{textAlign:'right', color:'black'}}>Belum Punya Akun ? </Text>
+                            <Text style={{textAlign:'right', color:'black', fontFamily:'RedHatDisplay-Regular'}}>Belum Punya Akun ? </Text>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('Registrasi')} >
-                            <Text style={{textAlign:'right', color:'#003499'}}>Daftar Disini</Text>
+                            <Text style={{textAlign:'right', color:'#003499', fontFamily:'RedHatDisplay-Regular'}}>Daftar Disini</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
