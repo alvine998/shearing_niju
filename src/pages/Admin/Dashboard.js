@@ -34,7 +34,7 @@ export default class Dashboard extends Component{
                     </ScrollView>
 
                     <View style={{paddingTop:normalize(20)}}>
-                        <View style={{height:normalize(650), backgroundColor:'white', borderTopRightRadius:20, borderTopLeftRadius:20}}>
+                        <View style={{height:normalize(620), backgroundColor:'white', borderTopRightRadius:20, borderTopLeftRadius:20}}>
                             <View style={{alignItems:'center', justifyContent:'center', paddingTop:normalize(10)}}>
                                 <View style={{backgroundColor:'#808080', height:normalize(10), width:normalize(250), borderRadius:10}}/>
                                 <View style={{paddingTop:normalize(20)}}>
@@ -69,7 +69,7 @@ export default class Dashboard extends Component{
                                     </View>
 
                                     <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', paddingTop:normalize(20)}}>
-                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Profiles')}>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('BuatInvoice')}>
                                             <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#E78181', alignItems:'center', justifyContent:'center'}}>
                                                 <Image source={invoice} style={{width:normalize(60), height:normalize(60)}}/>
                                             </View>
@@ -77,10 +77,10 @@ export default class Dashboard extends Component{
                                         </TouchableOpacity>
                                         <View style={{paddingLeft:normalize(20)}}/>
                                         <TouchableOpacity>
-                                            <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#6D7AF2', alignItems:'center', justifyContent:'center'}}>
-                                                <Image source={checksheet} style={{width:normalize(60), height:normalize(60)}}/>
+                                            <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#fff', alignItems:'center', justifyContent:'center'}}>
+                                                {/* <Image source={checksheet} style={{width:normalize(60), height:normalize(60)}}/> */}
                                             </View>
-                                            <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Quality{"\n"}Check</Text>
+                                            {/* <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Quality{"\n"}Check</Text> */}
                                         </TouchableOpacity>
                                         <View style={{paddingLeft:normalize(20)}}/>
                                         <TouchableOpacity>
@@ -91,7 +91,7 @@ export default class Dashboard extends Component{
                                     </View>
 
                                     {/* Button */}
-                                    <View style={{paddingTop:normalize(250)}}>
+                                    <View style={{paddingTop:normalize(230)}}>
                                         <Button onPress={() => navigation.navigate('Login')} full style={{backgroundColor:'#F44444', borderRadius:10, height:normalize(40)}}>
                                             <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center', fontWeight:'bold'}}>KELUAR</Text>
                                         </Button>

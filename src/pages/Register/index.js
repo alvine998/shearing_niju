@@ -108,7 +108,7 @@ export default class Registrasi extends Component{
                                     {/* <Icon type={"FontAwesome5"} name="eye-slash" style={{color:'#dfdfdf'}} /> */}
                             </View>
                             <View>
-                                <Button onPress={() => this.props.navigation.navigate('Login')} full success style={{width:normalize(100), height:normalize(40), borderRadius:10, backgroundColor:'#56FF1B'}}>
+                                <Button onPress={() => this.props.navigation.navigate('Login')} full success style={{width:normalize(100), height:normalize(40), borderRadius:10}}>
                                     <Text style={{color:'white'}}>Daftar</Text>
                                 </Button>
                             </View>

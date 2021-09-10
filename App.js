@@ -21,6 +21,7 @@ import IsiKotakMasuk from './src/pages/Admin/IsiKotakMasuk';
 import BuatLaporan from './src/pages/Admin/BuatLaporan';
 import AturProgress from './src/pages/Admin/AturProgress';
 import CustomerProgress from './src/pages/Admin/CustomerProgress';
+import BuatInvoice from './src/pages/Admin/BuatInvoice';
 
 const Stack = createStackNavigator();
 
@@ -55,6 +56,8 @@ const Stack = createStackNavigator();
           {/* Atur Progress */}
           <Stack.Screen name="AturProgress" component={AturProgress} options={{headerShown: false}} />
           <Stack.Screen name="CustomerProgress" component={CustomerProgress} options={{headerShown: false}} />
+          {/* Buat Invoice */}
+          <Stack.Screen name="BuatInvoice" component={BuatInvoice} options={{headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
       // <View>

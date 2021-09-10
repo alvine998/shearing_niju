@@ -30,18 +30,9 @@ export default class IsiKotakMasuk extends Component{
                             <Text style={{fontFamily:'RedHatDisplay-Regular'}} >1. Order Id :</Text>
                             <Text style={{fontFamily:'RedHatDisplay-Regular'}} >2. Nama :</Text>
                             <Text style={{fontFamily:'RedHatDisplay-Regular'}} >3. Nama Perusahaan :</Text>
-                            <Text style={{fontFamily:'RedHatDisplay-Regular'}} >4. Alamat Perusahaan :</Text>
-                            <Text style={{fontFamily:'RedHatDisplay-Regular'}} >5. Kebutuhan Perusahaan :</Text>
-                            <Text style={{fontFamily:'RedHatDisplay-Regular'}} ></Text>
-                            <Text style={{fontFamily:'RedHatDisplay-Regular'}} ></Text>
-                            <Text style={{fontFamily:'RedHatDisplay-Regular'}} >6. Detail Order :</Text>
-                            <Text style={{fontFamily:'RedHatDisplay-Regular'}} ></Text>
-                            <Text style={{fontFamily:'RedHatDisplay-Regular'}} ></Text>
-                            <Text style={{fontFamily:'RedHatDisplay-Regular'}} ></Text>
-                            <Text style={{fontFamily:'RedHatDisplay-Regular'}} ></Text>
-                            <Text style={{fontFamily:'RedHatDisplay-Regular'}} ></Text>
-                            <Text style={{fontFamily:'RedHatDisplay-Regular'}} ></Text>
-                            <Text style={{fontFamily:'RedHatDisplay-Regular'}} ></Text>
+                            <Text style={{fontFamily:'RedHatDisplay-Regular'}} >4. Alamat Perusahaan : {"\n"}</Text>
+                            <Text style={{fontFamily:'RedHatDisplay-Regular'}} >5. Kebutuhan Perusahaan :{"\n"}{"\n"}</Text>
+                            <Text style={{fontFamily:'RedHatDisplay-Regular'}} >6. Detail Order :{"\n"}{"\n"}{"\n"}{"\n"}</Text>
 
                             <Button onPress={() => this.props.navigation.navigate('KotakMasuk')} full style={{backgroundColor:'#73A3EC', height:normalize(40), borderRadius:10}} >
                                 <Text style={{fontFamily:'RedHatDisplay-Regular', color:'white'}} >Terima</Text>

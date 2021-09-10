@@ -1,6 +1,8 @@
+import { shallowEqual } from "@babel/types";
 import { Button } from "native-base";
 import React, {Component} from "react";
 import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import Modal from "react-native-modalbox";
 import normalize from "react-native-normalize";
 import { box_time } from "../../assets";
 
@@ -10,6 +12,11 @@ export default class FindOrder extends Component{
         this.state={
 
         };
+        this.show = React.createRef();
+    }
+
+    showModal(){
+        this.show.open(true)
     }
 
     render(){
@@ -38,7 +45,7 @@ export default class FindOrder extends Component{
                         </TouchableOpacity>
 
                         {/* Ball 2 */}
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => Alert.alert("Kirim Material ke Alamat Ini : https://g.page/PT-Nusa-indah?share")}>
                             <View style={{paddingTop:normalize(20), paddingLeft:normalize(50), paddingRight:normalize(50), flexDirection:'row'}}>
                                 <View style={{height:normalize(60), width:normalize(60), borderRadius:30, backgroundColor:'#B1B1B1', alignItems:'center', justifyContent:'center'}}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), color:'white'}}>2</Text>
@@ -80,7 +87,7 @@ export default class FindOrder extends Component{
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), color:'white'}}>5</Text>
                                 </View>
                                 <View style={{alignItems:'center', justifyContent:'center', paddingLeft:normalize(10)}}>
-                                    <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(24), color:'white'}}>Pesanan Selesai</Text>
+                                    <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(24), color:'white'}}>Pembayaran</Text>
                                 </View>
                             </View>
                         </TouchableOpacity>
@@ -90,18 +97,6 @@ export default class FindOrder extends Component{
                             <View style={{paddingTop:normalize(20), paddingLeft:normalize(50), paddingRight:normalize(50), flexDirection:'row'}}>
                                 <View style={{height:normalize(60), width:normalize(60), borderRadius:30, backgroundColor:'#B1B1B1', alignItems:'center', justifyContent:'center'}}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), color:'white'}}>6</Text>
-                                </View>
-                                <View style={{alignItems:'center', justifyContent:'center', paddingLeft:normalize(10)}}>
-                                    <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(24), color:'white'}}>Pembayaran</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-
-                        {/* Ball 7 */}
-                        <TouchableOpacity>
-                            <View style={{paddingTop:normalize(20), paddingLeft:normalize(50), paddingRight:normalize(50), flexDirection:'row'}}>
-                                <View style={{height:normalize(60), width:normalize(60), borderRadius:30, backgroundColor:'#B1B1B1', alignItems:'center', justifyContent:'center'}}>
-                                    <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), color:'white'}}>7</Text>
                                 </View>
                                 <View style={{alignItems:'center', justifyContent:'center', paddingLeft:normalize(10)}}>
                                     <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(24), color:'white'}}>Pengiriman Pesanan</Text>
