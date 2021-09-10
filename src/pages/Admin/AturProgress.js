@@ -29,7 +29,7 @@ export default class AturProgress extends Component{
                             <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), textAlign:'center', paddingTop:normalize(10)}}>Customer On Progress</Text>
                             <ScrollView style={{padding:normalize(20), paddingLeft:normalize(30), paddingRight:normalize(30)}}>
                                 <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerProgress')}>
                                         <View style={{height:normalize(70), width:normalize(70), backgroundColor:'#dfdfdf'}}>
                                         <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(20), textAlign:'center', paddingTop:normalize(20)}}>C001</Text>
                                         </View>
