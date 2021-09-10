@@ -71,12 +71,12 @@ export default class Login extends Component{
                             </TouchableOpacity> */}
                         </View>
                         <View>
-                            <Button full onPress={() => this.props.navigation.navigate('Home')}  style={{width:normalize(250), height:normalize(40), borderRadius:10, backgroundColor:'#56FF1B'}}>
+                            <Button full success onPress={() => this.props.navigation.navigate('Home')}  style={{width:normalize(250), height:normalize(40), borderRadius:10}}>
                                 <Text style={{color:'white', fontFamily:'RedHatDisplay-Regular', textAlign:'center'}}>Masuk Customer</Text>
                             </Button>
                         </View>
                         <View style={{paddingTop:normalize(10)}}>
-                            <Button full onPress={() => this.props.navigation.navigate('Dashboard')}  style={{width:normalize(250), height:normalize(40), borderRadius:10, backgroundColor:'#56FF1B'}}>
+                            <Button full success onPress={() => this.props.navigation.navigate('Dashboard')}  style={{width:normalize(250), height:normalize(40), borderRadius:10}}>
                                 <Text style={{color:'white', fontFamily:'RedHatDisplay-Regular', textAlign:'center'}}>Masuk Admin</Text>
                             </Button>
                         </View>

@@ -53,14 +53,14 @@ export default class Dashboard extends Component{
                                             <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Kotak{"\n"}Masuk</Text>
                                         </TouchableOpacity>
                                         <View style={{paddingLeft:normalize(20)}}/>
-                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('FindOrder') }>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('BuatLaporan') }>
                                             <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#54D871', alignItems:'center', justifyContent:'center'}}>
                                                 <Image source={reports} style={{width:normalize(60), height:normalize(60)}}/>
                                             </View>
                                             <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Buat{"\n"}Laporan</Text>
                                         </TouchableOpacity>
                                         <View style={{paddingLeft:normalize(20)}}/>
-                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Invoice')}>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AturProgress')}>
                                             <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#C3B257', alignItems:'center', justifyContent:'center'}}>
                                                 <Image source={progress} style={{width:normalize(60), height:normalize(60)}}/>
                                             </View>

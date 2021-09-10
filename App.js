@@ -18,6 +18,8 @@ import Profiles from './src/pages/Profiles';
 import Dashboard from './src/pages/Admin/Dashboard';
 import KotakMasuk from './src/pages/Admin/KotakMasuk';
 import IsiKotakMasuk from './src/pages/Admin/IsiKotakMasuk';
+import BuatLaporan from './src/pages/Admin/BuatLaporan';
+import AturProgress from './src/pages/Admin/AturProgress';
 
 const Stack = createStackNavigator();
 
@@ -47,6 +49,10 @@ const Stack = createStackNavigator();
           {/* Kotak Masuk */}
           <Stack.Screen name="KotakMasuk" component={KotakMasuk} options={{headerShown: false}} />
           <Stack.Screen name="IsiKotakMasuk" component={IsiKotakMasuk} options={{headerShown: false}} />
+          {/* Buat Laporan */}
+          <Stack.Screen name="BuatLaporan" component={BuatLaporan} options={{headerShown: false}} />
+          {/* Atur Progress */}
+          <Stack.Screen name="AturProgress" component={AturProgress} options={{headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
       // <View>
