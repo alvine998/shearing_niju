@@ -41,7 +41,7 @@ export default class Dashboard extends Component{
                                     <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(24), textAlign:'center'}}>DASHBOARD MENU</Text>
 
                                     <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', paddingTop:normalize(20)}}>
-                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Order')}>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('KotakMasuk')}>
                                             <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#6D7AF2', alignItems:'center', justifyContent:'center'}}>
                                                 <ImageBackground source={mailing} style={{width:normalize(50), height:normalize(40), flexDirection:'row'}}>
                                                     <Right/>

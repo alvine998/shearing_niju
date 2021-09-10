@@ -16,6 +16,8 @@ import Invoice from './src/pages/Invoice';
 import AvailInvoice from './src/pages/Invoice/AvailInvoice';
 import Profiles from './src/pages/Profiles';
 import Dashboard from './src/pages/Admin/Dashboard';
+import KotakMasuk from './src/pages/Admin/KotakMasuk';
+import IsiKotakMasuk from './src/pages/Admin/IsiKotakMasuk';
 
 const Stack = createStackNavigator();
 
@@ -42,6 +44,9 @@ const Stack = createStackNavigator();
 
           {/* Admin NIJU */}
           <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown: false}} />
+          {/* Kotak Masuk */}
+          <Stack.Screen name="KotakMasuk" component={KotakMasuk} options={{headerShown: false}} />
+          <Stack.Screen name="IsiKotakMasuk" component={IsiKotakMasuk} options={{headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
       // <View>
