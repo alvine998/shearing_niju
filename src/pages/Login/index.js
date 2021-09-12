@@ -1,6 +1,6 @@
 import { Button, Icon, Right } from 'native-base';
 import React, { Component } from 'react';
-import { Dimensions, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Dimensions, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import normalize from 'react-native-normalize';
 import { nijulogo } from '../../assets';
 
@@ -71,7 +71,7 @@ export default class Login extends Component{
                             </TouchableOpacity> */}
                         </View>
                         <View>
-                            <Button full success onPress={() => this.props.navigation.navigate('Home')}  style={{width:normalize(250), height:normalize(40), borderRadius:10}}>
+                            <Button full success onPress={async () => this.state.email = "alvine@gmail.com" && this.state.password == 1234 ? this.props.navigation.navigate('Home') : Alert.alert("Usename atau Password Salah")}  style={{width:normalize(250), height:normalize(40), borderRadius:10}}>
                                 <Text style={{color:'white', fontFamily:'RedHatDisplay-Regular', textAlign:'center'}}>Masuk Customer</Text>
                             </Button>
                         </View>

@@ -1,6 +1,7 @@
+import axios from 'axios';
 import { Button } from 'native-base';
 import React, { Component } from 'react'
-import { Dimensions, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Dimensions, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import normalize from 'react-native-normalize';
 import { nijulogo } from '../../assets';
 
@@ -36,11 +37,43 @@ export default class Registrasi extends Component{
         this.setState({phone: event})
     }
 
+    componentDidMount(){
+        axios.get('http://10.0.3.2:3000/customers')
+        .then(res => {
+            const collection = res.data;
+            console.log(collection);
+            this.setState({collection});
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    onSubmit(){
+        const custObject = {
+            nama: this.state.name,
+            email: this.state.email,
+            nohp: this.state.phone,
+            password: this.state.password
+        };
+        console.log('hello ',custObject) 
+        axios.post('http://10.0.3.2:3000/customers/', custObject)
+            .then(res => 
+                {
+                console.log(res.data)
+                Alert.alert('Berhasil Daftar')
+                this.setState({name: '', email:'', phone:'', password:''})
+                }
+                );
+        // this.props.navigation.navigate('Login')
+    }
+
 
     render(){
+        const {collection} = this.state;
         const screenheight = Dimensions.get('window').height;
         return(
-            <View style={{backgroundColor:'#73A3EC', height: 'auto', maxHeight: screenheight}}>
+            <View style={{backgroundColor:'#73A3EC', height: '100%', maxHeight: screenheight}}>
                 <ScrollView>
                     <View  style={{alignItems:'center', justifyContent:'center', paddingTop:normalize(50), paddingBottom:normalize(50)}}>
                         <Image source={nijulogo} style={{height:normalize(120), width:normalize(120)}} />
@@ -48,6 +81,8 @@ export default class Registrasi extends Component{
                                 <Text style={{color:'white', fontSize:normalize(30), fontWeight:'bold', textAlign:'center'}}>NIJU</Text>
                                 <Text style={{color:'white', fontSize:normalize(20)}}>Shearing Metal Plate</Text>
                             </View>
+
+                            {collection.map(user => <Text>{user.email}</Text>)}
 
                             <View style={{padding:normalize(20)}}>
                                     <TextInput
@@ -59,7 +94,7 @@ export default class Registrasi extends Component{
                                         }}
                                         underlineColorAndroid="white"
                                         value={this.state.name}
-                                        onChange={this.handleName}
+                                        onChangeText={this.handleName}
                                     />
                                 <View style={{padding:normalize(10)}} />
                                     <TextInput
@@ -71,7 +106,7 @@ export default class Registrasi extends Component{
                                         }}
                                         underlineColorAndroid="white"
                                         value={this.state.phone}
-                                        onChange={this.handlePhone}
+                                        onChangeText={this.handlePhone}
                                         keyboardType="number-pad"
                                         maxLength={13}
                                     />
@@ -89,7 +124,7 @@ export default class Registrasi extends Component{
                                         }}
                                         underlineColorAndroid="white"
                                         value={this.state.email}
-                                        onChange={this.handleEmail}
+                                        onChangeText={this.handleEmail}
                                     />
                                 </View>
                                 <View style={{padding:normalize(10)}} />
@@ -103,12 +138,12 @@ export default class Registrasi extends Component{
                                         }}
                                         underlineColorAndroid="white"
                                         value={this.state.password}
-                                        onChange={this.handlePass}
+                                        onChangeText={this.handlePass}
                                     />
                                     {/* <Icon type={"FontAwesome5"} name="eye-slash" style={{color:'#dfdfdf'}} /> */}
                             </View>
                             <View>
-                                <Button onPress={() => this.props.navigation.navigate('Login')} full success style={{width:normalize(100), height:normalize(40), borderRadius:10}}>
+                                <Button onPress={() => this.onSubmit()} full success style={{width:normalize(100), height:normalize(40), borderRadius:10}}>
                                     <Text style={{color:'white'}}>Daftar</Text>
                                 </Button>
                             </View>
