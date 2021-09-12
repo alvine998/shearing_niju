@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Button, Icon, Right } from 'native-base';
 import React, { Component } from 'react';
 import { Alert, Dimensions, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -22,6 +23,27 @@ export default class Login extends Component{
 
     handlePass = (event) => {
         this.setState({password: event})
+    }
+
+    componentDidMount(){
+        
+    }
+
+    onLogin(){
+        const authOk = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        axios.post('http://10.0.3.2:3000/customers/login', authOk)
+        .then(res => {
+            console.log(res.data);
+            Alert.alert("Login Sukses");
+            this.props.navigation.navigate('Home')
+        })   
+        .catch(err => {
+            console.log(err);
+            Alert.alert("Username atau Password Salah")
+        })     
     }
 
     render(){
@@ -50,7 +72,7 @@ export default class Login extends Component{
                                     }}
                                     underlineColorAndroid="white"
                                     value={this.state.email}
-                                    onChange={this.handleEmail}
+                                    onChangeText={this.handleEmail}
                                 />
                             </View>
                             <View>
@@ -63,7 +85,7 @@ export default class Login extends Component{
                                     underlineColorAndroid="white"
                                     secureTextEntry={true}
                                     value={this.state.password}
-                                    onChange={this.handlePass}
+                                    onChangeText={this.handlePass}
                                 />
                             </View>
                             {/* <TouchableOpacity style={{paddingTop:normalize(5)}}>
@@ -71,7 +93,7 @@ export default class Login extends Component{
                             </TouchableOpacity> */}
                         </View>
                         <View>
-                            <Button full success onPress={async () => this.state.email = "alvine@gmail.com" && this.state.password == 1234 ? this.props.navigation.navigate('Home') : Alert.alert("Usename atau Password Salah")}  style={{width:normalize(250), height:normalize(40), borderRadius:10}}>
+                            <Button full success onPress={() => this.onLogin()}  style={{width:normalize(250), height:normalize(40), borderRadius:10}}>
                                 <Text style={{color:'white', fontFamily:'RedHatDisplay-Regular', textAlign:'center'}}>Masuk Customer</Text>
                             </Button>
                         </View>

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Body, Button, ListItem } from "native-base";
 import React, {Component} from "react";
 import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
@@ -8,11 +9,31 @@ export default class Profiles extends Component{
     constructor(props){
         super(props);
         this.state={
+            name:'',
+            email:'',
+            phone:'',
+            password:'',
             collection:[],
         };
     }
 
+    componentDidMount(){
+        axios.get('http://10.0.3.2:3000/customers')
+        .then(res => {
+            const collection = res.data;
+            console.log(collection);
+            this.setState({collection});
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    // {collection.map(user => <Text>{user.email}</Text>)}
+
+
     render(){
+        const {collection} = this.state;
         return(
             <View style={{backgroundColor:'#73A3EC', height:'100%'}}>
                 <View style={{backgroundColor:'white', borderBottomLeftRadius:50, borderBottomRightRadius:50, height:normalize(120)}}>

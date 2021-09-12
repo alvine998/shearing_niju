@@ -81,9 +81,6 @@ export default class Registrasi extends Component{
                                 <Text style={{color:'white', fontSize:normalize(30), fontWeight:'bold', textAlign:'center'}}>NIJU</Text>
                                 <Text style={{color:'white', fontSize:normalize(20)}}>Shearing Metal Plate</Text>
                             </View>
-
-                            {collection.map(user => <Text>{user.email}</Text>)}
-
                             <View style={{padding:normalize(20)}}>
                                     <TextInput
                                         placeholder="Nama"
