@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Image, View, Text} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage} from '@react-native-async-storage/async-storage';
 import {StackActions} from '@react-navigation/native';
 import normalize from 'react-native-normalize';
 import {nijulogo} from '../assets';
@@ -12,19 +12,23 @@ export default class Splash extends Component {
   }
 
   componentDidMount() {
-    const validasiSession = async () => {
-      const isLogin = await AsyncStorage.getItem('session_id')
-      if(isLogin){
-        setTimeout(() => {
-          this.props.navigation.dispatch(StackActions.replace('Home'));
-        }, 1500);
-      } else {
-        setTimeout(() => {
-          this.props.navigation.dispatch(StackActions.replace('Login'));
-        }, 3000);
-      }
-    }    
-    validasiSession(); 
+    // const validasiSession = async () => {
+    //   const isLogin = await AsyncStorage.getItem('session_id')
+    //   if(isLogin){
+    //     setTimeout(() => {
+    //       this.props.navigation.dispatch(StackActions.replace('Home'));
+    //     }, 1500);
+    //   } else {
+    //     setTimeout(() => {
+    //       this.props.navigation.dispatch(StackActions.replace('Login'));
+    //     }, 3000);
+    //   }
+    // }    
+    // validasiSession(); 
+
+    setTimeout(() => {
+      this.props.navigation.dispatch(StackActions.replace('Login'));
+    }, 1000);
   }
 
   render() {

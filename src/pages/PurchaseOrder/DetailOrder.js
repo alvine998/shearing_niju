@@ -46,7 +46,7 @@ export default class DetailOrder extends Component{
             total_harga: this.state.totalharga
         }
         console.log('hey', details)
-        axios.post('http://10.0.3.2:3000/detorders/', details)
+        axios.post('http://10.0.2.2:3000/detorders/', details)
         .then(res => {
             console.log(res.data);
             Alert.alert("Data berhasil ditambah");

@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import { Button, Icon, Right } from 'native-base';
 import React, { Component } from 'react';
@@ -29,16 +30,27 @@ export default class Login extends Component{
         
     }
 
+    storeData = async () => {
+        try{
+            await AsyncStorage.setItem('email', this.state.email)
+            Alert.alert('Data Async', this.state.email)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     onLogin(){
         const authOk = {
             email: this.state.email,
             password: this.state.password
         }
-        axios.post('http://10.0.3.2:3000/customers/login/', authOk)
+
+        axios.post('http://10.0.2.2:3000/customers/login/', authOk)
         .then(res => {
             console.log(res.data);
             Alert.alert("Login Sukses");
-                this.props.navigation.navigate('Home')   
+            this.storeData();
+            this.props.navigation.navigate('Home')   
         })   
         .catch(err => {
             if(this.state.email = 'alfi@gmail.com' && this.state.password == 12345678){

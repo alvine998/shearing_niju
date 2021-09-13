@@ -57,12 +57,13 @@ export default class Registrasi extends Component{
             password: this.state.password
         };
         console.log('hello ',custObject) 
-        axios.post('http://10.0.3.2:3000/customers/', custObject)
+        axios.post('http://10.0.2.2:3000/customers/', custObject)
             .then(res => 
                 {
                 console.log(res.data)
                 Alert.alert('Berhasil Daftar')
                 this.setState({name: '', email:'', phone:'', password:''})
+                this.props.navigation.navigate('Login')
                 }
                 );
         // this.props.navigation.navigate('Login')

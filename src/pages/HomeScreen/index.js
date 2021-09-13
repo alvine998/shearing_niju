@@ -1,19 +1,31 @@
 import { Body, Button, Header, Icon, Left, Right, Title } from 'native-base'
 import React, { Component } from 'react'
-import {Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import {Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import normalize from 'react-native-normalize'
 import { box_add, box_time, invoice, logistics, nijulogo, profile, quality, settings, worker } from '../../assets'
+import Login from '../Login'
 
 export default class HomeScreen extends Component{
     constructor(props){
         super(props);
         this.state={
-
+            email:'',
         }
     }
 
+    getData = async () => {
+        try {
+          await AsyncStorage.getItem('email')
+            Alert.alert(email)
+        } catch(e) {
+          // error reading value
+          console.log(e)
+        }
+      }
+
     _logout = async () => {
+        this.getData();
         await AsyncStorage.clear();
         this.props.navigation.navigate('Login')
     }
@@ -44,6 +56,8 @@ export default class HomeScreen extends Component{
                             <Image source={logistics} style={{width:normalize(370), height:normalize(270)}}/>
                         </View>
                     </ScrollView>
+
+                    <Text>{this.getData}</Text>
 
                     <View style={{paddingTop:normalize(20)}}>
                         <View style={{height:normalize(650), backgroundColor:'white', borderTopRightRadius:20, borderTopLeftRadius:20}}>

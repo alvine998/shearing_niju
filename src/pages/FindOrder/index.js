@@ -27,7 +27,7 @@ export default class FindOrder extends Component{
                         <View style={{width:normalize(70),borderRadius:10, height:normalize(70), backgroundColor:'#54D871', alignItems:'center', justifyContent:'center'}}>
                             <Image source={box_time} style={{width:normalize(60), height:normalize(60)}}/>
                         </View>
-                        <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), paddingLeft:normalize(10)}}>Lacak Pengiriman</Text>
+                        <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), paddingLeft:normalize(10)}}>Lacak Pesanan</Text>
                     </View>
                 </View>
                 <ScrollView>
@@ -57,7 +57,7 @@ export default class FindOrder extends Component{
                         </TouchableOpacity>
 
                         {/* Ball 3 */}
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => Alert.alert("Working Instruction Belum Dikirim")}>
                             <View style={{paddingTop:normalize(20), paddingLeft:normalize(50), paddingRight:normalize(50), flexDirection:'row'}}>
                                 <View style={{height:normalize(60), width:normalize(60), borderRadius:30, backgroundColor:'#B1B1B1', alignItems:'center', justifyContent:'center'}}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), color:'white'}}>3</Text>
