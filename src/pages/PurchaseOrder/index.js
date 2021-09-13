@@ -8,8 +8,17 @@ export default class PurchaseOrder extends Component{
     constructor(props){
         super(props);
         this.state={
-
+            namapt:"",
+            alamatpt:""
         };
+    }
+
+    handleNamaPt(event){
+        this.setState({namapt: event})
+    }
+
+    handleAlamatPt(event){
+        this.setState({alamatpt: event})
     }
 
     render(){
@@ -40,6 +49,8 @@ export default class PurchaseOrder extends Component{
                                 color:'white'
                             }}
                             underlineColorAndroid="white"
+                            value={this.state.namapt}
+                            onChangeText={this.handleNamaPt.bind(this)}
                             />
                         </View>
                         <View>
@@ -51,11 +62,13 @@ export default class PurchaseOrder extends Component{
                                 color:'white'
                             }}
                             underlineColorAndroid="white"
+                            value={this.state.alamatpt}
+                            onChangeText={this.handleAlamatPt.bind(this)}
                             />
                         </View>
                         <View style={{flexDirection:'row', paddingTop:normalize(10)}}>
                             <Left>
-                                <Button onPress={() => this.props.navigation.navigate('DetailOrder')} style={{backgroundColor:'#003499', height:normalize(40), width:normalize(100), marginLeft:normalize(40)}}>
+                                <Button onPress={() => this.props.navigation.navigate('DetailOrder')} style={{backgroundColor:'#003499', height:normalize(40), width:normalize(120), marginLeft:normalize(40)}}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(16),color:'white', paddingLeft:normalize(10), textAlign:'left'}}>Tambah Data</Text>
                                 </Button>
                             </Left>

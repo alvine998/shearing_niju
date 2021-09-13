@@ -1,10 +1,22 @@
 import { Body, Button, Header, Icon, Left, Right, Title } from 'native-base'
 import React, { Component } from 'react'
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import {Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import normalize from 'react-native-normalize'
 import { box_add, box_time, invoice, logistics, nijulogo, profile, quality, settings, worker } from '../../assets'
 
 export default class HomeScreen extends Component{
+    constructor(props){
+        super(props);
+        this.state={
+
+        }
+    }
+
+    _logout = async () => {
+        await AsyncStorage.clear();
+        this.props.navigation.navigate('Login')
+    }
     render(){
         const navigation = this.props.navigation;
         return(
@@ -86,7 +98,7 @@ export default class HomeScreen extends Component{
 
                                     {/* Button */}
                                     <View style={{paddingTop:normalize(250)}}>
-                                        <Button onPress={() => navigation.navigate('Login')} full style={{backgroundColor:'#F44444', borderRadius:10, height:normalize(40)}}>
+                                        <Button onPress={() => this._logout()} full style={{backgroundColor:'#F44444', borderRadius:10, height:normalize(40)}}>
                                             <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center', fontWeight:'bold'}}>KELUAR</Text>
                                         </Button>
                                     </View>

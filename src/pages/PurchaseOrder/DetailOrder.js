@@ -1,6 +1,7 @@
+import axios from "axios";
 import { Body, Button, Left } from "native-base";
 import React, { Component } from "react";
-import { Image, ScrollView, Text, TextInput, View, TouchableOpacity } from "react-native";
+import { Image, ScrollView, Text, TextInput, View, TouchableOpacity, Alert } from "react-native";
 import normalize from "react-native-normalize";
 import { box_add } from "../../assets";
 
@@ -8,8 +9,49 @@ export default class DetailOrder extends Component{
     constructor(props){
         super(props);
         this.state={
-
+            namaMaterial:'',
+            jumlahMaterial:'',
+            hargaSatuan:'',
+            totalharga:''
         };
+    }
+
+    handleNamaMaterial(event){
+        this.setState({namaMaterial: event})
+    }
+
+
+    handleJumlahMaterial(event){
+        this.setState({jumlahMaterial: event})
+    }
+
+    handleHargaSatuan(event){
+        this.setState({hargaSatuan: event})
+    }
+    
+    
+    onSubmit = () => {
+        const total = this.state.hargaSatuan * this.state.jumlahMaterial;
+        // this.setState({totalharga : total})
+        this.setState((prevState) => ({
+            totalharga: prevState.totalharga + total
+        }))
+    }
+
+    onAdd = () => {
+        const details = {
+            nama_item: this.state.namaMaterial,
+            jumlah_item: this.state.jumlahMaterial,
+            harga_satuan: this.state.hargaSatuan,
+            total_harga: this.state.totalharga
+        }
+        console.log('hey', details)
+        axios.post('http://10.0.3.2:3000/detorders/', details)
+        .then(res => {
+            console.log(res.data);
+            Alert.alert("Data berhasil ditambah");
+            this.setState({namaMaterial:'', jumlahMaterial:'', hargaSatuan:'', totalharga:''})
+        })
     }
 
     render(){
@@ -40,6 +82,8 @@ export default class DetailOrder extends Component{
                                 color:'white'
                             }}
                             underlineColorAndroid="white"
+                            value={this.state.namaMaterial}
+                            onChangeText={this.handleNamaMaterial.bind(this)}
                             />
                         </View>
                         <View>
@@ -52,6 +96,8 @@ export default class DetailOrder extends Component{
                             }}
                             underlineColorAndroid="white"
                             keyboardType="number-pad"
+                            value={this.state.jumlahMaterial}
+                            onChangeText={this.handleJumlahMaterial.bind(this)}
                             />
                         </View>
                         <View>
@@ -64,24 +110,34 @@ export default class DetailOrder extends Component{
                                 color:'white'
                             }}
                             underlineColorAndroid="white"
+                            value={this.state.hargaSatuan}
+                            onChangeText={this.handleHargaSatuan.bind(this)}
                             />
+                        </View>
+
+                        <View style={{paddingTop:normalize(10), paddingBottom:normalize(10)}}>
+                            <Button onPress={() => this.onSubmit()} full style={{backgroundColor:'#003499', height:normalize(40), width:normalize(100)}}>
+                                <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18),color:'white'}}>Cek Total</Text>
+                            </Button>
                         </View>
                         <View>
                             <TextInput
                             placeholder="Total Harga"
-                            keyboardType="number-pad"
                             style={{
                                 width:normalize(280),
                                 paddingLeft:normalize(20),
                                 color:'white'
                             }}
                             underlineColorAndroid="white"
+                            editable={true}
+                            value={this.state.totalharga}
+                            
                             />
                         </View>
                         
 
                             <View style={{paddingTop:normalize(20)}}>
-                                <Button full style={{backgroundColor:'#003499', height:normalize(40), width:normalize(280), borderRadius:10}} onPress={() => this.props.navigation.navigate('Order')}>
+                                <Button full style={{backgroundColor:'#003499', height:normalize(40), width:normalize(280), borderRadius:10}} onPress={() => this.onAdd()}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18),color:'white', paddingLeft:normalize(10), textAlign:'left'}}>Tambahkan</Text>
                                 </Button>
                                 <View style={{paddingTop:normalize(10)}}/>
