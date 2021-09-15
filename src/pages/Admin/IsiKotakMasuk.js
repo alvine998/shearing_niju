@@ -15,7 +15,7 @@ export default class IsiKotakMasuk extends Component{
     }
 
     componentDidMount(){
-        axios.get(`http://10.0.2.2:3000/orders/`)
+        axios.get(`http://10.0.3.2:3000/orders/`)
         .then(res => {
             const collectionOrder = res.data;
             console.log("data obj",collectionOrder)

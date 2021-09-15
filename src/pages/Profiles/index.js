@@ -1,7 +1,8 @@
+import AsyncStorage from "@react-native-community/async-storage";
 import axios from "axios";
 import { Body, Button, ListItem } from "native-base";
 import React, {Component} from "react";
-import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import normalize from "react-native-normalize";
 import { emptys, invoice, profile } from "../../assets";
 
@@ -9,31 +10,91 @@ export default class Profiles extends Component{
     constructor(props){
         super(props);
         this.state={
-            name:'',
+            nama:'',
             email:'',
             phone:'',
             password:'',
             collection:[],
+            valEmail:'',
+            values:''
         };
+        this.handleNama = this.handleNama.bind(this);
+        this.handleEmail = this.handleEmail.bind(this);
+        this.handleNohp = this.handleNohp.bind(this);
+        this.handlePass = this.handlePass.bind(this);
     }
 
-    componentDidMount(){
-        axios.get('http://10.0.3.2:3000/customers')
-        .then(res => {
-            const collection = res.data;
-            console.log(collection);
-            this.setState({collection});
-        })
-        .catch(err => {
-            console.log(err)
-        })
+    handleNama(event){
+        this.setState({nama: event})
     }
+
+    handleEmail(event){
+        this.setState({email: event})
+    }
+
+    handleNohp(event){
+        this.setState({phone: event})
+    }
+
+    handlePass(event){
+        this.setState({password: event})
+    }
+
+
+    // Mendapatkan data email current user
+    getValueFunction = async () => {
+        // Function to get the value from AsyncStorage
+      await AsyncStorage.getItem('emailKey').then(
+        (values, collection) => {
+            console.log(values)
+            this.setState({valEmail:values}) 
+            axios.get(`http://10.0.3.2:3000/customerss/${values}`)
+            .then(res => {
+                collection = res.data;
+                console.log(collection);
+                this.setState({collection});
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+      )
+      
+        
+      };
+      updateData = () => {
+          const changeUser = {
+              nama: this.state.nama,
+              email: this.state.email,
+              nohp: this.state.phone,
+              password: this.state.password,
+          }
+        console.log('hey', changeUser)
+        axios.put(`http://10.0.3.2:3000/customers/${this.state.collection._id}`, changeUser)
+        .then( (res) => res.json())
+          .then(resJson => {
+              console.log(resJson)
+          })
+        
+    }
+      
+
+    componentDidMount(){
+        this.getValueFunction();
+    }
+
+    // getDataCurrentUser = async (values) => {
+    //     console.log(values);
+    //     await
+        
+    // }
 
     // {collection.map(user => <Text>{user.email}</Text>)}
 
 
     render(){
-        const {collection} = this.state;
+        const {collection, valEmail} = this.state;
+        
         return(
             <View style={{backgroundColor:'#73A3EC', height:'100%'}}>
                 <View style={{backgroundColor:'white', borderBottomLeftRadius:50, borderBottomRightRadius:50, height:normalize(120)}}>
@@ -52,35 +113,46 @@ export default class Profiles extends Component{
                                 Sesuai yang Anda Inginkan
                             </Text>
                         </View>
+                        {/* {collectionCust.map((users) => <Text>{users.email}</Text>)} */}
+                    
                         <TextInput
-                            placeholder="Nama Anda"
+                            placeholder={collection.nama}
+                            style={{
+                                width:normalize(280),
+                                paddingLeft:normalize(20),
+                                color:'white'
+                            }}
+                            placeholderTextColor={'#fff'}
+                            underlineColorAndroid="white"
+                            value={this.state.nama}
+                            onChangeText={this.handleNama}
+                        />
+                        
+                        <TextInput
+                            style={{
+                                width:normalize(280),
+                                paddingLeft:normalize(20),
+                                color:'white'
+                            }}
+                            placeholderTextColor={'#fff'}
+                            underlineColorAndroid="white"
+                            placeholder={collection.email}
+                            value={this.state.email}
+                            onChangeText={this.handleEmail}
+                        />
+                        <TextInput
                             style={{
                                 width:normalize(280),
                                 paddingLeft:normalize(20),
                                 color:'white'
                             }}
                             underlineColorAndroid="white"
+                            placeholder={collection.nohp}
+                            value={this.state.phone}
+                            placeholderTextColor={'#fff'}
+                            onChangeText={this.handleNohp}
                         />
                         <TextInput
-                            placeholder="Email"
-                            style={{
-                                width:normalize(280),
-                                paddingLeft:normalize(20),
-                                color:'white'
-                            }}
-                            underlineColorAndroid="white"
-                        />
-                        <TextInput
-                            placeholder="Nomor Ponsel"
-                            style={{
-                                width:normalize(280),
-                                paddingLeft:normalize(20),
-                                color:'white'
-                            }}
-                            underlineColorAndroid="white"
-                        />
-                        <TextInput
-                            placeholder="Password"
                             style={{
                                 width:normalize(280),
                                 paddingLeft:normalize(20),
@@ -88,10 +160,14 @@ export default class Profiles extends Component{
                             }}
                             secureTextEntry={true}
                             underlineColorAndroid="white"
+                            placeholder={collection.password}
+                            placeholderTextColor={'#fff'}
+                            value={this.state.password}
+                            onChangeText={this.handlePass}
                         />
 
                         <View style={{paddingTop:normalize(20)}}>
-                            <Button full style={{backgroundColor:'#003499', height:normalize(40),width:normalize(280), borderRadius:10}} onPress={() => this.props.navigation.navigate('Home')}>
+                            <Button full style={{backgroundColor:'#003499', height:normalize(40),width:normalize(280), borderRadius:10}} onPress={() => this.updateData()}>
                                 <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18),color:'white', paddingLeft:normalize(10), textAlign:'center'}}>Ganti</Text>
                             </Button>
                         </View>

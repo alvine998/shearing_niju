@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-community/async-storage";
+import axios from "axios";
 import { Body, Button, Left } from "native-base";
 import React, { Component } from "react";
 import { Image, ScrollView, Text, TextInput, View, TouchableOpacity } from "react-native";
@@ -9,7 +11,11 @@ export default class PurchaseOrder extends Component{
         super(props);
         this.state={
             namapt:"",
-            alamatpt:""
+            alamatpt:"",
+            collection:[],
+            values:"",
+            detCollect:[],
+            valEmail:'',
         };
     }
 
@@ -21,7 +27,47 @@ export default class PurchaseOrder extends Component{
         this.setState({alamatpt: event})
     }
 
+    getValueId = async () => {
+        await AsyncStorage.getItem('emailKey').then(
+            (values, collection) => {
+                console.log(values)
+                this.setState({valEmail:values}) 
+                axios.get(`http://10.0.3.2:3000/customerss/${values}`)
+                .then(res => {
+                    collection = res.data;
+                    console.log(collection._id);
+                    this.setState({collection});
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+            }
+          )
+    }
+
+    getDataDetail = () => {
+        console.log("hello", this.state.collection);
+        axios.get(`http://10.0.3.2:3000/detorderss/${this.state.collection._id}`)
+        .then(res => {
+            const detCollect = res.data;
+            console.log(detCollect);
+            this.setState({detCollect})
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    componentDidUpdate(){
+        // this.getDataDetail();
+    }
+
+    componentDidMount(){
+        this.getValueId();
+    }
+
     render(){
+        const {detCollect, collection} = this.state;
         return(
             <View style={{height:'100%', backgroundColor:'#73A3EC'}}>
                 <View style={{backgroundColor:'white', borderBottomLeftRadius:50, borderBottomRightRadius:50, height:normalize(120)}}>
@@ -74,18 +120,10 @@ export default class PurchaseOrder extends Component{
                             </Left>
                             <Body/>
                         </View>
-                        <TextInput
-                            placeholder="Material"
-                            style={{
-                                width:normalize(280),
-                                paddingLeft:normalize(20),
-                                color:'white'
-                            }}
-                            underlineColorAndroid="white"
-                            multiline={true}
-                            numberOfLines={8}   
-                            editable={false}
-                            />
+                            <View style={{height:normalize(100), width:normalize(250),marginTop:normalize(20), backgroundColor:'#fff'}}>
+
+                            </View>
+                        
 
                             <View style={{paddingTop:normalize(20)}}>
                                 <Button full style={{backgroundColor:'#003499', height:normalize(40), width:normalize(280), borderRadius:10}} onPress={() => this.props.navigation.navigate('Verification')}>

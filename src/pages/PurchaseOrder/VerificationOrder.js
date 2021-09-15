@@ -29,8 +29,8 @@ export default class VerificationOrder extends Component{
                         <Image source={waitings} style={{width:normalize(338), height:normalize(338)}} />
                         <View>
                             <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(22),color:'white', paddingLeft:normalize(10), textAlign:'center'}}>
-                                Form PO Kamu Lagi di Verifikasi
-                                Mohon Ditunggu Ya
+                                Form PO Anda Sedang di Verifikasi
+                                Mohon Ditunggu
                             </Text>
                         </View>
                         <View style={{paddingTop:normalize(20)}}>

@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-community/async-storage";
 import axios from "axios";
 import { Body, Button, Left } from "native-base";
 import React, { Component } from "react";
@@ -12,8 +13,28 @@ export default class DetailOrder extends Component{
             namaMaterial:'',
             jumlahMaterial:'',
             hargaSatuan:'',
-            totalharga:''
+            totalharga:'',
+            collection:[],
+            values:''
         };
+    }
+
+    getValueId = async () => {
+        await AsyncStorage.getItem('emailKey').then(
+            (values, collection) => {
+                console.log(values)
+                this.setState({valEmail:values}) 
+                axios.get(`http://10.0.3.2:3000/customerss/${values}`)
+                .then(res => {
+                    collection = res.data;
+                    console.log(collection);
+                    this.setState({collection});
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+            }
+          )
     }
 
     handleNamaMaterial(event){
@@ -40,18 +61,23 @@ export default class DetailOrder extends Component{
 
     onAdd = () => {
         const details = {
+            custid: this.state.collection._id,
             nama_item: this.state.namaMaterial,
             jumlah_item: this.state.jumlahMaterial,
             harga_satuan: this.state.hargaSatuan,
             total_harga: this.state.totalharga
         }
         console.log('hey', details)
-        axios.post('http://10.0.2.2:3000/detorders/', details)
+        axios.post('http://10.0.3.2:3000/detorders', details)
         .then(res => {
             console.log(res.data);
             Alert.alert("Data berhasil ditambah");
             this.setState({namaMaterial:'', jumlahMaterial:'', hargaSatuan:'', totalharga:''})
         })
+    }
+
+    componentDidMount(){
+        this.getValueId();
     }
 
     render(){
@@ -88,7 +114,7 @@ export default class DetailOrder extends Component{
                         </View>
                         <View>
                             <TextInput
-                            placeholder="Jumlah Material"
+                            placeholder="Jumlah Material per Sheet"
                             style={{
                                 width:normalize(280),
                                 paddingLeft:normalize(20),

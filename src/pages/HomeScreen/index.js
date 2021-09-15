@@ -10,22 +10,37 @@ export default class HomeScreen extends Component{
     constructor(props){
         super(props);
         this.state={
-            email:'',
+            valEmail:'',
+            valId:''
         }
     }
 
-    getData = async () => {
-        try {
-          await AsyncStorage.getItem('email')
-            Alert.alert(email)
-        } catch(e) {
-          // error reading value
-          console.log(e)
-        }
-      }
+    componentDidMount(){
+        const getValueFunction = () => {
+            // Function to get the value from AsyncStorage
+            AsyncStorage.getItem('emailKey').then(
+              (value) =>
+                // AsyncStorage returns a promise
+                // Adding a callback to get the value
+                // this.setState({valEmail: value}),
+              // Setting the value in Text
+              axios.get(`http://10.0.3.2:3000/customerss/${value}`)
+                .then(res => {
+                    const collection = res.data;
+                    console.log(value);
+                    console.log(collection);
+                    this.setState({collection});
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+            );
+          };
+
+          getValueFunction();
+    }
 
     _logout = async () => {
-        this.getData();
         await AsyncStorage.clear();
         this.props.navigation.navigate('Login')
     }
@@ -57,7 +72,7 @@ export default class HomeScreen extends Component{
                         </View>
                     </ScrollView>
 
-                    <Text>{this.getData}</Text>
+                    
 
                     <View style={{paddingTop:normalize(20)}}>
                         <View style={{height:normalize(650), backgroundColor:'white', borderTopRightRadius:20, borderTopLeftRadius:20}}>
