@@ -1,48 +1,78 @@
 import { Body, Button, Header, Icon, Left, Right, Title } from 'native-base'
 import React, { Component } from 'react'
-import {Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import {Alert, BackHandler, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import normalize from 'react-native-normalize'
 import { box_add, box_time, invoice, logistics, nijulogo, profile, quality, settings, worker } from '../../assets'
 import Login from '../Login'
+import axios from 'axios'
 
 export default class HomeScreen extends Component{
     constructor(props){
         super(props);
         this.state={
             valEmail:'',
-            valId:''
+            valId:'',
+            valOrder:[],
+            collection:[]
         }
     }
 
-    componentDidMount(){
-        const getValueFunction = () => {
-            // Function to get the value from AsyncStorage
-            AsyncStorage.getItem('emailKey').then(
-              (value) =>
-                // AsyncStorage returns a promise
-                // Adding a callback to get the value
-                // this.setState({valEmail: value}),
-              // Setting the value in Text
-              axios.get(`http://10.0.3.2:3000/customerss/${value}`)
-                .then(res => {
-                    const collection = res.data;
-                    console.log(value);
-                    console.log(collection);
-                    this.setState({collection});
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-            );
-          };
+    getValueFunction = async () => {
+        // Function to get the value from AsyncStorage
+        await AsyncStorage.getItem('emailKey').then(
+          (value) =>
+            // AsyncStorage returns a promise
+            // Adding a callback to get the value
+            // this.setState({valEmail: value}),
+          // Setting the value in Text
+          axios.get(`http://10.0.2.2:3000/customerss/${value}`)
+            .then((res, valOrder) => {
+                const collection = res.data;
+                console.log(value);
+                console.log(collection);
+                this.setState({collection});
 
-          getValueFunction();
+                // axios.get(`http://10.0.2.2:3000/orders/${collection._id}`)
+                // .then(
+                //     res => {
+                //         valOrder = res.data
+                //         console.log(valOrder)
+                //         this.setState({valOrder}) 
+                //     }
+                // )
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        );
+      };
+
+    componentDidMount(){
+        this.getValueFunction();
+        const backHandler = BackHandler.addEventListener("hardwareBackPress", this.backHandling);
+        return () => backHandler.remove();
+    }
+
+    backHandling(){
+        Alert.alert("Apakah Anda Yakin", "Keluar Aplikasi ?", [
+            {
+                text:"Tidak",
+                onPress: () => null,
+                style:'cancel'
+            },
+            {
+                text:"Ya",
+                onPress:() => BackHandler.exitApp()
+            }
+        ]);
+        return true;
+        
     }
 
     _logout = async () => {
         await AsyncStorage.clear();
-        this.props.navigation.navigate('Login')
+        this.props.navigation.push('Login')
     }
     render(){
         const navigation = this.props.navigation;
@@ -82,7 +112,7 @@ export default class HomeScreen extends Component{
                                     <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(24), textAlign:'center'}}>MENU UTAMA</Text>
 
                                     <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', paddingTop:normalize(20)}}>
-                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Order')}>
+                                        <TouchableOpacity onPress={() => {this.props.navigation.navigate('Order')}}>
                                             <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#6D7AF2', alignItems:'center', justifyContent:'center'}}>
                                                 <Image source={box_add} style={{width:normalize(60), height:normalize(60)}}/>
                                             </View>

@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import axios from "axios";
 import { Body, Button, Left } from "native-base";
 import React, { Component } from "react";
-import { Image, ScrollView, Text, TextInput, View, TouchableOpacity, Alert } from "react-native";
+import { Image, ScrollView, Text, TextInput, View, TouchableOpacity, Alert, BackHandler } from "react-native";
 import normalize from "react-native-normalize";
 import { box_add } from "../../assets";
 
@@ -24,7 +24,7 @@ export default class DetailOrder extends Component{
             (values, collection) => {
                 console.log(values)
                 this.setState({valEmail:values}) 
-                axios.get(`http://10.0.3.2:3000/customerss/${values}`)
+                axios.get(`http://10.0.2.2:3000/customerss/${values}`)
                 .then(res => {
                     collection = res.data;
                     console.log(collection);
@@ -59,6 +59,12 @@ export default class DetailOrder extends Component{
         }))
     }
 
+    backHandling(){
+        Alert.alert("Tekan Tombol Kembali Ya"
+        );
+        return true;
+    }
+
     onAdd = () => {
         const details = {
             custid: this.state.collection._id,
@@ -68,7 +74,7 @@ export default class DetailOrder extends Component{
             total_harga: this.state.totalharga
         }
         console.log('hey', details)
-        axios.post('http://10.0.3.2:3000/detorders', details)
+        axios.post('http://10.0.2.2:3000/detorders', details)
         .then(res => {
             console.log(res.data);
             Alert.alert("Data berhasil ditambah");
@@ -78,6 +84,8 @@ export default class DetailOrder extends Component{
 
     componentDidMount(){
         this.getValueId();
+        const backHandler = BackHandler.addEventListener("hardwareBackPress", this.backHandling);
+        return () => backHandler.remove();
     }
 
     render(){
@@ -167,7 +175,7 @@ export default class DetailOrder extends Component{
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18),color:'white', paddingLeft:normalize(10), textAlign:'left'}}>Tambahkan</Text>
                                 </Button>
                                 <View style={{paddingTop:normalize(10)}}/>
-                                <Button full style={{backgroundColor:'#F44444', height:normalize(40), width:normalize(280), borderRadius:10}} onPress={() => this.props.navigation.navigate('Order')}>
+                                <Button full style={{backgroundColor:'#F44444', height:normalize(40), width:normalize(280), borderRadius:10}} onPress={() => this.props.navigation.push('Order')}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18),color:'white', paddingLeft:normalize(10), textAlign:'left'}}>Kembali</Text>
                                 </Button>
                             </View>

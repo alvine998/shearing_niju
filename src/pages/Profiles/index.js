@@ -48,7 +48,7 @@ export default class Profiles extends Component{
         (values, collection) => {
             console.log(values)
             this.setState({valEmail:values}) 
-            axios.get(`http://10.0.3.2:3000/customerss/${values}`)
+            axios.get(`http://10.0.2.2:3000/customerss/${values}`)
             .then(res => {
                 collection = res.data;
                 console.log(collection);
@@ -70,7 +70,7 @@ export default class Profiles extends Component{
               password: this.state.password,
           }
         console.log('hey', changeUser)
-        axios.put(`http://10.0.3.2:3000/customers/${this.state.collection._id}`, changeUser)
+        axios.put(`http://10.0.2.2:3000/customers/${this.state.collection._id}`, changeUser)
         .then( (res) => res.json())
           .then(resJson => {
               console.log(resJson)

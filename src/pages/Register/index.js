@@ -50,7 +50,7 @@ export default class Registrasi extends Component{
     }
 
     componentDidMount(){
-        axios.get('http://10.0.3.2:3000/customers')
+        axios.get('http://10.0.2.2:3000/customers')
         .then(res => {
             const collection = res.data;
             console.log(collection);
@@ -62,24 +62,48 @@ export default class Registrasi extends Component{
     }
 
     onSubmit(){
-        const custObject = {
-            nama: this.state.name,
-            email: this.state.email,
-            nohp: this.state.phone,
-            password: this.state.password,
-            namapt: this.state.namapt,
-            alamatpt: this.state.alamatpt
-        };
-        console.log('hello ',custObject) 
-        axios.post('http://10.0.3.2:3000/customers/', custObject)
-            .then(res => 
-                {
-                console.log(res.data)
-                Alert.alert('Berhasil Daftar')
-                this.setState({name: '', email:'', phone:'', password:'', namapt:'', alamatpt:''})
-                this.props.navigation.navigate('Login')
-                }
-                );
+        if(!this.state.name){
+            Alert.alert("Harap Isi Nama Anda")
+        }
+        else if(!this.state.email){
+            Alert.alert("Harap Isi Email Anda")
+        }
+        else if(!this.state.phone){
+            Alert.alert("Harap Isi Nomor Ponsel Anda")
+        }
+        else if(!this.state.password){
+            Alert.alert("Harap Isi Password Anda")
+        }
+        else if(!this.state.namapt){
+            Alert.alert("Harap Isi Nama Perusahaan Anda")
+        }
+        else if(!this.state.email){
+            Alert.alert("Harap Isi Alamat Perusahaan Anda")
+        }
+        else if(this.state.password.length < 8){
+            Alert.alert("Password Tidak Boleh Kurang Dari 8 Karakter")
+        }
+        else {
+            const custObject = {
+                nama: this.state.name,
+                email: this.state.email,
+                nohp: this.state.phone,
+                password: this.state.password,
+                namapt: this.state.namapt,
+                alamatpt: this.state.alamatpt
+            };
+            console.log('hello ',custObject) 
+            axios.post('http://10.0.2.2:3000/customers/', custObject)
+                .then(res => 
+                    {
+                    console.log(res.data)
+                    Alert.alert('Berhasil Daftar')
+                    this.setState({name: '', email:'', phone:'', password:'', namapt:'', alamatpt:''})
+                    this.props.navigation.navigate('Login')
+                    }
+                    );
+        }
+        
         // this.props.navigation.navigate('Login')
     }
 
@@ -120,7 +144,7 @@ export default class Registrasi extends Component{
                                         value={this.state.phone}
                                         onChangeText={this.handlePhone}
                                         keyboardType="number-pad"
-                                        maxLength={13}
+                                        maxLength={12}
                                     />
                                 <View style={{padding:normalize(10)}} />
                                 {/* <View style={{borderWidth:1, backgroundColor:'white', width:normalize(250),borderColor:'white', height:normalize(40), borderRadius:10}}>

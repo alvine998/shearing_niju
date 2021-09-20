@@ -33,7 +33,6 @@ export default class Login extends Component{
     storeData = async () => {
         if(this.state.email){
             AsyncStorage.setItem('emailKey', this.state.email)
-            alert('data saved', this.state.email);
         } else {
             alert('Please fill')
         }
@@ -45,7 +44,7 @@ export default class Login extends Component{
             password: this.state.password
         }
 
-        axios.post('http://10.0.3.2:3000/customers/login/', authOk)
+        axios.post('http://10.0.2.2:3000/customers/login/', authOk)
         .then(res => {
             console.log(res.data);
             Alert.alert("Login Sukses");

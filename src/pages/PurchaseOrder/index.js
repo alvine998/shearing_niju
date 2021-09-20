@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-community/async-storage";
 import axios from "axios";
-import { Body, Button, Left } from "native-base";
+import { Body, Button, Left, List, ListItem } from "native-base";
 import React, { Component } from "react";
-import { Image, ScrollView, Text, TextInput, View, TouchableOpacity } from "react-native";
+import { Image, ScrollView, Text, TextInput, View, TouchableOpacity, FlatList } from "react-native";
 import normalize from "react-native-normalize";
 import { box_add } from "../../assets";
 
@@ -16,6 +16,7 @@ export default class PurchaseOrder extends Component{
             values:"",
             detCollect:[],
             valEmail:'',
+            status:'belum verifikasi'
         };
     }
 
@@ -28,15 +29,30 @@ export default class PurchaseOrder extends Component{
     }
 
     getValueId = async () => {
-        await AsyncStorage.getItem('emailKey').then(
+        await AsyncStorage.getItem('emailKey')
+        .then(
             (values, collection) => {
                 console.log(values)
-                this.setState({valEmail:values}) 
-                axios.get(`http://10.0.3.2:3000/customerss/${values}`)
+                this.setState({valEmail:values})
+
+                // Mengambil data customer by email
+                axios.get(`http://10.0.2.2:3000/customerss/${values}`)
                 .then(res => {
                     collection = res.data;
                     console.log(collection._id);
                     this.setState({collection});
+
+                    // Memanggil Data Order by Customer Id
+                    console.log("hello", collection);
+                    axios.get(`http://10.0.2.2:3000/detorderss/${collection._id}`)
+                    .then(res => {
+                        const detCollect = res.data;
+                        console.log(detCollect);
+                        this.setState({detCollect})
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
                 })
                 .catch(err => {
                     console.log(err)
@@ -45,25 +61,45 @@ export default class PurchaseOrder extends Component{
           )
     }
 
-    getDataDetail = () => {
-        console.log("hello", this.state.collection);
-        axios.get(`http://10.0.3.2:3000/detorderss/${this.state.collection._id}`)
-        .then(res => {
-            const detCollect = res.data;
-            console.log(detCollect);
-            this.setState({detCollect})
+    renderValue(){
+        return this.state.detCollect.map((value, index) => {
+            return(
+                <View style={{width:normalize(270), height:normalize(140), backgroundColor:'#fff', padding:normalize(20)}}>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={{textAlign:'left', borderBottomWidth:1, fontFamily:'RedHatDisplay-Regular'}}>
+                                Nama Item : {value.nama_item}{'\n'}
+                                Jumlah Item : {value.jumlah_item}{'\n'}
+                                Harga Satuan : {value.harga_satuan}{'\n'}
+                                Total Harga : {value.total_harga}{'\n'}
+                            </Text>
+                        </View>
+                </View>
+            )
         })
-        .catch(err => {
-            console.log(err)
-        })
-    }
-
-    componentDidUpdate(){
-        // this.getDataDetail();
     }
 
     componentDidMount(){
         this.getValueId();
+    }
+
+    onSubmit(){
+        const dataOrder = {
+            namapt: this.state.collection.namapt,
+            custid: this.state.collection._id,
+            alamatpt: this.state.collection.alamatpt,
+            detorderid: this.state.detCollect.map(id => id._id),
+            status: this.state.status
+        }
+        // console.log("order", dataOrder)
+        axios.post('http://10.0.2.2:3000/orders', dataOrder)
+        .then(
+            res => {
+                console.log(res.data)
+                console.log("data sukses order")
+                alert('Order Berhasil')
+                this.props.navigation.navigate('Verification');
+            }
+        )
     }
 
     render(){
@@ -94,8 +130,9 @@ export default class PurchaseOrder extends Component{
                                 paddingLeft:normalize(20),
                                 color:'white'
                             }}
+                            editable={false}
                             underlineColorAndroid="white"
-                            value={this.state.namapt}
+                            value={collection.namapt}
                             onChangeText={this.handleNamaPt.bind(this)}
                             />
                         </View>
@@ -107,8 +144,9 @@ export default class PurchaseOrder extends Component{
                                 paddingLeft:normalize(20),
                                 color:'white'
                             }}
+                            editable={false}
                             underlineColorAndroid="white"
-                            value={this.state.alamatpt}
+                            value={collection.alamatpt}
                             onChangeText={this.handleAlamatPt.bind(this)}
                             />
                         </View>
@@ -120,13 +158,15 @@ export default class PurchaseOrder extends Component{
                             </Left>
                             <Body/>
                         </View>
-                            <View style={{height:normalize(100), width:normalize(250),marginTop:normalize(20), backgroundColor:'#fff'}}>
 
-                            </View>
+                            {this.renderValue()}
+                            {/* <View style={{height:normalize(100), width:normalize(250),marginTop:normalize(20), backgroundColor:'#fff'}}>
+
+                            </View> */}
                         
 
                             <View style={{paddingTop:normalize(20)}}>
-                                <Button full style={{backgroundColor:'#003499', height:normalize(40), width:normalize(280), borderRadius:10}} onPress={() => this.props.navigation.navigate('Verification')}>
+                                <Button full style={{backgroundColor:'#003499', height:normalize(40), width:normalize(280), borderRadius:10}} onPress={() => this.onSubmit()}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18),color:'white', paddingLeft:normalize(10), textAlign:'left'}}>Order</Text>
                                 </Button>
                                 <View style={{paddingTop:normalize(10)}}/>
