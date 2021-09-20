@@ -13,12 +13,16 @@ export default class Registrasi extends Component{
             phone:'',
             name:'',
             password:'',
-            collection:[]
+            collection:[],
+            namapt:'',
+            alamatpt:''
         }
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePass = this.handlePass.bind(this);
         this.handlePhone = this.handlePhone.bind(this);
         this.handleName = this.handleName.bind(this);
+        this.handleNamapt = this.handleNamapt.bind(this);
+        this.handleAlamatpt = this.handleAlamatpt.bind(this);
     }
 
     handleEmail = (event) => {
@@ -35,6 +39,14 @@ export default class Registrasi extends Component{
 
     handlePhone = (event) => {
         this.setState({phone: event})
+    }
+
+    handleNamapt = (event) => {
+        this.setState({namapt: event})
+    }
+
+    handleAlamatpt = (event) => {
+        this.setState({alamatpt: event})
     }
 
     componentDidMount(){
@@ -54,7 +66,9 @@ export default class Registrasi extends Component{
             nama: this.state.name,
             email: this.state.email,
             nohp: this.state.phone,
-            password: this.state.password
+            password: this.state.password,
+            namapt: this.state.namapt,
+            alamatpt: this.state.alamatpt
         };
         console.log('hello ',custObject) 
         axios.post('http://10.0.3.2:3000/customers/', custObject)
@@ -62,7 +76,7 @@ export default class Registrasi extends Component{
                 {
                 console.log(res.data)
                 Alert.alert('Berhasil Daftar')
-                this.setState({name: '', email:'', phone:'', password:''})
+                this.setState({name: '', email:'', phone:'', password:'', namapt:'', alamatpt:''})
                 this.props.navigation.navigate('Login')
                 }
                 );
@@ -123,6 +137,36 @@ export default class Registrasi extends Component{
                                         underlineColorAndroid="white"
                                         value={this.state.email}
                                         onChangeText={this.handleEmail}
+                                    />
+                                </View>
+                                <View style={{padding:normalize(10)}} />
+
+                                <View>
+                                    <TextInput
+                                        placeholder="Nama Perusahaan"
+                                        style={{
+                                            width:normalize(250),
+                                            paddingLeft:normalize(20),
+                                            color:'white'
+                                        }}
+                                        underlineColorAndroid="white"
+                                        value={this.state.namapt}
+                                        onChangeText={this.handleNamapt}
+                                    />
+                                </View>
+                                <View style={{padding:normalize(10)}} />
+
+                                <View>
+                                    <TextInput
+                                        placeholder="Alamat Perusahaan"
+                                        style={{
+                                            width:normalize(250),
+                                            paddingLeft:normalize(20),
+                                            color:'white'
+                                        }}
+                                        underlineColorAndroid="white"
+                                        value={this.state.alamatpt}
+                                        onChangeText={this.handleAlamatpt}
                                     />
                                 </View>
                                 <View style={{padding:normalize(10)}} />

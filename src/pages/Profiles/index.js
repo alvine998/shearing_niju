@@ -160,7 +160,7 @@ export default class Profiles extends Component{
                             }}
                             secureTextEntry={true}
                             underlineColorAndroid="white"
-                            placeholder={collection.password}
+                            placeholder="********"
                             placeholderTextColor={'#fff'}
                             value={this.state.password}
                             onChangeText={this.handlePass}
