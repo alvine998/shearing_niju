@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-community/async-storage";
+import axios from "axios";
 import { Button, Icon } from "native-base";
 import React, {Component} from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -8,8 +10,39 @@ export default class KotakMasuk extends Component{
     constructor(props){
         super(props);
         this.state={
-
+            collection:[],
+            values:[]
         }
+    }
+
+    getDataOrder(){
+        axios.get('http://10.0.2.2:3000/orders')
+        .then(
+            res => {
+                const collection = res.data;
+                console.log(collection);
+                this.setState({collection})
+
+                axios.get(`http://10.0.2.2:3000/customers/${collection.custid}`)
+                .then(
+                    res => {
+                        const values = res.data;
+                        console.log(values);
+                        this.setState({values})
+                    }
+                )
+            }
+        )
+    }
+
+    setData = async () => {
+        const idm = this.state.collection.map(val => val._id)
+        console.log("hello", idm)
+        await AsyncStorage.setItem('orderkey', idm)
+    }
+
+    componentDidMount(){
+        this.getDataOrder();
     }
 
     render(){
@@ -25,18 +58,16 @@ export default class KotakMasuk extends Component{
                 </View>
                 <ScrollView>
                     <View style={{paddingTop:normalize(30), alignItems:'center', justifyContent:'center'}}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('IsiKotakMasuk')} style={{height:normalize(50), width:'100%', backgroundColor:'white'}}>
-                                <View style={{flexDirection:'row', padding:normalize(10)}}>
-                                    <Icon type={"FontAwesome5"} name="envelope"/>
-                                    <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), paddingLeft:normalize(10), paddingTop:normalize(5)}}>Pesan Belum Dibaca</Text>
-                                </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{height:normalize(50), width:'100%', backgroundColor:'white', borderTopWidth:1}}>
-                                <View style={{flexDirection:'row', padding:normalize(10)}}>
-                                    <Icon type={"FontAwesome5"} name="envelope-open"/>
-                                    <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), paddingLeft:normalize(10), paddingTop:normalize(5)}}>Pesan Telah Dibaca</Text>
-                                </View>
-                        </TouchableOpacity>
+                        {this.state.collection && this.state.collection.map(valueses => {
+                            return(
+                                    <TouchableOpacity onPress={() => {this.setData(), this.props.navigation.navigate('IsiKotakMasuk')}} style={{height:normalize(50), width:'100%', backgroundColor:'white'}}>
+                                        <View style={{flexDirection:'row', padding:normalize(10)}}>
+                                            <Icon type={"FontAwesome5"} name="envelope"/>
+                                            <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), paddingLeft:normalize(10), paddingTop:normalize(5)}}>Order Masuk {valueses.namapt}</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                            )
+                        })}
                     </View>
                 </ScrollView>
                 <View style={{padding:normalize(30)}}>

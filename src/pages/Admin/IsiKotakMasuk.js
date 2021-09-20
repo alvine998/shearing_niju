@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-community/async-storage";
 import axios from "axios";
 import { Button, Icon } from "native-base";
 import React, {Component} from "react";
@@ -11,16 +12,28 @@ export default class IsiKotakMasuk extends Component{
         this.state={
             collectionOrder:[],
             collectionCustomer:[],
+            id:''
         }
     }
 
+    getItem = async () => {
+        await AsyncStorage.getItem('orderkey')
+        .then(
+            collectionCustomer => {
+                console.log(collectionCustomer);
+                this.setState({id: collectionCustomer});
+                axios.get(`http://10.0.2.2:3000/orders/${collectionCustomer._id}`)
+                .then(res => {
+                    const collectionOrder = res.data;
+                    console.log("data obj",collectionOrder)
+                    this.setState({collectionOrder})
+                })
+            }
+        )
+    }
+
     componentDidMount(){
-        axios.get(`http://10.0.3.2:3000/orders/`)
-        .then(res => {
-            const collectionOrder = res.data;
-            console.log("data obj",collectionOrder)
-            this.setState({collectionOrder})
-        })
+        this.getItem();
     }
 
     render(){
@@ -40,43 +53,10 @@ export default class IsiKotakMasuk extends Component{
                         <View style={{height:normalize(450), width:'100%', backgroundColor:'#fff', borderRadius:20, padding:normalize(20)}}>
                             
                             <Text style={{fontFamily:'RedHatDisplay-Bold', textAlign:'center', fontSize:normalize(20), paddingBottom:normalize(10)}} >Request Shearing</Text>
-                            {collectionOrder.map(item => {
-                                return(
-                                <Text style={{fontFamily:'RedHatDisplay-Regular'}} >1. Order Id : {item._id}</Text>
-                                )
-                                })}
-                            {collectionOrder.map(item => {
-                                return(
-                                    <Text style={{fontFamily:'RedHatDisplay-Regular'}} >2. Nama : {item.custid}</Text>
-                                )
-                            })}
-                            {collectionOrder.map(item => {
-                                return(
-                                <Text style={{fontFamily:'RedHatDisplay-Regular'}} >3. Nama Perusahaan : {item.namapt}</Text>
-                                )
-                            })}
-                            {collectionOrder.map(item => {
-                                return(
-                                    <Text style={{fontFamily:'RedHatDisplay-Regular'}} >4. Alamat Perusahaan : {item.alamatpt}</Text>
-                                )
-                            })}
-                            {collectionOrder.map(item => {
-                                return(
-                                    <Text style={{fontFamily:'RedHatDisplay-Regular'}} >5. Nomor Dihubungi :</Text>
-                                )
-                            })}
-                            {collectionOrder.map(item => {
-                                return(
-                                    <Text style={{fontFamily:'RedHatDisplay-Regular'}} >6. Detail Order : {"\n"} {item.detorderid.nama_item}</Text>
-                                )
-                            })}
+                            
 
                             <Button onPress={() => this.props.navigation.navigate('KotakMasuk')} full style={{backgroundColor:'#73A3EC', height:normalize(40), borderRadius:10}} >
                                 <Text style={{fontFamily:'RedHatDisplay-Regular', color:'white'}} >Terima</Text>
-                            </Button>
-                            <View style={{paddingTop:normalize(10)}} />
-                            <Button onPress={() => this.props.navigation.navigate('KotakMasuk')}  full style={{backgroundColor:'#E78181', height:normalize(40), borderRadius:10}} >
-                                <Text style={{fontFamily:'RedHatDisplay-Regular', color:'white'}} >Tolak</Text>
                             </Button>
                         </View>
                     </View>

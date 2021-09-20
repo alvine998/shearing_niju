@@ -16,7 +16,8 @@ export default class PurchaseOrder extends Component{
             values:"",
             detCollect:[],
             valEmail:'',
-            status:'belum verifikasi'
+            status:'belum verifikasi',
+            session_order:0,
         };
     }
 
@@ -88,9 +89,9 @@ export default class PurchaseOrder extends Component{
             custid: this.state.collection._id,
             alamatpt: this.state.collection.alamatpt,
             detorderid: this.state.detCollect.map(id => id._id),
-            status: this.state.status
+            status: this.state.status,
         }
-        // console.log("order", dataOrder)
+        console.log("order", dataOrder)
         axios.post('http://10.0.2.2:3000/orders', dataOrder)
         .then(
             res => {
@@ -98,6 +99,19 @@ export default class PurchaseOrder extends Component{
                 console.log("data sukses order")
                 alert('Order Berhasil')
                 this.props.navigation.navigate('Verification');
+            }
+        )
+    }
+
+    forCustomer(){
+        const customer = {
+            session_order: this.state.collection.session_order + 1
+        }
+        console.log(this.state.collection._id)
+        axios.put(`http://10.0.2.2:3000/customers/${this.state.collection._id}`, customer)
+        .then(
+            res => {
+                console.log(res.data)
             }
         )
     }
@@ -166,7 +180,7 @@ export default class PurchaseOrder extends Component{
                         
 
                             <View style={{paddingTop:normalize(20)}}>
-                                <Button full style={{backgroundColor:'#003499', height:normalize(40), width:normalize(280), borderRadius:10}} onPress={() => this.onSubmit()}>
+                                <Button full style={{backgroundColor:'#003499', height:normalize(40), width:normalize(280), borderRadius:10}} onPress={() => {this.onSubmit(), this.forCustomer()}}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18),color:'white', paddingLeft:normalize(10), textAlign:'left'}}>Order</Text>
                                 </Button>
                                 <View style={{paddingTop:normalize(10)}}/>
