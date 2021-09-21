@@ -12,24 +12,50 @@ export default class IsiKotakMasuk extends Component{
         this.state={
             collectionOrder:[],
             collectionCustomer:[],
-            id:''
+            collect:[],
+            id:'',
+            status:'sudah verifikasi'
         }
     }
 
     getItem = async () => {
         await AsyncStorage.getItem('orderkey')
         .then(
-            collectionCustomer => {
-                console.log(collectionCustomer);
-                this.setState({id: collectionCustomer});
-                axios.get(`http://10.0.2.2:3000/orders/${collectionCustomer._id}`)
-                .then(res => {
-                    const collectionOrder = res.data;
-                    console.log("data obj",collectionOrder)
-                    this.setState({collectionOrder})
+            collectionOrder => {
+                console.log("Hey" ,collectionOrder);
+                this.setState({
+                    collectionOrder
                 })
+                axios.get(`http://10.0.2.2:3000/orders/${collectionOrder}`)
+                    .then(res => {
+                        const collectionCustomer = res.data;
+                        console.log("data obj",collectionCustomer)
+                        this.setState({collectionCustomer})
+
+                        axios.get(`http://10.0.2.2:3000/detorderss/${collectionCustomer.custid}`)
+                        .then(res => {
+                            const collect = res.data;
+                            console.log("data obj",collect)
+                            this.setState({collect})
+                        })
+                    })
+                
             }
         )
+    }
+
+    updateStatus(){
+        const stats = { status: this.state.status}
+        console.log(this.state.status)
+        axios.put(`http://10.0.2.2:3000/orders/${this.state.collectionCustomer._id}`, stats)
+        .then(
+            res => 
+            {
+                console.log(res.data)
+                alert('Status Update')
+            }
+        )
+        
     }
 
     componentDidMount(){
@@ -37,7 +63,7 @@ export default class IsiKotakMasuk extends Component{
     }
 
     render(){
-        const {collectionOrder} = this.state;
+        const {collectionCustomer, collect} = this.state;
         return(
             <View style={{backgroundColor:'#73A3EC', height:'100%'}}>
                 <View style={{backgroundColor:'white', borderBottomLeftRadius:50, borderBottomRightRadius:50, height:normalize(120)}}>
@@ -48,19 +74,40 @@ export default class IsiKotakMasuk extends Component{
                         <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), paddingLeft:normalize(10)}}>Kotak Masuk</Text>
                     </View>
                 </View>
-                <ScrollView>
                     <View style={{padding:normalize(30), alignItems:'center', justifyContent:'center'}}>
-                        <View style={{height:normalize(450), width:'100%', backgroundColor:'#fff', borderRadius:20, padding:normalize(20)}}>
-                            
-                            <Text style={{fontFamily:'RedHatDisplay-Bold', textAlign:'center', fontSize:normalize(20), paddingBottom:normalize(10)}} >Request Shearing</Text>
-                            
+                        <View style={{height:normalize(400), width:'100%', backgroundColor:'#fff', borderRadius:20, padding:normalize(20)}}>
+                            <ScrollView>
+                                <View>
+                                    <Text style={{fontFamily:'RedHatDisplay-Bold', textAlign:'center', fontSize:normalize(20), paddingBottom:normalize(10)}} >Request Shearing</Text>
+                                    <View style={{paddingTop:normalize(20)}}>
+                                        <Text>Order Id : {"\n"} {collectionCustomer._id}</Text>
+                                        <Text>Cust Id : {"\n"} {collectionCustomer.custid}</Text>
+                                        <Text>Nama PT : {"\n"} {collectionCustomer.namapt}</Text>
+                                        <Text>Alamat PT : {"\n"} {collectionCustomer.alamatpt}</Text>
+                                        <View style={{paddingTop:normalize(10)}} />
+                                        <Text>Detail Order :</Text>
+                                        {collect && collect.map(collects => 
+                                            {
+                                                return(
+                                                    <View style={{borderBottomWidth:1}}>
+                                                        <Text>Nama Item : {collects.nama_item}</Text>
+                                                        <Text>Jumlah Item : {collects.jumlah_item}</Text>
+                                                        <Text>Harga Satuan : {collects.harga_satuan}</Text>
+                                                        <Text>Total Harga : {collects.total_harga}</Text>
+                                                    </View>
+                                                )
+                                            }
+                                        )}
+                                    </View>
+                                    
 
-                            <Button onPress={() => this.props.navigation.navigate('KotakMasuk')} full style={{backgroundColor:'#73A3EC', height:normalize(40), borderRadius:10}} >
-                                <Text style={{fontFamily:'RedHatDisplay-Regular', color:'white'}} >Terima</Text>
-                            </Button>
+                                    <Button onPress={() => {this.updateStatus(), this.props.navigation.navigate('KotakMasuk')}} full style={{backgroundColor:'#73A3EC', height:normalize(40), borderRadius:10, marginTop:normalize(20)}} >
+                                        <Text style={{fontFamily:'RedHatDisplay-Regular', color:'white'}} >Terima</Text>
+                                    </Button>
+                                </View>
+                            </ScrollView>
                         </View>
                     </View>
-                </ScrollView>
             </View>
         )
     }
