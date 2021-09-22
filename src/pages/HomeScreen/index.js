@@ -48,6 +48,17 @@ export default class HomeScreen extends Component{
         );
       };
 
+    updateSession(){
+        console.log(this.state.collection.session_order)
+        const session = {
+            session_order: this.state.collection.session_order = 1
+        }
+        axios.put(`http://10.0.2.2:3000/customers/${this.state.collection._id}`, session)
+        .then(
+            res => console.log(res.data)
+        )
+    }
+
     componentDidMount(){
         this.getValueFunction();
         const backHandler = BackHandler.addEventListener("hardwareBackPress", this.backHandling);
@@ -112,14 +123,14 @@ export default class HomeScreen extends Component{
                                     <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(24), textAlign:'center'}}>MENU UTAMA</Text>
 
                                     <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', paddingTop:normalize(20)}}>
-                                        <TouchableOpacity onPress={() => {this.props.navigation.navigate('Order')}}>
+                                        <TouchableOpacity onPress={() => {this.updateSession() ,this.props.navigation.navigate('Order')}}>
                                             <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#6D7AF2', alignItems:'center', justifyContent:'center'}}>
                                                 <Image source={box_add} style={{width:normalize(60), height:normalize(60)}}/>
                                             </View>
                                             <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Pesan {"\n"} Sekarang</Text>
                                         </TouchableOpacity>
                                         <View style={{paddingLeft:normalize(20)}}/>
-                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('FindOrder') }>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('ListOrder') }>
                                             <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#54D871', alignItems:'center', justifyContent:'center'}}>
                                                 <Image source={box_time} style={{width:normalize(60), height:normalize(60)}}/>
                                             </View>

@@ -15,7 +15,8 @@ export default class Registrasi extends Component{
             password:'',
             collection:[],
             namapt:'',
-            alamatpt:''
+            alamatpt:'',
+            session_order:0
         }
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePass = this.handlePass.bind(this);
@@ -90,7 +91,8 @@ export default class Registrasi extends Component{
                 nohp: this.state.phone,
                 password: this.state.password,
                 namapt: this.state.namapt,
-                alamatpt: this.state.alamatpt
+                alamatpt: this.state.alamatpt,
+                session_order: this.state.session_order
             };
             console.log('hello ',custObject) 
             axios.post('http://10.0.2.2:3000/customers/', custObject)

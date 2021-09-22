@@ -15,9 +15,10 @@ export default class PurchaseOrder extends Component{
             collection:[],
             values:"",
             detCollect:[],
+            sessCollect:[],
             valEmail:'',
             status:'belum verifikasi',
-            session_order:0,
+            sessions:0,
         };
     }
 
@@ -28,6 +29,8 @@ export default class PurchaseOrder extends Component{
     handleAlamatPt(event){
         this.setState({alamatpt: event})
     }
+
+
 
     getValueId = async () => {
         await AsyncStorage.getItem('emailKey')
@@ -50,6 +53,14 @@ export default class PurchaseOrder extends Component{
                         const detCollect = res.data;
                         console.log(detCollect);
                         this.setState({detCollect})
+
+                        axios.get(`http://10.0.2.2:3000/detorderss/session/1`)
+                        .then(res => {
+                            const sessCollect = res.data;
+                            console.log("Top", sessCollect.map(id => id._id));
+                            this.setState({sessCollect})
+                            
+                        })
                     })
                     .catch(err => {
                         console.log(err)
@@ -63,20 +74,20 @@ export default class PurchaseOrder extends Component{
     }
 
     renderValue(){
-        return this.state.detCollect.map((value, index) => {
-            return(
-                <View style={{width:normalize(270), height:normalize(140), backgroundColor:'#fff', padding:normalize(20)}}>
-                        <View style={{flexDirection:'row'}}>
-                            <Text style={{textAlign:'left', borderBottomWidth:1, fontFamily:'RedHatDisplay-Regular'}}>
-                                Nama Item : {value.nama_item}{'\n'}
-                                Jumlah Item : {value.jumlah_item}{'\n'}
-                                Harga Satuan : {value.harga_satuan}{'\n'}
-                                Total Harga : {value.total_harga}{'\n'}
-                            </Text>
-                        </View>
-                </View>
-            )
-        })
+           return this.state.sessCollect.map((value, index) => {
+                return(
+                    <View style={{width:normalize(270), height:normalize(140), backgroundColor:'#fff', padding:normalize(20)}}>
+                            <View style={{flexDirection:'row'}}>
+                                <Text style={{textAlign:'left', borderBottomWidth:1, fontFamily:'RedHatDisplay-Regular'}}>
+                                    Nama Item : {value.nama_item}{'\n'}
+                                    Jumlah Item : {value.jumlah_item}{'\n'}
+                                    Harga Satuan : {value.harga_satuan}{'\n'}
+                                    Total Harga : {value.total_harga}{'\n'}
+                                </Text>
+                            </View>
+                    </View>
+                )
+            })
     }
 
     componentDidMount(){
@@ -88,7 +99,7 @@ export default class PurchaseOrder extends Component{
             namapt: this.state.collection.namapt,
             custid: this.state.collection._id,
             alamatpt: this.state.collection.alamatpt,
-            detorderid: this.state.detCollect.map(id => id._id),
+            detorderid: this.state.sessCollect.map(id => id._id),
             status: this.state.status,
         }
         console.log("order", dataOrder)
@@ -104,16 +115,24 @@ export default class PurchaseOrder extends Component{
     }
 
     forCustomer(){
-        const customer = {
-            session_order: this.state.collection.session_order + 1
+        const sess = {
+            session_detail: this.state.sessions,
         }
-        console.log(this.state.collection._id)
-        axios.put(`http://10.0.2.2:3000/customers/${this.state.collection._id}`, customer)
-        .then(
-            res => {
-                console.log(res.data)
-            }
-        )
+        this.state.detCollect.map(id => 
+            {
+                console.log("id",id._id);
+                axios.put(`http://10.0.2.2:3000/detorders/${id._id}`, sess)
+                .then(
+                    res => {
+                        console.log("sukses")
+                        console.log(res.data)
+                    }
+                )
+                .catch(err => {
+                    console.log(err)
+                })
+            }    
+        );
     }
 
     render(){

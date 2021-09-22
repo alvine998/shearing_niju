@@ -15,7 +15,8 @@ export default class DetailOrder extends Component{
             hargaSatuan:'',
             totalharga:'',
             collection:[],
-            values:''
+            values:'',
+            session_detail:1
         };
     }
 
@@ -66,20 +67,37 @@ export default class DetailOrder extends Component{
     }
 
     onAdd = () => {
-        const details = {
-            custid: this.state.collection._id,
-            nama_item: this.state.namaMaterial,
-            jumlah_item: this.state.jumlahMaterial,
-            harga_satuan: this.state.hargaSatuan,
-            total_harga: this.state.totalharga
+        if(!this.state.namaMaterial){
+            Alert.alert('harap isi nama material')
         }
-        console.log('hey', details)
-        axios.post('http://10.0.2.2:3000/detorders', details)
-        .then(res => {
-            console.log(res.data);
-            Alert.alert("Data berhasil ditambah");
-            this.setState({namaMaterial:'', jumlahMaterial:'', hargaSatuan:'', totalharga:''})
-        })
+        else if(!this.state.jumlahMaterial){
+            Alert.alert('harap isi jumlah material')
+        }
+        else if(!this.state.hargaSatuan){
+            Alert.alert('harap isi harga satuan')
+        }
+        else if(!this.state.totalharga){
+            Alert.alert('harap isi total harga')
+        }
+        else {
+            const details = {
+                custid: this.state.collection._id,
+                nama_item: this.state.namaMaterial,
+                jumlah_item: this.state.jumlahMaterial,
+                harga_satuan: this.state.hargaSatuan,
+                total_harga: this.state.totalharga,
+                session_detail: this.state.session_detail
+            }
+            console.log('hey', details)
+            axios.post('http://10.0.2.2:3000/detorders', details)
+            .then(res => {
+                console.log(res.data);
+                Alert.alert("Data berhasil ditambah");
+                this.setState({namaMaterial:'', jumlahMaterial:'', hargaSatuan:'', totalharga:''})
+            })
+        }
+
+        
     }
 
     componentDidMount(){

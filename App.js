@@ -22,6 +22,7 @@ import BuatLaporan from './src/pages/Admin/BuatLaporan';
 import AturProgress from './src/pages/Admin/AturProgress';
 import CustomerProgress from './src/pages/Admin/CustomerProgress';
 import BuatInvoice from './src/pages/Admin/BuatInvoice';
+import ListOrder from './src/pages/ListOrder';
 
 const Stack = createStackNavigator();
 
@@ -40,6 +41,7 @@ const Stack = createStackNavigator();
           <Stack.Screen name="Verification" component={VerificationOrder} options={{headerShown: false}} />
           {/* find order */}
           <Stack.Screen name="FindOrder" component={FindOrder} options={{headerShown: false}} />
+          <Stack.Screen name="ListOrder" component={ListOrder} options={{headerShown: false}} />
           {/* Invoice */}
           <Stack.Screen name="Invoice" component={Invoice} options={{headerShown: false}} />
           <Stack.Screen name="AvailInvoice" component={AvailInvoice} options={{headerShown: false}} />
