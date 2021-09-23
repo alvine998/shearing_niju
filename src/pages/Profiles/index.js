@@ -10,10 +10,10 @@ export default class Profiles extends Component{
     constructor(props){
         super(props);
         this.state={
-            nama:'',
-            email:'',
-            phone:'',
-            password:'',
+            // nama:'',
+            // email:'',
+            // phone:'',
+            // password:'',
             collection:[],
             valEmail:'',
             values:''
@@ -25,19 +25,23 @@ export default class Profiles extends Component{
     }
 
     handleNama(event){
-        this.setState({nama: event})
+        const namas = this.state.collection.nama;
+        this.setState({namas: event})
     }
 
     handleEmail(event){
-        this.setState({email: event})
+        const emails = this.state.collection.email;
+        this.setState({emails: event})
     }
 
     handleNohp(event){
+        const phone = this.state.collection.nohp;
         this.setState({phone: event})
     }
 
     handlePass(event){
-        this.setState({password: event})
+        const passwords = this.state.collection.password;
+        this.setState({passwords: event})
     }
 
 
@@ -116,7 +120,6 @@ export default class Profiles extends Component{
                         {/* {collectionCust.map((users) => <Text>{users.email}</Text>)} */}
                     
                         <TextInput
-                            placeholder={collection.nama}
                             style={{
                                 width:normalize(280),
                                 paddingLeft:normalize(20),
@@ -124,7 +127,7 @@ export default class Profiles extends Component{
                             }}
                             placeholderTextColor={'#fff'}
                             underlineColorAndroid="white"
-                            value={this.state.nama}
+                            value={collection.nama}
                             onChangeText={this.handleNama}
                         />
                         
@@ -136,8 +139,7 @@ export default class Profiles extends Component{
                             }}
                             placeholderTextColor={'#fff'}
                             underlineColorAndroid="white"
-                            placeholder={collection.email}
-                            value={this.state.email}
+                            value={collection.email}
                             onChangeText={this.handleEmail}
                         />
                         <TextInput
@@ -147,8 +149,7 @@ export default class Profiles extends Component{
                                 color:'white'
                             }}
                             underlineColorAndroid="white"
-                            placeholder={collection.nohp}
-                            value={this.state.phone}
+                            value={collection.nohp}
                             placeholderTextColor={'#fff'}
                             onChangeText={this.handleNohp}
                         />
@@ -162,7 +163,7 @@ export default class Profiles extends Component{
                             underlineColorAndroid="white"
                             placeholder="********"
                             placeholderTextColor={'#fff'}
-                            value={this.state.password}
+                            value={collection.password}
                             onChangeText={this.handlePass}
                         />
 

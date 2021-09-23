@@ -82,7 +82,7 @@ export default class FindOrder extends Component{
                         </TouchableOpacity>
 
                         {/* Ball 2 */}
-                        <TouchableOpacity onPress={() => Alert.alert("Kirim Material ke Alamat Ini : https://g.page/PT-Nusa-indah?share")}>
+                        <TouchableOpacity onPress={() => valOrder.status == "belum verifikasi" ? Alert.alert("Selesaikan Verifikasi Dahulu") : this.props.navigation.navigate('UploadBukti')}>
                             <View style={{paddingTop:normalize(20), paddingLeft:normalize(50), paddingRight:normalize(50), flexDirection:'row'}}>
                                 <View style={{height:normalize(60), width:normalize(60), borderRadius:30, backgroundColor:'#B1B1B1', alignItems:'center', justifyContent:'center'}}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), color:'white'}}>2</Text>

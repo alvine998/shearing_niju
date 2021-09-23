@@ -27,14 +27,14 @@ export default class BuatLaporan extends Component{
                     <View style={{height:normalize(180), width:'100%', borderRadius:20, backgroundColor:'#fff', marginTop:normalize(50)}}>
                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), textAlign:'center'}}>Pilih Menu Laporan</Text>
                         <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', padding:normalize(10)}}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('BuatLaporan')} style={{alignItems:'center', justifyContent:'center'}}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('ListMaterial')} style={{alignItems:'center', justifyContent:'center'}}>
                                 <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#54D871', alignItems:'center', justifyContent:'center'}}>
                                     <Image source={reports} style={{width:normalize(60), height:normalize(60)}}/>
                                 </View>
                                 <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Laporan{"\n"}Material{"\n"}Bermasalah</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('BuatLaporan')} style={{alignItems:'center', justifyContent:'center'}}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('ListInvoice')} style={{alignItems:'center', justifyContent:'center'}}>
                                 <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#E78181', alignItems:'center', justifyContent:'center'}}>
                                     <Image source={reports} style={{width:normalize(60), height:normalize(60)}}/>
                                 </View>

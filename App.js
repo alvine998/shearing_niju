@@ -23,6 +23,9 @@ import AturProgress from './src/pages/Admin/AturProgress';
 import CustomerProgress from './src/pages/Admin/CustomerProgress';
 import BuatInvoice from './src/pages/Admin/BuatInvoice';
 import ListOrder from './src/pages/ListOrder';
+import UploadBukti from './src/pages/UploadBukti';
+import ListLaporanMaterial from './src/pages/Admin/ListLaporanMaterial';
+import ListLaporanInvoice from './src/pages/Admin/ListLaporanInvoice';
 
 const Stack = createStackNavigator();
 
@@ -47,6 +50,8 @@ const Stack = createStackNavigator();
           <Stack.Screen name="AvailInvoice" component={AvailInvoice} options={{headerShown: false}} />
           {/* Profil */}
           <Stack.Screen name="Profiles" component={Profiles} options={{headerShown: false}} />
+          {/* Upload Bukti Working Instruction dan Resi Pengiriman */}
+          <Stack.Screen name="UploadBukti" component={UploadBukti} options={{headerShown: false}} />
 
           {/* Admin NIJU */}
           <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown: false}} />
@@ -55,6 +60,8 @@ const Stack = createStackNavigator();
           <Stack.Screen name="IsiKotakMasuk" component={IsiKotakMasuk} options={{headerShown: false}} />
           {/* Buat Laporan */}
           <Stack.Screen name="BuatLaporan" component={BuatLaporan} options={{headerShown: false}} />
+          <Stack.Screen name="ListMaterial" component={ListLaporanMaterial} options={{headerShown: false}} />
+          <Stack.Screen name="ListInvoice" component={ListLaporanInvoice} options={{headerShown: false}} />
           {/* Atur Progress */}
           <Stack.Screen name="AturProgress" component={AturProgress} options={{headerShown: false}} />
           <Stack.Screen name="CustomerProgress" component={CustomerProgress} options={{headerShown: false}} />
