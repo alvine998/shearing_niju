@@ -14,7 +14,8 @@ export default class IsiKotakMasuk extends Component{
             collectionCustomer:[],
             collect:[],
             id:'',
-            status:'sudah verifikasi'
+            status:'sudah verifikasi',
+            ordid:[]
         }
     }
 
@@ -32,12 +33,20 @@ export default class IsiKotakMasuk extends Component{
                         console.log("data obj",collectionCustomer)
                         this.setState({collectionCustomer})
 
-                        axios.get(`http://10.0.2.2:3000/detorderss/${collectionCustomer.custid}`)
-                        .then(res => {
-                            const collect = res.data;
-                            console.log("data obj",collect)
-                            this.setState({collect})
-                        })
+                        return collectionCustomer.detorderid.map(id => 
+                            {
+                                console.log("id : ", id)
+                                // this.setState({ordid: id})
+                                // console.log(this.state.ordid)
+                                axios.get(`http://10.0.2.2:3000/detorders/${id}`)
+                                .then(res => {
+                                    const collect = res.data;
+                                    console.log("data ok",collect)
+                                    this.setState({collect})
+                                })
+                            }
+                        );
+                        
                     })
                 
             }
@@ -86,7 +95,7 @@ export default class IsiKotakMasuk extends Component{
                                         <Text>Alamat PT : {"\n"} {collectionCustomer.alamatpt}</Text>
                                         <View style={{paddingTop:normalize(10)}} />
                                         <Text>Detail Order :</Text>
-                                        {collect && collect.map(collects => 
+                                        {collect.map(collects => 
                                             {
                                                 return(
                                                     <View style={{borderBottomWidth:1}}>

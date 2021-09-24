@@ -57,7 +57,7 @@ export default class Dashboard extends Component{
                                             <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#54D871', alignItems:'center', justifyContent:'center'}}>
                                                 <Image source={reports} style={{width:normalize(60), height:normalize(60)}}/>
                                             </View>
-                                            <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Buat{"\n"}Laporan</Text>
+                                            <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Laporan{"\n"}Transaksi</Text>
                                         </TouchableOpacity>
                                         <View style={{paddingLeft:normalize(20)}}/>
                                         <TouchableOpacity onPress={() => this.props.navigation.navigate('AturProgress')}>

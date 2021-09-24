@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import axios from "axios";
 import { Body, Button, Left, List, ListItem } from "native-base";
 import React, { Component } from "react";
-import { Image, ScrollView, Text, TextInput, View, TouchableOpacity, FlatList } from "react-native";
+import { Image, ScrollView, Text, TextInput, View, TouchableOpacity, FlatList, Alert } from "react-native";
 import normalize from "react-native-normalize";
 import { box_add } from "../../assets";
 
@@ -18,6 +18,10 @@ export default class PurchaseOrder extends Component{
             sessCollect:[],
             valEmail:'',
             status:'belum verifikasi',
+            produksi:'belum produksi',
+            material:'belum diterima',
+            pembayaran:'belum dibayar',
+            pengiriman:'belum dikirim',
             sessions:0,
         };
     }
@@ -95,23 +99,34 @@ export default class PurchaseOrder extends Component{
     }
 
     onSubmit(){
-        const dataOrder = {
-            namapt: this.state.collection.namapt,
-            custid: this.state.collection._id,
-            alamatpt: this.state.collection.alamatpt,
-            detorderid: this.state.sessCollect.map(id => id._id),
-            status: this.state.status,
+        if(this.state.sessCollect && this.state.sessCollect.length < 1){
+            Alert.alert('Harap tambahkan data order')
         }
-        console.log("order", dataOrder)
-        axios.post('http://10.0.2.2:3000/orders', dataOrder)
-        .then(
-            res => {
-                console.log(res.data)
-                console.log("data sukses order")
-                alert('Order Berhasil')
-                this.props.navigation.navigate('Verification');
+        else {
+            this.forCustomer();
+            const dataOrder = {
+                namapt: this.state.collection.namapt,
+                custid: this.state.collection._id,
+                alamatpt: this.state.collection.alamatpt,
+                detorderid: this.state.sessCollect.map(id => id._id),
+                status: this.state.status,
+                status_material: this.state.material,
+                status_produksi: this.state.produksi,
+                status_pembayaran: this.state.pembayaran,
+                status_pengiriman: this.state.pengiriman
             }
-        )
+            console.log("order", dataOrder)
+            axios.post('http://10.0.2.2:3000/orders', dataOrder)
+            .then(
+                res => {
+                    console.log(res.data)
+                    console.log("data sukses order")
+                    alert('Order Berhasil')
+                    this.props.navigation.navigate('Verification');
+                }
+            )
+        }
+        
     }
 
     forCustomer(){
@@ -199,7 +214,7 @@ export default class PurchaseOrder extends Component{
                         
 
                             <View style={{paddingTop:normalize(20)}}>
-                                <Button full style={{backgroundColor:'#003499', height:normalize(40), width:normalize(280), borderRadius:10}} onPress={() => {this.onSubmit(), this.forCustomer()}}>
+                                <Button full style={{backgroundColor:'#003499', height:normalize(40), width:normalize(280), borderRadius:10}} onPress={() => {this.onSubmit()}}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18),color:'white', paddingLeft:normalize(10), textAlign:'left'}}>Order</Text>
                                 </Button>
                                 <View style={{paddingTop:normalize(10)}}/>

@@ -20,14 +20,17 @@ export default class BuatLaporan extends Component{
                         <View style={{width:normalize(70),borderRadius:10, height:normalize(70), backgroundColor:'#54D871', alignItems:'center', justifyContent:'center'}}>
                             <Image source={reports} style={{width:normalize(60), height:normalize(60)}}/>
                         </View>
-                        <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), paddingLeft:normalize(10)}}>Buat Laporan</Text>
+                        <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), paddingLeft:normalize(10)}}>Laporan Transaksi</Text>
                     </View>
                 </View>
                 <ScrollView>
-                    <View style={{height:normalize(180), width:'100%', borderRadius:20, backgroundColor:'#fff', marginTop:normalize(50)}}>
-                    <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), textAlign:'center'}}>Pilih Menu Laporan</Text>
-                        <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', padding:normalize(10)}}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('ListMaterial')} style={{alignItems:'center', justifyContent:'center'}}>
+                    <View style={{height:normalize(350), width:'100%', borderRadius:20, backgroundColor:'#fff', marginTop:normalize(50)}}>
+                    <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), textAlign:'center'}}>Daftar Transaksi</Text>
+                    <ScrollView>
+
+                    </ScrollView>
+                        {/* <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', padding:normalize(10)}}> */}
+                            {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('ListMaterial')} style={{alignItems:'center', justifyContent:'center'}}>
                                 <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#54D871', alignItems:'center', justifyContent:'center'}}>
                                     <Image source={reports} style={{width:normalize(60), height:normalize(60)}}/>
                                 </View>
@@ -39,10 +42,10 @@ export default class BuatLaporan extends Component{
                                     <Image source={reports} style={{width:normalize(60), height:normalize(60)}}/>
                                 </View>
                                 <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Laporan{"\n"}Invoice{"\n"}</Text>
-                            </TouchableOpacity>
-                        </View>
+                            </TouchableOpacity> */}
+                        {/* </View> */}
                     </View>
-                    <View style={{paddingTop:normalize(180), paddingLeft:normalize(30), paddingRight:normalize(30)}}>
+                    <View style={{paddingTop:normalize(20), paddingLeft:normalize(30), paddingRight:normalize(30)}}>
                         <Button onPress={() => this.props.navigation.navigate('Dashboard')} full style={{height:normalize(40), borderRadius:10, backgroundColor:'#E78181'}}>
                             <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), textAlign:'center'}}>Kembali</Text>
                         </Button>
