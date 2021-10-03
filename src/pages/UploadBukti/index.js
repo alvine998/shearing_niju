@@ -4,13 +4,14 @@ import normalize from "react-native-normalize";
 import { box_add, reports } from "../../assets";
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import RNFetchBlob from "rn-fetch-blob";
+import { Button } from "native-base";
 
 
 export default class UploadBukti extends Component{
     constructor(props){
         super(props);
         this.state={
-            url:'http://10.0.2.2:3000/files',
+            url:'http://10.0.3.2:3000/files',
             saving: false
         };
     }
@@ -191,16 +192,21 @@ export default class UploadBukti extends Component{
                     </View>
                 </View>
                 <ScrollView>
-                    <Image source={{uri: this.state.filePath.uri}} style={{width:normalize(100), height:normalize(150)}}/>
+                    {/* <Image source={{uri: this.state.filePath.uri}} style={{width:normalize(100), height:normalize(150)}}/> */}
 
-                    {/* <TouchableOpacity style={{width:normalize(100), height:normalize(40), backgroundColor:'#fff'}} onPress={() => this.captureImage('photo')}>
+                    <TouchableOpacity style={{width:normalize(100), height:normalize(40), backgroundColor:'#fff'}} onPress={() => this.captureImage('photo')}>
                         <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), paddingLeft:normalize(10)}}>Capture</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{width:normalize(100), height:normalize(40), backgroundColor:'#fff'}} onPress={() => this.chooseFile('photo')}>
                         <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), paddingLeft:normalize(10)}}>Gallery</Text>
-                    </TouchableOpacity> */}
+                    </TouchableOpacity>
                 </ScrollView>
+                <View style={{paddingTop:normalize(20), paddingLeft:normalize(50), paddingBottom:normalize(20)}}>
+                    <Button full style={{backgroundColor:'#F44444', height:normalize(40), width:normalize(280), borderRadius:10}} onPress={() => this.props.navigation.navigate('FindOrder')}>
+                        <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18),color:'white', paddingLeft:normalize(10), textAlign:'left'}}>Kembali</Text>
+                    </Button>
+                </View>
             </View>
         )
     }

@@ -29,7 +29,7 @@ export default class FindOrder extends Component{
                 console.log(res);
                 this.setState({res})
 
-                axios.get(`http://10.0.2.2:3000/orders/${res}`)
+                axios.get(`http://10.0.3.2:3000/orders/${res}`)
                 .then(
                     res => {
                         const valOrder = res.data;

@@ -12,10 +12,14 @@ export default class IsiKotakMasuk extends Component{
         this.state={
             collectionOrder:[],
             collectionCustomer:[],
-            collect:[],
+            ordid:[],
+            detail:[],
             id:'',
             status:'sudah verifikasi',
-            ordid:[]
+            nama_item:'',
+            harga_satuan:'',
+            jumlah_item:'',
+            total_harga:''
         }
     }
 
@@ -27,36 +31,39 @@ export default class IsiKotakMasuk extends Component{
                 this.setState({
                     collectionOrder
                 })
-                axios.get(`http://10.0.2.2:3000/orders/${collectionOrder}`)
-                    .then(res => {
+                axios.get(`http://10.0.3.2:3000/orders/${collectionOrder}`)
+                    .then((res,i) => {
                         const collectionCustomer = res.data;
-                        console.log("data obj",collectionCustomer)
-                        this.setState({collectionCustomer})
-
-                        return collectionCustomer.detorderid.map(id => 
-                            {
-                                console.log("id : ", id)
-                                // this.setState({ordid: id})
-                                // console.log(this.state.ordid)
-                                axios.get(`http://10.0.2.2:3000/detorders/${id}`)
-                                .then(res => {
-                                    const collect = res.data;
-                                    console.log("data ok",collect)
-                                    this.setState({collect})
-                                })
-                            }
-                        );
-                        
-                    })
+                        console.log(`collectionCustomer`, collectionCustomer)
+                        // console.log("data obj",collectionCustomer.detailorders.map(id => id._id))
+                        // collectionCustomer.detailorders.forEach(element => {
+                        //   console.log('element',element)  
+                        // })
+                        this.setState({collectionCustomer}) 
+                    }).catch(err => {console.log(err)})
                 
             }
         )
     }
 
+
+    // renderValue(){
+    //     return this.state.collectionCustomer.detorderid.map(id => {
+    //         axios.get(`http://10.0.3.2:3000/detorders/${id}`)
+    //         .then(
+    //             res => {
+    //                 const detail = res.data;
+    //                 console.log("detail : ", detail)
+    //                 this.setState({detail})
+    //             }
+    //         )
+    //     })
+    // }
+
     updateStatus(){
         const stats = { status: this.state.status}
         console.log(this.state.status)
-        axios.put(`http://10.0.2.2:3000/orders/${this.state.collectionCustomer._id}`, stats)
+        axios.put(`http://10.0.3.2:3000/orders/${this.state.collectionCustomer._id}`, stats)
         .then(
             res => 
             {
@@ -72,7 +79,7 @@ export default class IsiKotakMasuk extends Component{
     }
 
     render(){
-        const {collectionCustomer, collect} = this.state;
+        const {collectionCustomer, collect, detail} = this.state;
         return(
             <View style={{backgroundColor:'#73A3EC', height:'100%'}}>
                 <View style={{backgroundColor:'white', borderBottomLeftRadius:50, borderBottomRightRadius:50, height:normalize(120)}}>
@@ -91,22 +98,51 @@ export default class IsiKotakMasuk extends Component{
                                     <View style={{paddingTop:normalize(20)}}>
                                         <Text>Order Id : {"\n"} {collectionCustomer._id}</Text>
                                         <Text>Cust Id : {"\n"} {collectionCustomer.custid}</Text>
-                                        <Text>Nama PT : {"\n"} {collectionCustomer.namapt}</Text>
-                                        <Text>Alamat PT : {"\n"} {collectionCustomer.alamatpt}</Text>
+                                        <Text>Nama Perusahaan : {"\n"} {collectionCustomer.namapt}</Text>
+                                        <Text>Alamat Perusahaan : {"\n"} {collectionCustomer.alamatpt}</Text>
                                         <View style={{paddingTop:normalize(10)}} />
                                         <Text>Detail Order :</Text>
-                                        {collect.map(collects => 
-                                            {
+                                        {
+                                            collectionCustomer && collectionCustomer.detailorders && collectionCustomer.detailorders.map((element,i) => {
+                                                console.log(`element bawah`, element)
                                                 return(
-                                                    <View style={{borderBottomWidth:1}}>
-                                                        <Text>Nama Item : {collects.nama_item}</Text>
-                                                        <Text>Jumlah Item : {collects.jumlah_item}</Text>
-                                                        <Text>Harga Satuan : {collects.harga_satuan}</Text>
-                                                        <Text>Total Harga : {collects.total_harga}</Text>
+                                                    <View key={i}>
+                                                        <Text >Nama Item : {"\n"} {element.nama_item}</Text>
+                                                        <Text>Jumlah Item : {"\n"} {element.jumlah_item}</Text>
+                                                        <Text>Harga Satuan : {"\n"} {element.harga_satuan}</Text>
+                                                        <Text>Total Harga : {"\n"} {element.total_harga}</Text>
                                                     </View>
                                                 )
-                                            }
-                                        )}
+                                            })
+                                        }
+                                        
+                                        {
+                                            // this.state.collectionCustomer.map((res) => {
+                                            //     res.detorderid.map((respo,i) => {
+                                                    
+                                            //     })
+                                            // })
+                                            // this.renderValue()
+                                        }
+                                        {/* {
+                                            collectionCustomer.map(id => {
+                                                axios.get(`http://10.0.3.2:3000/detorders/${id.detorderid}`)
+                                                    .then(res => {
+                                                    const collect = res.data;
+                                                    console.log("data ok",collect)
+                                                    this.setState({collect})
+
+                                                    console.log("Detail : ", collect)
+
+                                                    // collect.map(collects => 
+                                                    //     {
+                                                    
+                                                    //         )
+                                                    //     }   
+                                                    // )
+                                                })
+                                            })
+                                        } */}
                                     </View>
                                     
 

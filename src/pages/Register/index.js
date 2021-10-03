@@ -51,7 +51,7 @@ export default class Registrasi extends Component{
     }
 
     componentDidMount(){
-        axios.get('http://10.0.2.2:3000/customers')
+        axios.get('http://10.0.3.2:3000/customers')
         .then(res => {
             const collection = res.data;
             console.log(collection);
@@ -95,7 +95,7 @@ export default class Registrasi extends Component{
                 session_order: this.state.session_order
             };
             console.log('hello ',custObject) 
-            axios.post('http://10.0.2.2:3000/customers/', custObject)
+            axios.post('http://10.0.3.2:3000/customers/', custObject)
                 .then(res => 
                     {
                     console.log(res.data)

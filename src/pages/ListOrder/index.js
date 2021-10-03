@@ -23,14 +23,14 @@ export default class ListOrder extends Component{
                 console.log(res)
                 this.setState({res})
 
-                axios.get(`http://10.0.2.2:3000/customerss/${res}`)
+                axios.get(`http://10.0.3.2:3000/customerss/${res}`)
                 .then(
                     res => {
                         const collection = res.data;
                         console.log(collection);
                         this.setState({collection})
 
-                        axios.get(`http://10.0.2.2:3000/orderss/${collection._id}`)
+                        axios.get(`http://10.0.3.2:3000/orderss/${collection._id}`)
                         .then(
                             res => {
                                 const custColl = res.data;

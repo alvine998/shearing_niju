@@ -26,7 +26,7 @@ export default class HomeScreen extends Component{
             // Adding a callback to get the value
             // this.setState({valEmail: value}),
           // Setting the value in Text
-          axios.get(`http://10.0.2.2:3000/customerss/${value}`)
+          axios.get(`http://10.0.3.2:3000/customerss/${value}`)
             .then((res, valOrder) => {
                 const collection = res.data;
                 console.log(value);
@@ -53,7 +53,7 @@ export default class HomeScreen extends Component{
         const session = {
             session_order: this.state.collection.session_order = 1
         }
-        axios.put(`http://10.0.2.2:3000/customers/${this.state.collection._id}`, session)
+        axios.put(`http://10.0.3.2:3000/customers/${this.state.collection._id}`, session)
         .then(
             res => console.log(res.data)
         )

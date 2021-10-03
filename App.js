@@ -26,6 +26,8 @@ import ListOrder from './src/pages/ListOrder';
 import UploadBukti from './src/pages/UploadBukti';
 import ListLaporanMaterial from './src/pages/Admin/ListLaporanMaterial';
 import ListLaporanInvoice from './src/pages/Admin/ListLaporanInvoice';
+import ListInvoice from './src/pages/Admin/ListInvoice';
+import DataCustomer from './src/pages/Admin/DataCustomer';
 
 const Stack = createStackNavigator();
 
@@ -67,6 +69,9 @@ const Stack = createStackNavigator();
           <Stack.Screen name="CustomerProgress" component={CustomerProgress} options={{headerShown: false}} />
           {/* Buat Invoice */}
           <Stack.Screen name="BuatInvoice" component={BuatInvoice} options={{headerShown: false}} />
+          <Stack.Screen name="ListKotakInvoice" component={ListInvoice} options={{headerShown: false}} />
+          {/* Data Customer */}
+          <Stack.Screen name="DataCustomer" component={DataCustomer} options={{headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
       // <View>

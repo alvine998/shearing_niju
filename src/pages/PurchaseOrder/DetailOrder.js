@@ -16,7 +16,9 @@ export default class DetailOrder extends Component{
             totalharga:'',
             collection:[],
             values:'',
-            session_detail:1
+            orderid:'',
+            session_detail:1,
+            po:''
         };
     }
 
@@ -25,7 +27,7 @@ export default class DetailOrder extends Component{
             (values, collection) => {
                 console.log(values)
                 this.setState({valEmail:values}) 
-                axios.get(`http://10.0.2.2:3000/customerss/${values}`)
+                axios.get(`http://10.0.3.2:3000/customerss/${values}`)
                 .then(res => {
                     collection = res.data;
                     console.log(collection);
@@ -82,6 +84,8 @@ export default class DetailOrder extends Component{
         else {
             const details = {
                 custid: this.state.collection._id,
+                po_numb: this.state.po,
+                orderid: this.state.orderid,
                 nama_item: this.state.namaMaterial,
                 jumlah_item: this.state.jumlahMaterial,
                 harga_satuan: this.state.hargaSatuan,
@@ -89,11 +93,11 @@ export default class DetailOrder extends Component{
                 session_detail: this.state.session_detail
             }
             console.log('hey', details)
-            axios.post('http://10.0.2.2:3000/detorders', details)
+            axios.post('http://10.0.3.2:3000/detorders', details)
             .then(res => {
                 console.log(res.data);
                 Alert.alert("Data berhasil ditambah");
-                this.setState({namaMaterial:'', jumlahMaterial:'', hargaSatuan:'', totalharga:''})
+                this.setState({namaMaterial:'', jumlahMaterial:'', hargaSatuan:'', totalharga:'', po:''})
             })
         }
 
@@ -125,6 +129,24 @@ export default class DetailOrder extends Component{
                         </Text>
                     </View>
                     <View style={{padding:normalize(20), alignItems:'center'}}>
+                        <Left>
+                        <View>
+                            <TextInput
+                            placeholder="Nomor PO"
+                            style={{
+                                width:normalize(100),
+                                paddingLeft:normalize(0),
+                                color:'white',
+                                textAlign:'center'
+                            }}
+                            maxLength={5}
+                            keyboardType="number-pad"
+                            underlineColorAndroid="white"
+                            value={this.state.po}
+                            onChangeText={(event) => this.setState({po: event}) }
+                            />
+                        </View>
+                        </Left>
                         <View>
                             <TextInput
                             placeholder="Nama Material"

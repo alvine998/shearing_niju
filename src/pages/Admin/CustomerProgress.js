@@ -31,7 +31,7 @@ export default class CustomerProgress extends Component{
                 console.log('id : ', res);
                 this.setState({res})
 
-                axios.get(`http://10.0.2.2:3000/orders/${res}`)
+                axios.get(`http://10.0.3.2:3000/orders/${res}`)
                 .then(
                     response => {
                         const collect = response.data;
@@ -56,7 +56,7 @@ export default class CustomerProgress extends Component{
         const produksi = {
             status_produksi: this.state.produksi
         }
-        axios.put(`http://10.0.2.2:3000/orders/${collects}`, produksi)
+        axios.put(`http://10.0.3.2:3000/orders/${collects}`, produksi)
         .then(
             res => {
                 console.log('update : ', res.data);

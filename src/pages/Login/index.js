@@ -12,7 +12,8 @@ export default class Login extends Component{
         this.state={
             email:'',
             password:'',
-            collection:[]
+            collection:[],
+            karyawan:[]
         }
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePass = this.handlePass.bind(this);
@@ -27,7 +28,13 @@ export default class Login extends Component{
     }
 
     componentDidMount(){
-        
+        axios.get(`http://10.0.3.2:3000/karyawans`)
+        .then(
+            res => {
+                console.log(res.data.map(email => email.email))
+                this.setState({karyawan: res.data})
+            }
+        )
     }
 
     storeData = async () => {
@@ -44,7 +51,7 @@ export default class Login extends Component{
             password: this.state.password
         }
 
-        axios.post('http://10.0.2.2:3000/customers/login/', authOk)
+        axios.post('http://10.0.3.2:3000/customers/login/', authOk)
         .then(res => {
             console.log(res.data);
             Alert.alert("Login Sukses");

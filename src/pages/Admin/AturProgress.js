@@ -16,7 +16,7 @@ export default class AturProgress extends Component{
     }
 
     getDataOrder(){
-        axios.get(`http://10.0.2.2:3000/orders`)
+        axios.get(`http://10.0.3.2:3000/orders`)
         .then(
             res => {
                 const collect = res.data;

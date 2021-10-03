@@ -4,14 +4,16 @@ import { Button, Icon } from "native-base";
 import React, {Component} from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import normalize from "react-native-normalize";
-import { mailing } from "../../assets";
+import { invoice, mailing } from "../../assets";
 
-export default class KotakMasuk extends Component{
+export default class ListInvoice extends Component{
     constructor(props){
         super(props);
         this.state={
             collection:[],
             values:[],
+            inv:[],
+            validate: false
         }
     }
 
@@ -50,27 +52,55 @@ export default class KotakMasuk extends Component{
 
     componentDidMount(){
         this.getDataOrder();
+        this.getDataInvoice();
     }
+
+    getDataInvoice(){
+        axios.get(`http://10.0.3.2:3000/invoices`)
+        .then(
+            res => {
+                const inv = res.data;
+                console.log(inv.map(stat => stat.status));
+                this.setState({inv})
+            }
+        )
+    }
+
+    // disableList(){
+    //     try{
+    //         this.state.inv.map(inn => {
+    //             if(inn.status == 'sudah verifikasi'){
+    //                 this.setState({validate: true})
+    //             }
+    //             else {
+    //                 return false
+    //             }
+    //         })
+    //     }
+    //     catch(err){
+    //         console.log(err)
+    //     }
+    // }
 
     render(){
         return(
             <View style={{backgroundColor:'#73A3EC', height:'100%'}}>
                 <View style={{backgroundColor:'white', borderBottomLeftRadius:50, borderBottomRightRadius:50, height:normalize(120)}}>
                     <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', paddingTop:normalize(20)}}>
-                        <View style={{width:normalize(70),borderRadius:10, height:normalize(70), backgroundColor:'#6D7AF2', alignItems:'center', justifyContent:'center'}}>
-                            <Image source={mailing} style={{width:normalize(50), height:normalize(40)}}/>
+                        <View style={{width:normalize(70),borderRadius:10, height:normalize(70), backgroundColor:'#E78181', alignItems:'center', justifyContent:'center'}}>
+                            <Image source={invoice} style={{width:normalize(60), height:normalize(60)}}/>
                         </View>
-                        <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), paddingLeft:normalize(10)}}>Kotak Masuk</Text>
+                        <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), paddingLeft:normalize(10)}}>List Invoice</Text>
                     </View>
                 </View>
                 <ScrollView>
                     <View style={{paddingTop:normalize(30), alignItems:'center', justifyContent:'center'}}>
-                        {this.state.collection.sort((a,b) => new Date(a) < new Date(b) ? 1 : -1) && this.state.collection.map(valueses => {
+                        {this.state.collection.reverse() && this.state.collection.map((valueses, i) => {
                             return(
-                                    <TouchableOpacity onPress={() => {this.setData(valueses._id),this.props.navigation.navigate('IsiKotakMasuk')}} style={{height:normalize(50), width:'100%', backgroundColor:'white'}}>
+                                    <TouchableOpacity disabled={this.state.inv.map(stat => stat.status) == 'sudah dikirim' ? true : false} onPress={() => {this.setData(valueses._id),this.props.navigation.navigate('BuatInvoice')}} style={{height:normalize(70), width:'100%', backgroundColor:'white'}}>
                                         <View style={{flexDirection:'row', padding:normalize(10)}}>
                                             <Icon type={"FontAwesome5"} name="envelope"/>
-                                            <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), paddingLeft:normalize(10), paddingTop:normalize(5)}}>Order Masuk {valueses.namapt}</Text>
+                                            <Text key={i} style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), paddingLeft:normalize(10), paddingTop:normalize(5)}}>{valueses.namapt}/{valueses.createdAt}</Text>
                                         </View>
                                     </TouchableOpacity>
                             )
@@ -79,7 +109,7 @@ export default class KotakMasuk extends Component{
                 </ScrollView>
                 <View style={{padding:normalize(30)}}>
                     <Button onPress={() => this.props.navigation.navigate('Dashboard')} full style={{backgroundColor:'#E78181', height:normalize(40), borderRadius:10}}>
-                    <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18)}}>Kembali</Text>
+                    <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), color:'white'}}>Kembali</Text>
                     </Button>
                 </View>
             </View>

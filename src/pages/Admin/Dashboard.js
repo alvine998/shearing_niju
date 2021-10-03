@@ -57,7 +57,7 @@ export default class Dashboard extends Component{
                                             <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#54D871', alignItems:'center', justifyContent:'center'}}>
                                                 <Image source={reports} style={{width:normalize(60), height:normalize(60)}}/>
                                             </View>
-                                            <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Laporan{"\n"}Transaksi</Text>
+                                            <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center'}}>Data{"\n"}Customer</Text>
                                         </TouchableOpacity>
                                         <View style={{paddingLeft:normalize(20)}}/>
                                         <TouchableOpacity onPress={() => this.props.navigation.navigate('AturProgress')}>
@@ -69,7 +69,7 @@ export default class Dashboard extends Component{
                                     </View>
 
                                     <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', paddingTop:normalize(20)}}>
-                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('BuatInvoice')}>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('ListKotakInvoice')}>
                                             <View style={{width:normalize(70), height:normalize(70),borderRadius:10, backgroundColor:'#E78181', alignItems:'center', justifyContent:'center'}}>
                                                 <Image source={invoice} style={{width:normalize(60), height:normalize(60)}}/>
                                             </View>
@@ -91,14 +91,14 @@ export default class Dashboard extends Component{
                                     </View>
 
                                     {/* Button */}
-                                    <View style={{paddingTop:normalize(230)}}>
+                                    <View style={{paddingTop:normalize(200)}}>
                                         <Button onPress={() => navigation.navigate('Login')} full style={{backgroundColor:'#F44444', borderRadius:10, height:normalize(40)}}>
                                             <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), textAlign:'center', fontWeight:'bold'}}>KELUAR</Text>
                                         </Button>
                                     </View>
 
                                     {/* copyright */}
-                                    <View style={{paddingTop:normalize(20)}}>
+                                    <View style={{paddingTop:normalize(10)}}>
                                         <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(14), textAlign:'center'}}>Copyright By ptniju 2021</Text>
                                     </View>
                                 </View>

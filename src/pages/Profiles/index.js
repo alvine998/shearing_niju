@@ -16,32 +16,44 @@ export default class Profiles extends Component{
             // password:'',
             collection:[],
             valEmail:'',
-            values:''
+            values:'',
+            nama:'',
+            email:'',
+            nohp:'',
+            password:'',
+            namapt:'',
+            alamatpt:''
         };
         this.handleNama = this.handleNama.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
         this.handleNohp = this.handleNohp.bind(this);
         this.handlePass = this.handlePass.bind(this);
+        this.handleNamapt = this.handleNamapt.bind(this);
+        this.handleAlamatpt = this.handleAlamatpt.bind(this);
     }
 
     handleNama(event){
-        const namas = this.state.collection.nama;
-        this.setState({namas: event})
+        this.setState({collection: event})
     }
 
     handleEmail(event){
-        const emails = this.state.collection.email;
-        this.setState({emails: event})
+        this.setState({collection: event})
     }
 
     handleNohp(event){
-        const phone = this.state.collection.nohp;
-        this.setState({phone: event})
+        this.setState({nohp: event})
     }
 
     handlePass(event){
-        const passwords = this.state.collection.password;
-        this.setState({passwords: event})
+        this.setState({password: event})
+    }
+
+    handleNamapt(event){
+        this.setState({namapt: event})
+    }
+
+    handleAlamatpt(event){
+        this.setState({alamatpt: event})
     }
 
 
@@ -52,7 +64,7 @@ export default class Profiles extends Component{
         (values, collection) => {
             console.log(values)
             this.setState({valEmail:values}) 
-            axios.get(`http://10.0.2.2:3000/customerss/${values}`)
+            axios.get(`http://10.0.3.2:3000/customerss/${values}`)
             .then(res => {
                 collection = res.data;
                 console.log(collection);
@@ -71,10 +83,12 @@ export default class Profiles extends Component{
               nama: this.state.nama,
               email: this.state.email,
               nohp: this.state.phone,
+              namapt: this.state.namapt,
+              alamatpt: this.state.alamatpt,
               password: this.state.password,
           }
         console.log('hey', changeUser)
-        axios.put(`http://10.0.2.2:3000/customers/${this.state.collection._id}`, changeUser)
+        axios.put(`http://10.0.3.2:3000/customers/${this.state.collection._id}`, changeUser)
         .then( (res) => res.json())
           .then(resJson => {
               console.log(resJson)
@@ -128,7 +142,7 @@ export default class Profiles extends Component{
                             placeholderTextColor={'#fff'}
                             underlineColorAndroid="white"
                             value={collection.nama}
-                            onChangeText={this.handleNama}
+                            onChangeText={this.handleNama.bind(this)}
                         />
                         
                         <TextInput
@@ -152,6 +166,28 @@ export default class Profiles extends Component{
                             value={collection.nohp}
                             placeholderTextColor={'#fff'}
                             onChangeText={this.handleNohp}
+                        />
+                        <TextInput
+                            style={{
+                                width:normalize(280),
+                                paddingLeft:normalize(20),
+                                color:'white'
+                            }}
+                            underlineColorAndroid="white"
+                            value={collection.namapt}
+                            placeholderTextColor={'#fff'}
+                            onChangeText={this.handleNamapt}
+                        />
+                        <TextInput
+                            style={{
+                                width:normalize(280),
+                                paddingLeft:normalize(20),
+                                color:'white'
+                            }}
+                            underlineColorAndroid="white"
+                            value={collection.alamatpt}
+                            placeholderTextColor={'#fff'}
+                            onChangeText={this.handleAlamatpt}
                         />
                         <TextInput
                             style={{

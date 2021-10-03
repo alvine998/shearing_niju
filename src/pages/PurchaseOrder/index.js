@@ -44,7 +44,7 @@ export default class PurchaseOrder extends Component{
                 this.setState({valEmail:values})
 
                 // Mengambil data customer by email
-                axios.get(`http://10.0.2.2:3000/customerss/${values}`)
+                axios.get(`http://10.0.3.2:3000/customerss/${values}`)
                 .then(res => {
                     collection = res.data;
                     console.log(collection._id);
@@ -52,13 +52,13 @@ export default class PurchaseOrder extends Component{
 
                     // Memanggil Data Order by Customer Id
                     console.log("hello", collection);
-                    axios.get(`http://10.0.2.2:3000/detorderss/${collection._id}`)
+                    axios.get(`http://10.0.3.2:3000/detorderss/${collection._id}`)
                     .then(res => {
                         const detCollect = res.data;
                         console.log(detCollect);
                         this.setState({detCollect})
 
-                        axios.get(`http://10.0.2.2:3000/detorderss/session/1`)
+                        axios.get(`http://10.0.3.2:3000/detorderss/session/1`)
                         .then(res => {
                             const sessCollect = res.data;
                             console.log("Top", sessCollect.map(id => id._id));
@@ -116,7 +116,7 @@ export default class PurchaseOrder extends Component{
                 status_pengiriman: this.state.pengiriman
             }
             console.log("order", dataOrder)
-            axios.post('http://10.0.2.2:3000/orders', dataOrder)
+            axios.post('http://10.0.3.2:3000/orders', dataOrder)
             .then(
                 res => {
                     console.log(res.data)
@@ -136,7 +136,7 @@ export default class PurchaseOrder extends Component{
         this.state.detCollect.map(id => 
             {
                 console.log("id",id._id);
-                axios.put(`http://10.0.2.2:3000/detorders/${id._id}`, sess)
+                axios.put(`http://10.0.3.2:3000/detorders/${id._id}`, sess)
                 .then(
                     res => {
                         console.log("sukses")
@@ -149,6 +149,10 @@ export default class PurchaseOrder extends Component{
             }    
         );
     }
+
+    // forDetail(){
+
+    // }
 
     render(){
         const {detCollect, collection} = this.state;

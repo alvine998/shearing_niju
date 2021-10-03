@@ -1,6 +1,8 @@
+import AsyncStorage from "@react-native-community/async-storage";
+import axios from "axios";
 import { Button, Icon } from "native-base";
 import React, {Component} from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import normalize from "react-native-normalize";
 import { invoice, mailing } from "../../assets";
@@ -9,21 +11,102 @@ export default class BuatInvoice extends Component{
     constructor(props){
         super(props);
         this.state={
-            dateVisibility:false
+            dateVisibility:false,
+            collect:[],
+            collects:[],
+            collection:[],
+            harga:[],
+            total:0,
+            date: new Date(),
+            hargatotal:0,
+            status:'sudah dikirim',
+            karyawan:'Leni Kusrini'
         }
     }
 
-    showDatePicker = () => {
-        this.setState({dateVisibility: true})
+    // getDate(){
+    //     var date = {currentTime: (new Date()).toLocaleString()};
+    //     this.setState({date: date})
+    // }
+
+    getDataItem = async () => {
+        await AsyncStorage.getItem('orderkey')
+        .then(
+            res => {
+                console.log("Hello",res);
+                this.setState({collect: res})
+
+                axios.get(`http://10.0.3.2:3000/orders/${res}`)
+                .then(
+                    res => {
+                        console.log("Tes",res.data)
+                        const collection = res.data;
+                        this.setState({collection})
+                        console.log("nama : ", collection._id)
+                    }
+                )
+            }
+        )
     }
 
-    hideDatePicker = () => {
-        this.setState({dateVisibility: false})
+    getTotalHarga(prevState){
+        console.log('prev', this.state.collection.detorderid)
+            try{
+                const arr = this.state.collection.detorderid
+                console.log(arr.length)
+                arr.map((user,i) => {
+                    axios.get(`http://10.0.3.2:3000/detorders/${user}`)
+                    .then(
+                        (res,v) => {
+                            console.log(res.data)
+                            const harga = res.data;
+                            this.setState({harga}); 
+                            const total = harga.jumlah_item * 1200000
+                            console.log("total: ", total)
+                            this.setState({total})
+                            console.log(this.state.total)
+                        }
+                    )
+                    
+                })
+            }
+            catch(err){
+                console.log(err)
+            }
     }
 
-    handleConfirm = (date) => {
-        console.warn('date has picked', date);
-        this.hideDatePicker;
+    saveInvoice(){
+        const saving = {
+            orderid: this.state.collect,
+            karyawanid: this.state.collects._id,
+            custid: this.state.collection.custid,
+            tanggal: this.state.date.toLocaleDateString(),
+            nama_pt: this.state.collection.namapt,
+            total_biaya: this.state.hargatotal,
+            status: this.state.status
+        }
+        console.log(saving)
+        axios.post(`http://10.0.3.2:3000/invoices`, saving)
+        .then(
+            res => {
+                console.log("Sukses save invoice", res.data)
+                Alert.alert("Berhasil Kirim Invoice")
+                this.props.navigation.push('ListKotakInvoice')
+            }
+
+        )
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        const {collection} = this.state;
+
+        if(collection && prevState.collection !== collection){
+            this.getTotalHarga()
+        }
+    }
+
+    componentDidMount(){
+        this.getDataItem();
     }
 
     render(){
@@ -39,26 +122,35 @@ export default class BuatInvoice extends Component{
                 </View>
                 <ScrollView>
                     <View style={{padding:normalize(30), alignItems:'center', justifyContent:'center'}}>
-                        <View style={{height:normalize(450), width:'100%', backgroundColor:'#fff', borderRadius:20, padding:normalize(20)}}>
+                        <View style={{height:normalize(350), width:'100%', backgroundColor:'#fff', borderRadius:20, padding:normalize(20)}}>
                             <Text style={{fontFamily:'RedHatDisplay-Bold', textAlign:'center', fontSize:normalize(20), paddingBottom:normalize(10)}} >Invoice</Text>
-                            <View style={{paddingTop:normalize(20), paddingLeft:normalize(20), paddingRight:normalize(20)}}>
-                                <Text style={{fontFamily:'RedHatDisplay-Regular'}}>Invoice Id : </Text>
-                                <Text style={{fontFamily:'RedHatDisplay-Regular'}}>Order Id : </Text>
-                                <Text style={{fontFamily:'RedHatDisplay-Regular'}}>Karyawan Id : </Text>
-                                <View style={{flexDirection:'row'}}>
-                                    <Text style={{fontFamily:'RedHatDisplay-Regular'}}>Tanggal Masuk : </Text>
-                                    <TouchableOpacity onPress={this.showDatePicker}>
-                                        <Text style={{fontFamily:'RedHatDisplay-Regular'}}>Pilih Tanggal</Text>
-                                        <DateTimePicker
-                                            isVisible={this.state.dateVisibility}
-                                            mode="date"
-                                            onConfirm={this.handleConfirm}
-                                            onCancel={this.hideDatePicker }
-                                        />
-                                    </TouchableOpacity>
+                            <View style={{paddingTop:normalize(0), paddingLeft:normalize(20), paddingRight:normalize(20)}}>
+                                <View style={{flexDirection:'row', alignItems:'center'}}>
+                                    <Text style={{fontFamily:'RedHatDisplay-Regular'}}>Nomor Invoice : </Text>
+                                    <TextInput
+                                        placeholder="__/INV/X/2021"
+                                        underlineColorAndroid="#dfdfdf"
+                                        style={{paddingLeft:normalize(20)}}
+                                    />
                                 </View>
-
+                                <Text style={{fontFamily:'RedHatDisplay-Regular'}}>Order Id : {this.state.collect}</Text>
+                                <Text style={{fontFamily:'RedHatDisplay-Regular', paddingTop:normalize(10)}}>Karyawan : {this.state.karyawan}</Text>
+                                <Text style={{fontFamily:'RedHatDisplay-Regular', paddingTop:normalize(10)}}>Tanggal : {this.state.date.toLocaleDateString()}</Text>
+                                <Text style={{fontFamily:'RedHatDisplay-Regular', paddingTop:normalize(10)}}>Nama Perusahaan : {this.state.collection.namapt}</Text>
+                                <Text style={{fontFamily:'RedHatDisplay-Regular', paddingTop:normalize(10)}}>Alamat Perusahaan : {this.state.collection.alamatpt}</Text>
+                                <Text style={{fontFamily:'RedHatDisplay-Regular', paddingTop:normalize(10)}}>Total Biaya : Rp.{this.state.hargatotal},-</Text>
+                                
                             </View>
+                            <View style={{paddingTop:normalize(20)}}>
+                                <Button onPress={() => this.saveInvoice()} full style={{backgroundColor:'#73A3EC', height:normalize(40), borderRadius:10, width:normalize(280)}}>
+                                    <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), color:'white'}}>Kirim</Text>
+                                </Button>
+                            </View>
+                        </View>
+                        <View style={{padding:normalize(20)}}>
+                            <Button onPress={() => this.props.navigation.navigate('ListKotakInvoice')} full style={{backgroundColor:'#E78181', height:normalize(40), borderRadius:10, width:normalize(300)}}>
+                            <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), color:'white'}}>Kembali</Text>
+                            </Button>
                         </View>
                     </View>
                 </ScrollView>
