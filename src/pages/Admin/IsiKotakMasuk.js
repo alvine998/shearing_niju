@@ -4,6 +4,7 @@ import { Button, Icon } from "native-base";
 import React, {Component} from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import normalize from "react-native-normalize";
+import NumberFormat from "react-number-format";
 import { mailing } from "../../assets";
 
 export default class IsiKotakMasuk extends Component{
@@ -96,8 +97,8 @@ export default class IsiKotakMasuk extends Component{
                                 <View>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', textAlign:'center', fontSize:normalize(20), paddingBottom:normalize(10)}} >Request Shearing</Text>
                                     <View style={{paddingTop:normalize(20)}}>
-                                        <Text>Order Id : {"\n"} {collectionCustomer._id}</Text>
-                                        <Text>Cust Id : {"\n"} {collectionCustomer.custid}</Text>
+                                        <Text>Nomor PO : {collectionCustomer.no_po}</Text>
+                                        {/* <Text>Cust Id : {"\n"} {collectionCustomer.custid}</Text> */}
                                         <Text>Nama Perusahaan : {"\n"} {collectionCustomer.namapt}</Text>
                                         <Text>Alamat Perusahaan : {"\n"} {collectionCustomer.alamatpt}</Text>
                                         <View style={{paddingTop:normalize(10)}} />
@@ -106,11 +107,14 @@ export default class IsiKotakMasuk extends Component{
                                             collectionCustomer && collectionCustomer.detailorders && collectionCustomer.detailorders.map((element,i) => {
                                                 console.log(`element bawah`, element)
                                                 return(
-                                                    <View key={i}>
-                                                        <Text >Nama Item : {"\n"} {element.nama_item}</Text>
-                                                        <Text>Jumlah Item : {"\n"} {element.jumlah_item}</Text>
-                                                        <Text>Harga Satuan : {"\n"} {element.harga_satuan}</Text>
-                                                        <Text>Total Harga : {"\n"} {element.total_harga}</Text>
+                                                    <View style={{borderBottomWidth:1}} key={i}>
+                                                        <Text >Nama Item : {element.nama_item}</Text>
+                                                        <Text>Jumlah Item : {element.jumlah_item}</Text>
+                                                        <Text>Harga Satuan : {element.harga_satuan}</Text>
+                                                        <NumberFormat value={element.total_harga} thousandSeparator={true} 
+                                                        displayType="text" prefix="Rp." 
+                                                        renderText={(value) => <Text>Total Harga : {value}</Text>}
+                                                        />
                                                     </View>
                                                 )
                                             })
@@ -146,9 +150,30 @@ export default class IsiKotakMasuk extends Component{
                                     </View>
                                     
 
-                                    <Button onPress={() => {this.updateStatus(), this.props.navigation.navigate('KotakMasuk')}} full style={{backgroundColor:'#73A3EC', height:normalize(40), borderRadius:10, marginTop:normalize(20)}} >
-                                        <Text style={{fontFamily:'RedHatDisplay-Regular', color:'white'}} >Terima</Text>
-                                    </Button>
+                                    {
+                                        this.state.collectionCustomer.status == "sudah verifikasi" ?
+                                        (
+                                            <View>
+                                                <Button onPress={() => {this.props.navigation.navigate('KotakMasuk')}} full style={{backgroundColor:'#E78181', height:normalize(40), borderRadius:10, marginTop:normalize(20)}} >
+                                                    <Text style={{fontFamily:'RedHatDisplay-Regular', color:'white'}} >Kembali</Text>
+                                                </Button>
+                                            </View>
+                                        ) : 
+                                        (
+                                            <View>
+                                                <Button onPress={() => {this.updateStatus(), this.props.navigation.navigate('KotakMasuk')}} full style={{backgroundColor:'#73A3EC', height:normalize(40), borderRadius:10, marginTop:normalize(20)}} >
+                                                    <Text style={{fontFamily:'RedHatDisplay-Regular', color:'white'}} >Terima</Text>
+                                                </Button>
+                                                <View style={{paddingTop:normalize(0)}}>
+                                                    <Button onPress={() => {this.props.navigation.navigate('KotakMasuk')}} full style={{backgroundColor:'#E78181', height:normalize(40), borderRadius:10, marginTop:normalize(20)}} >
+                                                        <Text style={{fontFamily:'RedHatDisplay-Regular', color:'white'}} >Kembali</Text>
+                                                    </Button>
+                                                </View>
+                                            </View>
+                                            
+                                        )
+                                    }
+                                    
                                 </View>
                             </ScrollView>
                         </View>

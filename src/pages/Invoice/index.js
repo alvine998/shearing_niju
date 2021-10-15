@@ -36,12 +36,12 @@ export default class Invoice extends Component{
                     .then(
                         res => {
                             const ordid = res.data;
-                            console.log("order data: ", ordid.map(id => id._id))
+                            console.log("order data: ", ordid.map(id => id.custid))
                             this.setState({ordid})
 
 
                             ordid.map(id => {
-                                axios.get(`http://10.0.3.2:3000/invoicess/${id._id}`)
+                                axios.get(`http://10.0.3.2:3000/invoicesss/${id.custid}`)
                                 .then(
                                     res => {
                                         console.log("Data Invoice : ",res.data)
@@ -58,28 +58,28 @@ export default class Invoice extends Component{
         )
     }
 
-    getDataInvoices(){
-        const id = this.state.collection._id
-        axios.get(`http://10.0.3.2:3000/invoicesss/${id}`)
-        .then(
-            res => {
-                console.log("Data Invoice : ",res.data)
-                const inv = res.data;
-                this.setState({collect})
-            }
-        )
-    }
+    // getDataInvoices(){
+    //     const id = this.state.collection._id
+    //     axios.get(`http://10.0.3.2:3000/invoicess/${id}`)
+    //     .then(
+    //         res => {
+    //             console.log("Data Invoice : ",res.data)
+    //             const inv = res.data;
+    //             this.setState({inv})
+    //         }
+    //     )
+    // }
 
     componentDidMount(){
         this.getDataInvoice();
     }
 
-    componentDidUpdate(prevProps, prevState){
-        const {collection} = this.state;
-        if(collection && prevState.collection !== collection){
-            this.getDataInvoices();
-        }
-    }
+    // componentDidUpdate(prevProps, prevState){
+    //     const {collection} = this.state;
+    //     if(collection && prevState.collection !== collection){
+    //         this.getDataInvoices();
+    //     }
+    // }
 
     render(){
         return(
@@ -102,21 +102,23 @@ export default class Invoice extends Component{
                                         <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24)}}>Invoice Anda</Text>
                                     </View>
                                     {
-                                        this.state.collect && this.state.collect.map(invs => {
+                                        this.state.inv.reverse() && this.state.inv.map((invs,i) => {
                                             return(
-                                                <View>
-                                                    <TouchableOpacity style={{backgroundColor:'#dfdfdf', width:normalize(300), flexDirection:'row', height:normalize(50), paddingTop:normalize(10), paddingLeft:normalize(20)}}>
+                                                <View key={i}>
+                                                    <TouchableOpacity onPress={() => {this.props.navigation.navigate('IsiInvoice')}} style={{backgroundColor:'#dfdfdf', width:normalize(370), flexDirection:'row', height:normalize(50), paddingTop:normalize(10), paddingLeft:normalize(20), alignItems:'center', justifyContent:"center"}}>
                                                         <View style={{width:normalize(30), height:normalize(30), borderRadius:15, backgroundColor:'#F44444'}}/>
-                                                        <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(24), paddingLeft:normalize(10)}}>Invoice</Text>
+                                                        <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18), paddingLeft:normalize(10)}}>Invoice {invs.invoice_no}</Text>
                                                     </TouchableOpacity>
                                                 </View>
                                             )
                                         })
                                     }
                                     <View style={{paddingTop:normalize(50)}}/>
-                                    <Button full style={{backgroundColor:'#F44444', height:normalize(40), width:normalize(300), borderRadius:10}} onPress={() => this.props.navigation.navigate('Home')}>
-                                        <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18),color:'white', paddingLeft:normalize(10), textAlign:'left'}}>Kembali</Text>
-                                    </Button>
+                                    <View style={{alignItems:'center', justifyContent:'center'}}>
+                                        <Button full style={{backgroundColor:'#F44444', height:normalize(40), width:normalize(300), borderRadius:10}} onPress={() => this.props.navigation.navigate('Home')}>
+                                            <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18),color:'white', paddingLeft:normalize(10), textAlign:'left'}}>Kembali</Text>
+                                        </Button>
+                                    </View>
                                 </View>
                                 
                             ) :

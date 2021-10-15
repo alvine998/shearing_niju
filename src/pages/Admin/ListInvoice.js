@@ -95,16 +95,18 @@ export default class ListInvoice extends Component{
                 </View>
                 <ScrollView>
                     <View style={{paddingTop:normalize(30), alignItems:'center', justifyContent:'center'}}>
-                        {this.state.collection.reverse() && this.state.collection.map((valueses, i) => {
-                            return(
-                                    <TouchableOpacity disabled={this.state.inv.map(stat => stat.status) == 'sudah dikirim' ? true : false} onPress={() => {this.setData(valueses._id),this.props.navigation.navigate('BuatInvoice')}} style={{height:normalize(70), width:'100%', backgroundColor:'white'}}>
-                                        <View style={{flexDirection:'row', padding:normalize(10)}}>
-                                            <Icon type={"FontAwesome5"} name="envelope"/>
-                                            <Text key={i} style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), paddingLeft:normalize(10), paddingTop:normalize(5)}}>{valueses.namapt}/{valueses.createdAt}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                            )
-                        })}
+                        {
+                            this.state.collection && this.state.collection.map((valueses, i) => {
+                                return(
+                                        <TouchableOpacity key={i} disabled={this.state.inv.status == 'sudah dikirim' ? true : false} onPress={() => {this.setData(valueses._id),this.props.navigation.navigate('BuatInvoice')}} style={{height:normalize(70), width:'100%', backgroundColor:'white'}}>
+                                            <View style={{flexDirection:'row', padding:normalize(10)}}>
+                                                <Icon type={"FontAwesome5"} name="envelope"/>
+                                                <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), paddingLeft:normalize(10), paddingTop:normalize(5)}}>{valueses.namapt}/{valueses.createdAt}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                )
+                            })
+                        }
                     </View>
                 </ScrollView>
                 <View style={{padding:normalize(30)}}>

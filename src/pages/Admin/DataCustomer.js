@@ -58,11 +58,11 @@ export default class DataCustomer extends Component{
                                 // console.log("Element bawah",this.state.collectionCustomer)
                                 (
                                     <View style={{paddingLeft:normalize(10), paddingRight:normalize(10)}}>
-                                        <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18)}}>Nama : {"\n"} {this.state.collectionCustomer.nama}</Text>
-                                        <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18)}}>Nama Perusahaan : {"\n"} {this.state.collectionCustomer.namapt}</Text>
-                                        <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18)}}>Alamat Perusahaan : {"\n"} {this.state.collectionCustomer.alamatpt}</Text>
-                                        <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18)}}>Email : {"\n"} {this.state.collectionCustomer.email}</Text>
-                                        <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18)}}>Nomor Hp : {"\n"} {this.state.collectionCustomer.nohp}</Text>
+                                        <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18)}}>Nama : {this.state.collectionCustomer.nama}</Text>
+                                        <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18)}}>Nama Perusahaan : {this.state.collectionCustomer.namapt}</Text>
+                                        <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18)}}>Alamat Perusahaan : {this.state.collectionCustomer.alamatpt}</Text>
+                                        <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18)}}>Email : {this.state.collectionCustomer.email}</Text>
+                                        <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(18)}}>Nomor Hp : {this.state.collectionCustomer.nohp}</Text>
                                     </View>
                                 )
                             }

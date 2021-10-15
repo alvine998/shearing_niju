@@ -65,7 +65,7 @@ export default class BuatLaporan extends Component{
                                         <TouchableOpacity onPress={() => {this.setData(res._id),this.props.navigation.navigate('DataCustomer')}} style={{height:normalize(50), width:'100%', backgroundColor:'white', borderBottomWidth:1}}>
                                             <View style={{flexDirection:'row', padding:normalize(10)}}>
                                                 <Icon type={"FontAwesome5"} name="user"/>
-                                                <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), paddingLeft:normalize(10), paddingTop:normalize(5)}}>Order Masuk {res.namapt}</Text>
+                                                <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), paddingLeft:normalize(10), paddingTop:normalize(5)}}>{res.namapt}</Text>
                                             </View>
                                         </TouchableOpacity>
                                     )

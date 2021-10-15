@@ -82,21 +82,21 @@ export default class FindOrder extends Component{
                         </TouchableOpacity>
 
                         {/* Ball 2 */}
-                        <TouchableOpacity onPress={() => valOrder.status == "belum verifikasi" ? Alert.alert("Selesaikan Verifikasi Dahulu") : this.props.navigation.navigate('UploadBukti')}>
+                        <TouchableOpacity onPress={() => valOrder.status == "belum verifikasi" ? Alert.alert("Selesaikan Verifikasi Dahulu") :  valOrder.status_material == "sedang dikirim" ? Alert.alert("Material dalam pengiriman") : valOrder.status_material == "sudah diterima" ? Alert.alert("Material telah diterima PT NIJU") : this.props.navigation.navigate('UploadBukti')}>
                             <View style={{paddingTop:normalize(20), paddingLeft:normalize(50), paddingRight:normalize(50), flexDirection:'row'}}>
-                                <View style={{height:normalize(60), width:normalize(60), borderRadius:30, backgroundColor:'#B1B1B1', alignItems:'center', justifyContent:'center'}}>
+                                <View style={[valOrder.status_material == 'sedang dikirim' ? styles.buttonSpecial : valOrder.status_material == 'sudah diterima' ? styles.buttonVerif : styles.buttonNonVerif]}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), color:'white'}}>2</Text>
                                 </View>
                                 <View style={{alignItems:'center', justifyContent:'center', paddingLeft:normalize(10)}}>
-                                    <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(24), color:'white'}}>Penyediaan Material & {"\n"} Working Instruction</Text>
+                                    <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(24), color:'white'}}>Penyediaan Material</Text>
                                 </View>
                             </View>
                         </TouchableOpacity>
 
                         {/* Ball 3 */}
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => {valOrder.status_material == "belum diterima" ? Alert.alert("Selesaikan Penyediaan Material Dahulu") : valOrder.status_produksi == "sedang produksi" ? Alert.alert("Produksi Sedang Dimulai") : Alert.alert("Produksi Telah Selesai")}}>
                             <View style={{paddingTop:normalize(20), paddingLeft:normalize(50), paddingRight:normalize(50), flexDirection:'row'}}>
-                                <View style={{height:normalize(60), width:normalize(60), borderRadius:30, backgroundColor:'#B1B1B1', alignItems:'center', justifyContent:'center'}}>
+                                <View style={[valOrder.status_produksi == 'sedang produksi' ? styles.buttonSpecial : valOrder.status_produksi == 'sudah produksi' ? styles.buttonVerif : styles.buttonNonVerif]}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), color:'white'}}>3</Text>
                                 </View>
                                 <View style={{alignItems:'center', justifyContent:'center', paddingLeft:normalize(10)}}>
@@ -106,9 +106,9 @@ export default class FindOrder extends Component{
                         </TouchableOpacity>
 
                         {/* Ball 4 */}
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => {valOrder.status_produksi == "belum produksi" || valOrder.status_produksi == "sedang produksi" ? Alert.alert("Produksi belum selesai") : valOrder.status_pembayaran == 'sedang verifikasi' ? alert("Menunggu verifikasi") : valOrder.status_pembayaran == 'sudah dibayar' ? alert("Pembayaran Selesai") : this.props.navigation.navigate('UploadBuktiBayar')}}>
                             <View style={{paddingTop:normalize(20), paddingLeft:normalize(50), paddingRight:normalize(50), flexDirection:'row'}}>
-                                <View style={{height:normalize(60), width:normalize(60), borderRadius:30, backgroundColor:'#B1B1B1', alignItems:'center', justifyContent:'center'}}>
+                                <View style={[valOrder.status_pembayaran == 'sedang verifikasi' ? styles.buttonSpecial : valOrder.status_pembayaran == 'sudah dibayar' ? styles.buttonVerif : styles.buttonNonVerif]}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), color:'white'}}>4</Text>
                                 </View>
                                 <View style={{alignItems:'center', justifyContent:'center', paddingLeft:normalize(10)}}>
@@ -118,9 +118,9 @@ export default class FindOrder extends Component{
                         </TouchableOpacity>
 
                         {/* Ball 5 */}
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => {valOrder.status_pembayaran == "belum dibayar" ? Alert.alert("Selesaikan Pembayaran Dahulu") : valOrder.status_pengiriman == 'sedang dikirim' ? this.props.navigation.navigate('UploadBuktiPengiriman') : valOrder.status_pengiriman == 'sudah diterima' ? alert("Produksi telah diterima") : alert("Menunggu Pengiriman Produk")}}>
                             <View style={{paddingTop:normalize(20), paddingLeft:normalize(50), paddingRight:normalize(50), flexDirection:'row'}}>
-                                <View style={{height:normalize(60), width:normalize(60), borderRadius:30, backgroundColor:'#B1B1B1', alignItems:'center', justifyContent:'center'}}>
+                                <View style={[valOrder.status_pengiriman == 'sedang dikirim' ? styles.buttonSpecial : valOrder.status_pengiriman == 'sudah diterima' ? styles.buttonVerif : styles.buttonNonVerif]}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), color:'white'}}>5</Text>
                                 </View>
                                 <View style={{alignItems:'center', justifyContent:'center', paddingLeft:normalize(10)}}>
@@ -148,6 +148,14 @@ const styles = StyleSheet.create({
         width:normalize(60), 
         borderRadius:30, 
         backgroundColor:'#003499', 
+        alignItems:'center', 
+        justifyContent:'center'
+    },
+    buttonSpecial:{
+        height:normalize(60), 
+        width:normalize(60), 
+        borderRadius:30, 
+        backgroundColor:'#FFDD3C', 
         alignItems:'center', 
         justifyContent:'center'
     },

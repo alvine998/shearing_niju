@@ -80,10 +80,10 @@ export default class ListOrder extends Component{
                         </View>
                         {this.state.custColl.reverse() && this.state.custColl.map(valueses => {
                             return(
-                                    <TouchableOpacity onPress={() => {this.setData(valueses._id),this.props.navigation.navigate('FindOrder')}} style={{height:normalize(50), width:'100%', backgroundColor:'white'}}>
+                                    <TouchableOpacity onPress={() => {this.setData(valueses._id),this.props.navigation.navigate('FindOrder')}} style={{height:normalize(70), width:'100%', backgroundColor:'white'}}>
                                         <View style={{flexDirection:'row', padding:normalize(10)}}>
                                             <Icon type={"FontAwesome5"} name="envelope"/>
-                                            <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), paddingLeft:normalize(10), paddingTop:normalize(5)}}>Order Id : {valueses._id}</Text>
+                                            <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), paddingLeft:normalize(10), paddingTop:normalize(5)}}>Nomor PO : {valueses.no_po} / {valueses.createdAt}</Text>
                                         </View>
                                     </TouchableOpacity>
                             )

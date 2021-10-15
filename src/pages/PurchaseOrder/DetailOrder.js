@@ -12,13 +12,13 @@ export default class DetailOrder extends Component{
         this.state={
             namaMaterial:'',
             jumlahMaterial:'',
-            hargaSatuan:'',
+            hargaSatuan:500,
             totalharga:'',
             collection:[],
             values:'',
             orderid:'',
             session_detail:1,
-            po:''
+            berat:''
         };
     }
 
@@ -44,22 +44,32 @@ export default class DetailOrder extends Component{
         this.setState({namaMaterial: event})
     }
 
+    handleBerat(event){
+        this.setState({berat: event})
+    }
+
 
     handleJumlahMaterial(event){
         this.setState({jumlahMaterial: event})
     }
-
-    handleHargaSatuan(event){
-        this.setState({hargaSatuan: event})
-    }
     
     
     onSubmit = () => {
-        const total = this.state.hargaSatuan * this.state.jumlahMaterial;
-        // this.setState({totalharga : total})
-        this.setState((prevState) => ({
-            totalharga: prevState.totalharga + total
-        }))
+        if(this.state.berat == 0 || this.state.berat == ''){
+            this.setState({totalharga: ''})
+        } else if(this.state.berat >= 1) {
+            const total = this.state.hargaSatuan * this.state.berat;
+            // this.setState({totalharga : total})
+            this.setState((prevState) => ({
+                totalharga: prevState.totalharga + total
+            }))
+        } else if(this.state.berat < 1){
+            const total = this.state.hargaSatuan * this.state.jumlahMaterial;
+            // this.setState({totalharga : total})
+            this.setState((prevState) => ({
+                totalharga: prevState.totalharga + total
+            }))
+        }
     }
 
     backHandling(){
@@ -75,6 +85,9 @@ export default class DetailOrder extends Component{
         else if(!this.state.jumlahMaterial){
             Alert.alert('harap isi jumlah material')
         }
+        else if(!this.state.berat){
+            Alert.alert('harap isi Berat Material')
+        }
         else if(!this.state.hargaSatuan){
             Alert.alert('harap isi harga satuan')
         }
@@ -84,8 +97,8 @@ export default class DetailOrder extends Component{
         else {
             const details = {
                 custid: this.state.collection._id,
-                po_numb: this.state.po,
                 orderid: this.state.orderid,
+                berat: this.state.berat,
                 nama_item: this.state.namaMaterial,
                 jumlah_item: this.state.jumlahMaterial,
                 harga_satuan: this.state.hargaSatuan,
@@ -97,7 +110,7 @@ export default class DetailOrder extends Component{
             .then(res => {
                 console.log(res.data);
                 Alert.alert("Data berhasil ditambah");
-                this.setState({namaMaterial:'', jumlahMaterial:'', hargaSatuan:'', totalharga:'', po:''})
+                this.setState({namaMaterial:'', jumlahMaterial:'', hargaSatuan:500, totalharga:'', berat:''})
             })
         }
 
@@ -129,24 +142,6 @@ export default class DetailOrder extends Component{
                         </Text>
                     </View>
                     <View style={{padding:normalize(20), alignItems:'center'}}>
-                        <Left>
-                        <View>
-                            <TextInput
-                            placeholder="Nomor PO"
-                            style={{
-                                width:normalize(100),
-                                paddingLeft:normalize(0),
-                                color:'white',
-                                textAlign:'center'
-                            }}
-                            maxLength={5}
-                            keyboardType="number-pad"
-                            underlineColorAndroid="white"
-                            value={this.state.po}
-                            onChangeText={(event) => this.setState({po: event}) }
-                            />
-                        </View>
-                        </Left>
                         <View>
                             <TextInput
                             placeholder="Nama Material"
@@ -160,9 +155,24 @@ export default class DetailOrder extends Component{
                             onChangeText={this.handleNamaMaterial.bind(this)}
                             />
                         </View>
+                        <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                            <TextInput
+                            placeholder="Berat Material"
+                            style={{
+                                width:normalize(260),
+                                paddingLeft:normalize(20),
+                                color:'white'
+                            }}
+                            underlineColorAndroid="white"
+                            keyboardType="number-pad"
+                            value={this.state.berat}
+                            onChangeText={this.handleBerat.bind(this)}
+                            />
+                            <Text> Kg</Text>
+                        </View>
                         <View>
                             <TextInput
-                            placeholder="Jumlah Material per Sheet"
+                            placeholder="Jumlah Material per Sheet / Pcs"
                             style={{
                                 width:normalize(280),
                                 paddingLeft:normalize(20),
@@ -176,7 +186,6 @@ export default class DetailOrder extends Component{
                         </View>
                         <View>
                             <TextInput
-                            placeholder="Harga Satuan"
                             keyboardType="number-pad"
                             style={{
                                 width:normalize(280),
@@ -184,8 +193,8 @@ export default class DetailOrder extends Component{
                                 color:'white'
                             }}
                             underlineColorAndroid="white"
-                            value={this.state.hargaSatuan}
-                            onChangeText={this.handleHargaSatuan.bind(this)}
+                            editable={false}
+                            value={"Harga Jasa Rp." + JSON.stringify(this.state.hargaSatuan) + ",-"}
                             />
                         </View>
 
@@ -203,9 +212,8 @@ export default class DetailOrder extends Component{
                                 color:'white'
                             }}
                             underlineColorAndroid="white"
-                            editable={true}
+                            editable={false}
                             value={this.state.totalharga}
-                            
                             />
                         </View>
                         

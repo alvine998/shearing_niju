@@ -49,22 +49,18 @@ export default class AturProgress extends Component{
                         <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), paddingLeft:normalize(10)}}>Atur Progress</Text>
                     </View>
                 </View>
-                <ScrollView>
-                    <View style={{paddingLeft:normalize(30), paddingRight:normalize(30)}}>
-                        <View style={{height:normalize(350), width:'100%', borderRadius:20, backgroundColor:'#fff', marginTop:normalize(50)}}>
+                <ScrollView >
+                    <View style={{paddingLeft:normalize(0), paddingRight:normalize(0)}}>
+                        <View style={{height:normalize(350), width:'100%', backgroundColor:'#fff', marginTop:normalize(50)}}>
                             <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), textAlign:'center', paddingTop:normalize(10)}}>Order On Progress</Text>
-                            <ScrollView style={{padding:normalize(20), paddingLeft:normalize(30), paddingRight:normalize(30)}}>
-                                <View style={{alignItems:'center',justifyContent:'center', flexDirection:'row'}}>
+                            <ScrollView nestedScrollEnabled={true}>
+                                <View style={{alignItems:'center', justifyContent:'center', paddingLeft:normalize(20), paddingRight:normalize(20), paddingTop:normalize(10)}}>
                                     {
-                                        collect.reverse() && collect.map(collects => {
+                                        collect && collect.map(collects => {
                                             return(
-                                                <View style={{paddingLeft:normalize(20)}}>
-                                                    <TouchableOpacity onPress={() => { this.setItem(collects._id) ,this.props.navigation.navigate('CustomerProgress')}}>
-                                                        <View style={{height:normalize(70), width:normalize(70), backgroundColor:'#dfdfdf'}}>
-                                                        <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(20), textAlign:'center', paddingTop:normalize(20)}}>{collects._id}</Text>
-                                                        </View>
+                                                    <TouchableOpacity style={{borderBottomWidth:1,height:normalize(70), width:'100%'}} onPress={() => { this.setItem(collects._id) ,this.props.navigation.navigate('CustomerProgress')}}>
+                                                        <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(20), textAlign:'left'}}>{collects.namapt} / {collects.createdAt}</Text>
                                                     </TouchableOpacity>
-                                                </View>
                                             )
                                         })
                                     }
@@ -81,7 +77,7 @@ export default class AturProgress extends Component{
                                 </View>
                             </ScrollView>
                         </View>
-                        <View style={{paddingTop:normalize(20)}}>
+                        <View style={{paddingTop:normalize(20), paddingLeft:normalize(20), paddingRight:normalize(20), paddingBottom:normalize(20)}}>
                             <Button onPress={() => this.props.navigation.navigate('Dashboard')} full style={{height:normalize(40), borderRadius:10, backgroundColor:'#E78181'}}>
                                 <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), textAlign:'center'}}>Kembali</Text>
                             </Button>

@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import { Image, ScrollView, Text, TextInput, View, TouchableOpacity, FlatList, Alert } from "react-native";
 import normalize from "react-native-normalize";
 import { box_add } from "../../assets";
+import NumberFormat from 'react-number-format'
 
 export default class PurchaseOrder extends Component{
     constructor(props){
@@ -23,11 +24,16 @@ export default class PurchaseOrder extends Component{
             pembayaran:'belum dibayar',
             pengiriman:'belum dikirim',
             sessions:0,
+            no_po:''
         };
     }
 
     handleNamaPt(event){
         this.setState({namapt: event})
+    }
+
+    handleNopo(event){
+        this.setState({no_po: event})
     }
 
     handleAlamatPt(event){
@@ -81,13 +87,17 @@ export default class PurchaseOrder extends Component{
            return this.state.sessCollect.map((value, index) => {
                 return(
                     <View style={{width:normalize(270), height:normalize(140), backgroundColor:'#fff', padding:normalize(20)}}>
-                            <View style={{flexDirection:'row'}}>
-                                <Text style={{textAlign:'left', borderBottomWidth:1, fontFamily:'RedHatDisplay-Regular'}}>
+                            <View style={{borderBottomWidth:1}}>
+                                <Text style={{textAlign:'left',  fontFamily:'RedHatDisplay-Regular'}}>
                                     Nama Item : {value.nama_item}{'\n'}
-                                    Jumlah Item : {value.jumlah_item}{'\n'}
-                                    Harga Satuan : {value.harga_satuan}{'\n'}
-                                    Total Harga : {value.total_harga}{'\n'}
+                                    Jumlah Item : {value.jumlah_item} Sheet{'\n'}
+                                    Berat Material : {value.berat} Kg{'\n'}
+                                    Harga Satuan : Rp.{value.harga_satuan},-
                                 </Text>
+                                <NumberFormat value={value.total_harga} thousandSeparator={true} 
+                                displayType="text" prefix="Rp." 
+                                renderText={(value) => <Text style={{fontFamily:'RedHatDisplay-Regular'}}>Total Harga : {value}</Text>}
+                                />
                             </View>
                     </View>
                 )
@@ -102,10 +112,14 @@ export default class PurchaseOrder extends Component{
         if(this.state.sessCollect && this.state.sessCollect.length < 1){
             Alert.alert('Harap tambahkan data order')
         }
+        else if(!this.state.no_po){
+            Alert.alert('Harap tambahkan nomor PO')
+        }
         else {
             this.forCustomer();
             const dataOrder = {
                 namapt: this.state.collection.namapt,
+                no_po: this.state.no_po,
                 custid: this.state.collection._id,
                 alamatpt: this.state.collection.alamatpt,
                 detorderid: this.state.sessCollect.map(id => id._id),
@@ -174,6 +188,23 @@ export default class PurchaseOrder extends Component{
                         </Text>
                     </View>
                     <View style={{padding:normalize(20), alignItems:'center'}}>
+
+                        <View>
+                            <TextInput
+                            placeholder="Nomor PO"
+                            style={{
+                                width:normalize(100),
+                                paddingLeft:normalize(0),
+                                color:'white',
+                                textAlign:'center'
+                            }}
+                            maxLength={5}
+                            keyboardType="number-pad"
+                            underlineColorAndroid="white"
+                            value={this.state.no_po}
+                            onChangeText={this.handleNopo.bind(this)}
+                            />
+                        </View>
                         <View>
                             <TextInput
                             placeholder="Nama Perusahaan"
@@ -204,8 +235,8 @@ export default class PurchaseOrder extends Component{
                         </View>
                         <View style={{flexDirection:'row', paddingTop:normalize(10)}}>
                             <Left>
-                                <Button onPress={() => this.props.navigation.navigate('DetailOrder')} style={{backgroundColor:'#003499', height:normalize(40), width:normalize(120), marginLeft:normalize(40)}}>
-                                    <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(16),color:'white', paddingLeft:normalize(10), textAlign:'left'}}>Tambah Data</Text>
+                                <Button onPress={() => this.props.navigation.navigate('DetailOrder')} style={{backgroundColor:'#003499', height:normalize(40), width:normalize(150), marginLeft:normalize(40)}}>
+                                    <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(16),color:'white', paddingLeft:normalize(10), textAlign:'left'}}>Tambah Material</Text>
                                 </Button>
                             </Left>
                             <Body/>

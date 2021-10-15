@@ -14,7 +14,7 @@ export default class Profiles extends Component{
             // email:'',
             // phone:'',
             // password:'',
-            collection:[],
+            // collection:{},
             valEmail:'',
             values:'',
             nama:'',
@@ -22,7 +22,8 @@ export default class Profiles extends Component{
             nohp:'',
             password:'',
             namapt:'',
-            alamatpt:''
+            alamatpt:'',
+            id:''
         };
         this.handleNama = this.handleNama.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
@@ -33,11 +34,15 @@ export default class Profiles extends Component{
     }
 
     handleNama(event){
-        this.setState({collection: event})
+        this.setState({nama: event})
+    }
+
+    handleId(event){
+        this.setState({id: event})
     }
 
     handleEmail(event){
-        this.setState({collection: event})
+        this.setState({email: event})
     }
 
     handleNohp(event){
@@ -68,7 +73,14 @@ export default class Profiles extends Component{
             .then(res => {
                 collection = res.data;
                 console.log(collection);
-                this.setState({collection});
+                // this.setState({collection});
+                this.handleNama(collection.nama)
+                this.handleEmail(collection.email)
+                this.handleNamapt(collection.namapt)
+                this.handleAlamatpt(collection.alamatpt)
+                this.handleNohp(collection.nohp)
+                this.handleId(collection._id)
+
             })
             .catch(err => {
                 console.log(err)
@@ -88,11 +100,14 @@ export default class Profiles extends Component{
               password: this.state.password,
           }
         console.log('hey', changeUser)
-        axios.put(`http://10.0.3.2:3000/customers/${this.state.collection._id}`, changeUser)
-        .then( (res) => res.json())
-          .then(resJson => {
-              console.log(resJson)
-          })
+        const id = this.state.id; 
+        axios.put(`http://10.0.3.2:3000/customers/${id}`, changeUser)
+        .then(
+            res => {
+                console.log(res.data)
+                alert("Profil berhasil diupdate");
+            }
+        )
         
     }
       
@@ -141,8 +156,9 @@ export default class Profiles extends Component{
                             }}
                             placeholderTextColor={'#fff'}
                             underlineColorAndroid="white"
-                            value={collection.nama}
-                            onChangeText={this.handleNama.bind(this)}
+                            value={this.state.nama}
+                            // onChangeText={this.handleNama.bind(this)}
+                            onChangeText={text => this.handleNama(text)}
                         />
                         
                         <TextInput
@@ -153,8 +169,8 @@ export default class Profiles extends Component{
                             }}
                             placeholderTextColor={'#fff'}
                             underlineColorAndroid="white"
-                            value={collection.email}
-                            onChangeText={this.handleEmail}
+                            value={this.state.email}
+                            onChangeText={text => this.handleEmail(text)}
                         />
                         <TextInput
                             style={{
@@ -163,9 +179,9 @@ export default class Profiles extends Component{
                                 color:'white'
                             }}
                             underlineColorAndroid="white"
-                            value={collection.nohp}
+                            value={this.state.nohp}
                             placeholderTextColor={'#fff'}
-                            onChangeText={this.handleNohp}
+                            onChangeText={text => this.handleNohp(text)}
                         />
                         <TextInput
                             style={{
@@ -174,9 +190,9 @@ export default class Profiles extends Component{
                                 color:'white'
                             }}
                             underlineColorAndroid="white"
-                            value={collection.namapt}
+                            value={this.state.namapt}
                             placeholderTextColor={'#fff'}
-                            onChangeText={this.handleNamapt}
+                            onChangeText={text => this.handleNamapt(text)}
                         />
                         <TextInput
                             style={{
@@ -185,9 +201,9 @@ export default class Profiles extends Component{
                                 color:'white'
                             }}
                             underlineColorAndroid="white"
-                            value={collection.alamatpt}
+                            value={this.state.alamatpt}
                             placeholderTextColor={'#fff'}
-                            onChangeText={this.handleAlamatpt}
+                            onChangeText={text => this.handleAlamatpt(text)}
                         />
                         <TextInput
                             style={{
@@ -199,8 +215,8 @@ export default class Profiles extends Component{
                             underlineColorAndroid="white"
                             placeholder="********"
                             placeholderTextColor={'#fff'}
-                            value={collection.password}
-                            onChangeText={this.handlePass}
+                            value={this.state.password}
+                            onChangeText={text => this.handlePass(text)}
                         />
 
                         <View style={{paddingTop:normalize(20)}}>

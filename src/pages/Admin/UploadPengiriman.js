@@ -18,7 +18,7 @@ import ImageCropPicker from 'react-native-image-crop-picker';
 import {uploadReplaceImage} from './utils';
 import AsyncStorage from '@react-native-community/async-storage';
 
-export default class UploadBukti extends Component {
+export default class UploadPengiriman extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,18 +62,19 @@ export default class UploadBukti extends Component {
     }
 
     const dataUpdate = {
-        image: result.info,
-        status_material: this.state.status
+        image_pengiriman: result.info,
+        status_pengiriman: this.state.status
     }
     
-    await AsyncStorage.getItem('findKey')
+    await AsyncStorage.getItem('progressKey')
     .then(
         res => {
             axios.put(`http://10.0.3.2:3000/orders/${res}`, dataUpdate)
             .then(
                 respon => {
                     console.log("respon", respon.data)
-                    alert("Berhasil upload")
+                    alert("Barang dikirim")
+                    this.props.navigation.push('CustomerProgress')
                 }
             )
         }
@@ -81,14 +82,14 @@ export default class UploadBukti extends Component {
   }
 
   async getDataImage(){
-    await AsyncStorage.getItem('findKey')
+    await AsyncStorage.getItem('progressKey')
     .then(
         res => {
             axios.get(`http://10.0.3.2:3000/orders/${res}`)
             .then(
                 result => {
-                    console.log(`result`, result.data.image)
-                    this.setState({oldPhoto: result.data.image,photo: result.data.image})
+                    console.log(`result`, result.data.image_pengiriman)
+                    this.setState({oldPhoto: result.data.image_pengiriman,photo: result.data.image_pengiriman})
                     console.log(`oldPhoto`, this.state.oldPhoto)
                 }
             )
@@ -207,7 +208,7 @@ export default class UploadBukti extends Component {
               borderRadius: 10,
             }}
             onPress={() => {
-              this.props.navigation.push('FindOrder'),
+              this.props.navigation.navigate('CustomerProgress'),
                 alert('Mohon ditunggu untuk verifikasi bukti pengiriman');
             }}>
             <Text

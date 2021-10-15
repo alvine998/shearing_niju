@@ -28,6 +28,12 @@ import ListLaporanMaterial from './src/pages/Admin/ListLaporanMaterial';
 import ListLaporanInvoice from './src/pages/Admin/ListLaporanInvoice';
 import ListInvoice from './src/pages/Admin/ListInvoice';
 import DataCustomer from './src/pages/Admin/DataCustomer';
+import TerimaBuktiOrder from './src/pages/Admin/TerimaBuktiOrder';
+import IsiInovoice from './src/pages/Invoice/IsiInvoice';
+import UploadBuktiBayar from './src/pages/UploadBuktiBayar';
+import UploadBuktiPengiriman from './src/pages/UploadBuktiPengiriman';
+import TerimaBuktiPembayaran from './src/pages/Admin/TerimaBuktiPembayaran';
+import UploadPengiriman from './src/pages/Admin/UploadPengiriman';
 
 const Stack = createStackNavigator();
 
@@ -50,10 +56,14 @@ const Stack = createStackNavigator();
           {/* Invoice */}
           <Stack.Screen name="Invoice" component={Invoice} options={{headerShown: false}} />
           <Stack.Screen name="AvailInvoice" component={AvailInvoice} options={{headerShown: false}} />
+          <Stack.Screen name="IsiInvoice" component={IsiInovoice} options={{headerShown: false}} />
           {/* Profil */}
           <Stack.Screen name="Profiles" component={Profiles} options={{headerShown: false}} />
           {/* Upload Bukti Working Instruction dan Resi Pengiriman */}
           <Stack.Screen name="UploadBukti" component={UploadBukti} options={{headerShown: false}} />
+          <Stack.Screen name="UploadBuktiBayar" component={UploadBuktiBayar} options={{headerShown: false}} />
+          <Stack.Screen name="UploadBuktiPengiriman" component={UploadBuktiPengiriman} options={{headerShown: false}} />
+
 
           {/* Admin NIJU */}
           <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown: false}} />
@@ -72,6 +82,11 @@ const Stack = createStackNavigator();
           <Stack.Screen name="ListKotakInvoice" component={ListInvoice} options={{headerShown: false}} />
           {/* Data Customer */}
           <Stack.Screen name="DataCustomer" component={DataCustomer} options={{headerShown: false}} />
+          {/* Upload */}
+          <Stack.Screen name="TerimaOrder" component={TerimaBuktiOrder} options={{headerShown: false}} />
+          <Stack.Screen name="TerimaBayar" component={TerimaBuktiPembayaran} options={{headerShown: false}} />
+          <Stack.Screen name="UploadPengiriman" component={UploadPengiriman} options={{headerShown: false}} />
+
         </Stack.Navigator>
       </NavigationContainer>
       // <View>

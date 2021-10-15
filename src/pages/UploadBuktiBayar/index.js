@@ -15,10 +15,10 @@ import {box_add, reports} from '../../assets';
 import {Button} from 'native-base';
 import axios from 'axios';
 import ImageCropPicker from 'react-native-image-crop-picker';
-import {uploadReplaceImage} from './utils';
+import {uploadReplaceImage, uploadReplaceImage2} from './utils';
 import AsyncStorage from '@react-native-community/async-storage';
 
-export default class UploadBukti extends Component {
+export default class UploadBuktiBayar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +27,7 @@ export default class UploadBukti extends Component {
       source: null,
       filePath: [],
       oldPhoto: '',
-      status:'sedang dikirim'
+      status: 'sedang verifikasi'
     };
   }
 
@@ -56,28 +56,29 @@ export default class UploadBukti extends Component {
 
     let result ={info:""}
     try {
-       result =  await uploadReplaceImage(oldPhoto,newUpload,newPhoto)
+       result =  await uploadReplaceImage2(oldPhoto,newUpload,newPhoto)
     } catch (error) {
       console.log(`error`, error);
     }
-
     const dataUpdate = {
-        image: result.info,
-        status_material: this.state.status
+        image_tf: result.info,
+        status_pembayaran: this.state.status
     }
+        await AsyncStorage.getItem('findKey')
+        .then(
+            res => {
+                axios.put(`http://10.0.3.2:3000/orders/${res}`, dataUpdate)
+                .then(
+                    respon => {
+                        console.log("respon", respon.data)
+                        alert("Berhasil upload")
+                    }
+                )
+            }
+        )
     
-    await AsyncStorage.getItem('findKey')
-    .then(
-        res => {
-            axios.put(`http://10.0.3.2:3000/orders/${res}`, dataUpdate)
-            .then(
-                respon => {
-                    console.log("respon", respon.data)
-                    alert("Berhasil upload")
-                }
-            )
-        }
-    )
+
+    
   }
 
   async getDataImage(){
@@ -87,8 +88,8 @@ export default class UploadBukti extends Component {
             axios.get(`http://10.0.3.2:3000/orders/${res}`)
             .then(
                 result => {
-                    console.log(`result`, result.data.image)
-                    this.setState({oldPhoto: result.data.image,photo: result.data.image})
+                    console.log(`result`, result.data.image_tf)
+                    this.setState({oldPhoto: result.data.image_tf,photo: result.data.image_tf})
                     console.log(`oldPhoto`, this.state.oldPhoto)
                 }
             )
@@ -137,7 +138,7 @@ export default class UploadBukti extends Component {
                 fontSize: normalize(24),
                 paddingLeft: normalize(10),
               }}>
-              Upload Bukti
+              Upload Bukti Pembayaran
             </Text>
           </View>
         </View>

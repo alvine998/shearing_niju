@@ -19,6 +19,7 @@ export default class CustomerProgress extends Component{
             collect:[],
             material:'sudah diterima',
             produksi:'sudah produksi',
+            produksi2:'sedang produksi',
             pembayaran: 'sudah dibayar',
             pengiriman:'sudah dikirim'
         }
@@ -60,21 +61,41 @@ export default class CustomerProgress extends Component{
         .then(
             res => {
                 console.log('update : ', res.data);
+                this.props.navigation.push('CustomerProgress')
+            }
+        )
+    }
+
+    updateProduksi2(){
+        const collects = this.state.collect._id;
+        const produksi = {
+            status_produksi: this.state.produksi2
+        }
+        axios.put(`http://10.0.3.2:3000/orders/${collects}`, produksi)
+        .then(
+            res => {
+                console.log('update : ', res.data);
+                this.props.navigation.push('CustomerProgress')
             }
         )
     }
 
     renderProduksi(){
-        if(this.state.produksi == 'sudah produksi'){
-            return null;
-        } else {
-            Alert.alert('Apakah Anda Yakin', 'Untuk Mulai Produksi ?' ,
+        Alert.alert('Status : Sedang Produksi', 'Selesaikan Produksi ?' ,
             [
                 {text:'Tidak', onPress:() => null, style:'cancel'}, 
-                {text:'Ya', onPress:() => this.updateProduksi()}
+                {text:'Ya', onPress:() => {this.updateProduksi()}}
             ]
             )
-        }
+    }
+
+    renderProduksi2(){
+        Alert.alert('Apakah Anda Yakin', 'Untuk Mulai Produksi ?' ,
+            [
+                {text:'Tidak', onPress:() => null, style:'cancel'}, 
+                {text:'Ya', onPress:() => {this.updateProduksi2()}}
+            ]
+            )
     }
 
     componentDidMount(){
@@ -98,17 +119,17 @@ export default class CustomerProgress extends Component{
                         <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(24), textAlign:'center', paddingTop:normalize(15)}}>Order Progress</Text>
                             {/* Progress 1 */}
                             <View style={{flexDirection:'row', padding:normalize(20)}}>
-                                <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(20), paddingTop:normalize(10)}}>1. Verifikasi Data Customer</Text>
-                                <View style={{paddingLeft:normalize(10) }}/>
-                                <Button full style={[ this.state.collect.status == 'sudah verifikasi' ? {backgroundColor: '#6D7AF2'} : {backgroundColor:'#E78181'}, { height:normalize(40),width:normalize(80), borderRadius:10}]}>
+                                <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(20), paddingTop:normalize(10)}}>1. Verifikasi Data Order</Text>
+                                <View style={{paddingLeft:normalize(40) }}/>
+                                <Button onPress={() => {this.state.collect.status == 'sudah verifikasi' ? [Alert.alert("Order Telah Aktif")] : alert("Order Belum Aktif")}} full style={[this.state.collect.status == 'sudah verifikasi' ? {backgroundColor:'#6D7AF2'}:{backgroundColor: '#E78181'}, { height:normalize(40),width:normalize(80), borderRadius:10}]}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), textAlign:'center'}}>Active</Text>
                                 </Button>
                             </View>
                             {/* Progress 2 */}
                             <View style={{flexDirection:'row', paddingLeft:normalize(0)}}>
-                                <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(20), paddingTop:normalize(10), paddingLeft:normalize(20)}}>2. Penerimaan Material &{"\n"} Work Instruction</Text>
-                                <View style={{paddingLeft:normalize(20) }}/>
-                                <Button onPress={() => [Alert.alert('Barang Diterima'), this.setState({active2: !this.state.active2})]} full style={[ this.state.active2 ? {backgroundColor: '#6D7AF2'} : {backgroundColor:'#E78181'}, { height:normalize(40),width:normalize(80), borderRadius:10}]}>
+                                <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(20), paddingTop:normalize(10), paddingLeft:normalize(20)}}>2. Penerimaan Material</Text>
+                                <View style={{paddingLeft:normalize(40) }}/>
+                                <Button onPress={() => {this.state.collect.status_material == 'sudah diterima' ? [alert("Sudah Diterima")] : this.props.navigation.navigate('TerimaOrder')}} full style={[this.state.collect.status_material == 'sudah diterima' ?  {backgroundColor:'#6D7AF2'}:{backgroundColor: '#E78181'}, { height:normalize(40),width:normalize(80), borderRadius:10}]}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), textAlign:'center'}}>Update</Text>
                                 </Button>
                             </View>
@@ -116,7 +137,7 @@ export default class CustomerProgress extends Component{
                             <View style={{flexDirection:'row', paddingLeft:normalize(20), paddingTop:normalize(20)}}>
                                 <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(20), paddingTop:normalize(10)}}>3. Produksi Shearing</Text>
                                 <View style={{paddingLeft:normalize(58) }}/>
-                                <Button onPress={() => this.renderProduksi()} full style={[ this.state.active4 ? {backgroundColor: '#6D7AF2'} : {backgroundColor:'#E78181'}, { height:normalize(40),width:normalize(80), borderRadius:10}]}>
+                                <Button onPress={() => {this.state.collect.status_material == 'belum diterima' ? alert("Selesaikan penerimaan material dahulu") : this.state.collect.status_produksi == 'belum produksi' ? this.renderProduksi2() : this.state.collect.status_produksi == 'sedang produksi' ? this.renderProduksi() : alert("Selesai Produksi") }} full style={[this.state.collect.status_produksi == 'sedang produksi' ? {backgroundColor:'#FFDD3C'}:this.state.collect.status_produksi == 'sudah produksi' ? {backgroundColor:'#6D7AF2'}:{backgroundColor: '#E78181'}, { height:normalize(40),width:normalize(80), borderRadius:10}]}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), textAlign:'center'}}>Update</Text>
                                 </Button>
                             </View>
@@ -124,7 +145,7 @@ export default class CustomerProgress extends Component{
                             <View style={{flexDirection:'row', paddingLeft:normalize(20), paddingTop:normalize(20)}}>
                                 <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(20), paddingTop:normalize(10)}}>4. Pembayaran</Text>
                                 <View style={{paddingLeft:normalize(102) }}/>
-                                <Button onPress={() => [Alert.alert('Pembayaran Telah Lunas'), this.setState({active5: !this.state.active5})]} full style={[ this.state.active5 ? {backgroundColor: '#6D7AF2'} : {backgroundColor:'#E78181'}, { height:normalize(40),width:normalize(80), borderRadius:10}]}>
+                                <Button onPress={() => {this.state.collect.status_produksi == 'belum produksi' || this.state.collect.status_produksi == 'sedang produksi' ? alert("Selesaikan produksi dahulu") : this.state.collect.status_pembayaran == 'sudah dibayar' ? [Alert.alert('Pembayaran Telah Lunas')] : this.props.navigation.navigate('TerimaBayar')}} full style={[this.state.collect.status_pembayaran == 'sudah dibayar' ?  {backgroundColor:'#6D7AF2'}:{backgroundColor: '#E78181'} , { height:normalize(40),width:normalize(80), borderRadius:10}]}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), textAlign:'center'}}>Update</Text>
                                 </Button>
                             </View>
@@ -132,7 +153,7 @@ export default class CustomerProgress extends Component{
                             <View style={{flexDirection:'row', paddingLeft:normalize(20), paddingTop:normalize(20)}}>
                                 <Text style={{fontFamily:'RedHatDisplay-Regular', fontSize:normalize(20), paddingTop:normalize(10)}}>5. Pengiriman Pesanan</Text>
                                 <View style={{paddingLeft:normalize(38) }}/>
-                                <Button onPress={() => [Alert.alert('Pesanan Telah Dikirim'), this.setState({active6: !this.state.active6})]} full style={[ this.state.active6 ? {backgroundColor: '#6D7AF2'} : {backgroundColor:'#E78181'}, { height:normalize(40),width:normalize(80), borderRadius:10}]}>
+                                <Button onPress={() => {this.state.collect.status_pembayaran == 'belum dibayar' ? alert("Selesaikan pembayaran dahulu") : this.state.collect.status_pengiriman == 'sudah diterima' ? [Alert.alert('Pesanan Telah Diterima')] : this.state.collect.status_pengiriman == 'sedang dikirim' ? alert("Produk sedang dikirim") : this.props.navigation.navigate('UploadPengiriman')}} full style={[this.state.collect.status_pengiriman == 'sedang dikirim' ? {backgroundColor:'#FFDD3C'} : this.state.collect.status_pengiriman == 'sudah diterima' ? {backgroundColor:'#6D7AF2'}:{backgroundColor: '#E78181'}, { height:normalize(40),width:normalize(80), borderRadius:10}]}>
                                     <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), textAlign:'center'}}>Update</Text>
                                 </Button>
                             </View>

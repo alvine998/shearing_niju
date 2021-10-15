@@ -65,16 +65,19 @@ export default class KotakMasuk extends Component{
                 </View>
                 <ScrollView>
                     <View style={{paddingTop:normalize(30), alignItems:'center', justifyContent:'center'}}>
-                        {this.state.collection.sort((a,b) => new Date(a) < new Date(b) ? 1 : -1) && this.state.collection.map(valueses => {
-                            return(
-                                    <TouchableOpacity onPress={() => {this.setData(valueses._id),this.props.navigation.navigate('IsiKotakMasuk')}} style={{height:normalize(50), width:'100%', backgroundColor:'white'}}>
-                                        <View style={{flexDirection:'row', padding:normalize(10)}}>
-                                            <Icon type={"FontAwesome5"} name="envelope"/>
-                                            <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), paddingLeft:normalize(10), paddingTop:normalize(5)}}>Order Masuk {valueses.namapt}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                            )
-                        })}
+                        {                        
+                            this.state.collection && this.state.collection.map(valueses => {
+                                return(
+                                        <TouchableOpacity onPress={() => {this.setData(valueses._id),this.props.navigation.navigate('IsiKotakMasuk')}} style={{height:normalize(70), width:'100%', backgroundColor:'white'}}>
+                                            <View style={{flexDirection:'row', padding:normalize(10)}}>
+                                                <Icon type={"FontAwesome5"} name="envelope"/>
+                                                <Text style={{fontFamily:'RedHatDisplay-Bold', fontSize:normalize(18), paddingLeft:normalize(10), paddingTop:normalize(5)}}>Order Masuk {valueses.namapt} / {valueses.createdAt}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                )
+                            })
+                        
+                        }
                     </View>
                 </ScrollView>
                 <View style={{padding:normalize(30)}}>
